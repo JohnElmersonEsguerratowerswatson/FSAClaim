@@ -1,0 +1,27 @@
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\spa.proxy.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\appsettings.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.staticwebassets.runtime.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.exe
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.deps.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.runtimeconfig.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\ref\FSA Claim.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\FSA Claim.pdb
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\bin\Debug\net6.0\Microsoft.AspNetCore.SpaProxy.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\spa.proxy.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.AssemblyInfoInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.AssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.csproj.CoreCompileInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.RazorAssemblyInfo.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.RazorAssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\scopedcss\bundle\FSA Claim.styles.css
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.csproj.CopyComplete
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\ref\FSA Claim.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.pdb
+C:\Users\johne5446\source\repos\FSAClaim\FSA Claim\obj\Debug\net6.0\FSA Claim.genruntimeconfig.cache

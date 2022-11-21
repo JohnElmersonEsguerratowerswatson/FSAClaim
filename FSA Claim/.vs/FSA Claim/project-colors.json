@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "5ff33d75-8971-467e-adc6-578b00e67160": {
+      "ProjectGuid": "5ff33d75-8971-467e-adc6-578b00e67160",
+      "DisplayName": "FSA Claim",
+      "ColorIndex": 0
+    },
+    "15a0e68c-9eaf-47b7-b38c-64882bd826ea": {
+      "ProjectGuid": "15a0e68c-9eaf-47b7-b38c-64882bd826ea",
+      "DisplayName": "FSA.Data",
+      "ColorIndex": 1
+    },
+    "345234e3-ba52-4b6e-9edf-55728a4757ff": {
+      "ProjectGuid": "345234e3-ba52-4b6e-9edf-55728a4757ff",
+      "DisplayName": "Data.Test",
+      "ColorIndex": 2
+    },
+    "4d0d356a-1871-4287-b25d-b3829bb3f565": {
+      "ProjectGuid": "4d0d356a-1871-4287-b25d-b3829bb3f565",
+      "DisplayName": "Data.Console",
+      "ColorIndex": 3
+    },
+    "dbbb51a7-7c32-49a8-bb3b-d64c8b906673": {
+      "ProjectGuid": "dbbb51a7-7c32-49a8-bb3b-d64c8b906673",
+      "DisplayName": "FSA.Domain",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 5
+}

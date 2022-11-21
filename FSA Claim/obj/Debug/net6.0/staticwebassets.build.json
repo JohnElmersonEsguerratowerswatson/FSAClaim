@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "MCWKA6+lqKXrUOEBK2NfaQV4pDdprmYlLLmZx4DfGdw=",
+  "Source": "FSA Claim",
+  "BasePath": "_content/FSA Claim",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "FSA Claim\\wwwroot",
+      "Source": "FSA Claim",
+      "ContentRoot": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA Claim\\wwwroot\\",
+      "BasePath": "_content/FSA Claim",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA Claim\\wwwroot\\favicon.ico",
+      "SourceId": "FSA Claim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA Claim\\wwwroot\\",
+      "BasePath": "_content/FSA Claim",
+      "RelativePath": "favicon.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\favicon.ico"
+    }
+  ]
+}

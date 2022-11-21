@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "vD9YyicNSM9VEQaD1hknDa95cGOmw9wQq3aE5ZUJjBE7o+tTYf9G3T8uYBRbnUZAvj+UgwR67iZRruNw6P46Ow==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA Claim\\FSA Claim.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\6.0.10\\microsoft.aspnetcore.spaproxy.6.0.10.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44422",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA Claim\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}
