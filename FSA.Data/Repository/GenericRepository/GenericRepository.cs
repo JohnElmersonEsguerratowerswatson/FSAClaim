@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository.GenericRepository
 {
-    public class GenericRepository<T> : IViewRepository<T>, ITransactRepository<T> where T : class
+    public abstract class GenericRepository<T> : IViewRepository<T>, ITransactRepository<T> where T : class
     {
         private FSAClaimContext _dbContext;
 
@@ -81,6 +81,23 @@ namespace FSA.Data.Repository.GenericRepository
             catch (Exception ex)
             {
                 return new List<T>();
+            }
+        }
+
+        public T Get(Func<T, bool> criteria)
+        {
+            try
+            {
+                using (_dbContext)
+                {
+
+                    var list = _dbContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 

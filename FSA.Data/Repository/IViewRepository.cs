@@ -12,5 +12,7 @@ namespace FSA.Data.Repository
 
         //public IQueryable<T> GetList(Func<T, bool> criteria, IEntity parent );
         public ICollection<T> GetList();
+
+        public T Get(Func<T, bool> predicate);
     }
 }

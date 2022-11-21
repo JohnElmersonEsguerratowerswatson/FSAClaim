@@ -1,4 +1,5 @@
 ﻿using FSA.Data.DBContext;
+using FSA.Data.Repository.GenericRepository;
 using FSA.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository.LoginRepository
 {
-    public class LoginRepository : IViewRepository<Login>
+    public class LoginRepository : GenericRepository<Login>
     {
 
         private FSAClaimContext _dbContext;
@@ -18,7 +19,22 @@ namespace FSA.Data.Repository.LoginRepository
             _dbContext = new FSAClaimContext();
         }
 
-        public ICollection<Login> GetList(Func<Login, bool> criteria)
+        public new Login Get(Func<Login, bool> predicate)
+        {
+            try
+            {
+                using (_dbContext)
+                {      
+                    return _dbContext.Logins.SingleOrDefault(predicate);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public new ICollection<Login>  GetList(Func<Login, bool> criteria)
         {
             try
             {
@@ -34,7 +50,7 @@ namespace FSA.Data.Repository.LoginRepository
             }
         }
 
-        public ICollection<Login> GetList()
+        public new ICollection<Login> GetList()
         {
             try
             {

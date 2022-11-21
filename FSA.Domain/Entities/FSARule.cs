@@ -9,7 +9,7 @@ namespace FSA.Domain.Entities
     public class FSARule
     {
         public int ID { get; set; }
-        public int FSALimit { get; set; }
+        public decimal FSALimit { get; set; }
         public int YearCoverage { get; set; }
 
        
