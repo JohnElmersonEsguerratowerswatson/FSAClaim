@@ -1,4 +1,4 @@
-﻿using FSA.Data.Entities;
+﻿using FSA.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.DBContext
 {
-    public class FSAClaimContext : DbContext
+    internal class FSAClaimContext : DbContext
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

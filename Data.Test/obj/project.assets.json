@@ -8063,6 +8063,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "FSA.Data >= 1.0.0",
+      "FSA.Domain >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 16.11.0",
       "coverlet.collector >= 3.1.0",
       "xunit >= 2.4.1",
@@ -8098,6 +8099,9 @@
           "projectReferences": {
             "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj": {
               "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj"
+            },
+            "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Domain\\FSA.Domain.csproj": {
+              "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Domain\\FSA.Domain.csproj"
             }
           }
         }

@@ -1,4 +1,4 @@
-﻿using FSA.Data.Entities;
+﻿using FSA.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;

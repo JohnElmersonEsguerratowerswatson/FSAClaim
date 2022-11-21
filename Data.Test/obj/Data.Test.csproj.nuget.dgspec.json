@@ -30,6 +30,9 @@
             "projectReferences": {
               "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj": {
                 "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj"
+              },
+              "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Domain\\FSA.Domain.csproj": {
+                "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Domain\\FSA.Domain.csproj"
               }
             }
           }

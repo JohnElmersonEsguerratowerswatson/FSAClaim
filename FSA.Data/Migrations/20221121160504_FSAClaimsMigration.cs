@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FSA.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FSAClaimsMigration : Migration
+    internal partial class FSAClaimsMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
