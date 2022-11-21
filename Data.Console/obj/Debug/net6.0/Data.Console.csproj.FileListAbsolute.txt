@@ -1,0 +1,14 @@
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.exe
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.deps.json
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.runtimeconfig.json
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\ref\Data.Console.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.pdb
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.AssemblyInfoInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.AssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.csproj.CoreCompileInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\ref\Data.Console.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.pdb
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.genruntimeconfig.cache
