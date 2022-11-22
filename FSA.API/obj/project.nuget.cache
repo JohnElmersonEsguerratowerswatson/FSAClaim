@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "MegtJ6T0EAUgLcHvd5yDjxgZ14YaUk8fB5CN6L29cPa5RZc7C9uNpol7ULhwqDXiwJElxuZ7+kO7KRrSiZvO6Q==",
+  "dgSpecHash": "OiJoATFXZLb4fuQNmnKbK6dnHAP2WV+v7YargiOloCgY0HKUz9I4fjC+FsQGVeXdi1Xacuv5gaUbBucKzypcRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.API\\FSA.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\johne5446\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.11\\microsoft.aspnetcore.authentication.jwtbearer.6.0.11.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.1\\microsoft.data.sqlclient.5.0.1.nupkg.sha512",

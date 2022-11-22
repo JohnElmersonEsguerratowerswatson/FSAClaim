@@ -20,7 +20,35 @@ namespace FSA.Data.Repository.FSAClaimRepository
         public FSAClaimRepository()
         {
             _dbContext = new FSAClaimContext();
-           
+
+        }
+
+
+
+        public new IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+                using (_dbContext)
+                {
+                    var claim = _dbContext.FSAClaims.SingleOrDefault(predicate);
+                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                    claim.ReceiptAmount = fSAClaim.ReceiptAmount;
+                    claim.Modified = DateTime.UtcNow;
+                    claim.ReceiptDate = fSAClaim.ReceiptDate;
+                    claim.ClaimAmount = fSAClaim.ClaimAmount;
+                    claim.ReceiptNumber = fSAClaim.ReceiptNumber;
+
+                    int rows = _dbContext.SaveChanges();
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
         }
         //public IRepositoryResult Add(FSAClaim entity)
         //{

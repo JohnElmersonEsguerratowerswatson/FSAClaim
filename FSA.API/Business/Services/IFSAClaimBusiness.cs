@@ -1,18 +1,19 @@
-﻿using FSA.API.Models.Interface;
+﻿using FSA.API.Models;
+using FSA.API.Models.Interface;
 
 namespace FSA.API.Business.Services
 {
     public interface IFSAClaimBusiness
     {
-        public IClaim GetClaim(int referenceNumber);
+        public IViewClaim GetClaim(int referenceNumber);
 
-        public List<IClaimTableItem> GetClaimList();
+        public List<ClaimsTableItem> GetClaimList();
 
-        public IClaimResult Update(IClaim claim);
+        public IClaimResult Update(ITransactClaim claim);
 
-        public IClaimResult Delete(IClaim claim);
+        public IClaimResult Delete(ITransactClaim claim);
 
-        public IClaimResult AddClaim(IClaim claim);
+        public IClaimResult AddClaim(IViewClaim claim);
 
     }
 }

@@ -23,8 +23,11 @@ namespace FSA.Data.Repository.GenericRepository
                 using (_dbContext)
                 {
                     _dbContext.Add(entity);
+
+                    int rows = _dbContext.SaveChanges();
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
                 }
-                return new ClaimRepositoryResult(true);
             }
             catch (Exception ex)
             {
@@ -43,6 +46,8 @@ namespace FSA.Data.Repository.GenericRepository
                     T? entity = _dbContext.Set<T>().Where(predicate).SingleOrDefault();
                     if (entity == null) return new ClaimRepositoryResult(false, "Not Found", "");
                     _dbContext.Remove<T>(entity);
+                    int rows = _dbContext.SaveChanges();
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
                 }
             }
@@ -103,34 +108,20 @@ namespace FSA.Data.Repository.GenericRepository
             }
         }
 
-        public IRepositoryResult SaveChanges()
-        {
-            try
-            {
-                using (_dbContext)
-                {
-
-                    int currentRows = _dbContext.SaveChanges();
-                    return new ClaimRepositoryResult(true, rows: currentRows);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
-            }
-        }
-
         public IRepositoryResult Update(T entity, Func<T, bool> predicate)
         {
             try
             {
                 using (_dbContext)
                 {
-                    var claim = _dbContext.Set<T>().Where<T>(predicate).SingleOrDefault();
+                    var claim = _dbContext.Set<T>().SingleOrDefault<T>(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
                     claim = entity;
+
+                    int rows = _dbContext.SaveChanges();
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
                 }
-                return new ClaimRepositoryResult(true);
             }
             catch (Exception ex)
             {

@@ -10,6 +10,7 @@ namespace FSA.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.AddColumn<string>(
                 name: "Username",
                 table: "Logins",
@@ -26,6 +27,7 @@ namespace FSA.Data.Migrations
             migrationBuilder.CreateIndex("IX_FSAClaim_ReferenceNumber", "FSAClaims", "ReferenceNumber");
 
         }
+
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)

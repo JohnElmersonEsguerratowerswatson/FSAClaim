@@ -14,6 +14,6 @@ namespace FSA.Data.Repository
         public IRepositoryResult Update(T entity, Func<T, bool> predicate);
         public IRepositoryResult Delete(Func<T, bool> predicate);
         public IRepositoryResult Add(T entity);
-        public IRepositoryResult SaveChanges();
+
     }
 }

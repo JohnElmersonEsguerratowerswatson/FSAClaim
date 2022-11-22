@@ -8,6 +8,7 @@ C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\ref\FSA.API.dl
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\FSA.API.pdb
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll

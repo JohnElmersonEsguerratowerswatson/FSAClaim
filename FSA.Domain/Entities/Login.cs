@@ -9,7 +9,7 @@ namespace FSA.Domain.Entities
 {
     public class Login
     {
-        public string EmployeeID { get; set; }
+        public int EmployeeID { get; set; }
         [Key]
         public string Username { get; set; }
 
