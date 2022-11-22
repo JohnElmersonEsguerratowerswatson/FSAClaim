@@ -10,6 +10,6 @@ namespace FSA.Data.Repository
 
     {
         public ICollection<V> GetList(Func<T, bool> criteria);
-        public V? Get(<Func<T, bool> criteria);
+        public V? Get (Func<T, bool> criteria);
     }
 }

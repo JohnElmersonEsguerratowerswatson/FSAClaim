@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Console", "..\Data.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSA.Domain", "..\FSA.Domain\FSA.Domain.csproj", "{DBBB51A7-7C32-49A8-BB3B-D64C8B906673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSA.API", "..\FSA.API\FSA.API.csproj", "{00EAAE02-DD5F-4BA9-8C7E-54DE4CB92569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSA.API", "..\FSA.API\FSA.API.csproj", "{00EAAE02-DD5F-4BA9-8C7E-54DE4CB92569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSA.Common", "..\FSA.Common\FSA.Common.csproj", "{97DA17A3-7473-4053-BEC5-D7EAA3880821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{00EAAE02-DD5F-4BA9-8C7E-54DE4CB92569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00EAAE02-DD5F-4BA9-8C7E-54DE4CB92569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00EAAE02-DD5F-4BA9-8C7E-54DE4CB92569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97DA17A3-7473-4053-BEC5-D7EAA3880821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97DA17A3-7473-4053-BEC5-D7EAA3880821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97DA17A3-7473-4053-BEC5-D7EAA3880821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97DA17A3-7473-4053-BEC5-D7EAA3880821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

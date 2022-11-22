@@ -50,6 +50,9 @@ namespace FSA.Data.Repository.FSAClaimRepository
         }
 
 
+
+
+        ///Not Implemented
         ICollection<FSARule> IJoinRepository<Employee, EmployeeFSA, FSARule>.GetList(Func<Employee, bool> criteria)
         {
             throw new NotImplementedException();

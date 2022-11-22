@@ -33,14 +33,16 @@ namespace FSA.Data.Repository.GenericRepository
             }
         }
 
-        public IRepositoryResult Delete(T entity)
+        public IRepositoryResult Delete(Func<T, bool> predicate)
         {
             try
             {
                 using (_dbContext)
                 {
 
-                    _dbContext.Remove(entity);
+                    T? entity = _dbContext.Set<T>().Where(predicate).SingleOrDefault();
+                    if (entity == null) return new ClaimRepositoryResult(false, "Not Found", "");
+                    _dbContext.Remove<T>(entity);
                     return new ClaimRepositoryResult(true);
                 }
             }
@@ -91,8 +93,8 @@ namespace FSA.Data.Repository.GenericRepository
                 using (_dbContext)
                 {
 
-                    var list = _dbContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
-                    return list;
+                    T? entity = _dbContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
+                    return entity;
                 }
             }
             catch (Exception ex)
@@ -136,5 +138,7 @@ namespace FSA.Data.Repository.GenericRepository
             }
 
         }
+
+
     }
 }

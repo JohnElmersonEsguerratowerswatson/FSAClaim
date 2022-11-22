@@ -6,7 +6,7 @@ namespace FSA.API.Business.Services
     {
         public IClaim GetClaim(int referenceNumber);
 
-        public List<IClaimTableItem> GetClaimList(int employeeID);
+        public List<IClaimTableItem> GetClaimList();
 
         public IClaimResult Update(IClaim claim);
 

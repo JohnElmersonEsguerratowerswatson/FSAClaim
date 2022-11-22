@@ -924,6 +924,16 @@
           }
         }
       },
+      "FSA.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/FSA.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FSA.Common.dll": {}
+        }
+      },
       "FSA.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -3242,6 +3252,11 @@
         "version.txt"
       ]
     },
+    "FSA.Common/1.0.0": {
+      "type": "project",
+      "path": "../FSA.Common/FSA.Common.csproj",
+      "msbuildProject": "../FSA.Common/FSA.Common.csproj"
+    },
     "FSA.Data/1.0.0": {
       "type": "project",
       "path": "../FSA.Data/FSA.Data.csproj",
@@ -3255,6 +3270,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "FSA.Common >= 1.0.0",
       "FSA.Data >= 1.0.0",
       "FSA.Domain >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
@@ -3287,6 +3303,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Common\\FSA.Common.csproj": {
+              "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Common\\FSA.Common.csproj"
+            },
             "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj": {
               "projectPath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\FSA.Data\\FSA.Data.csproj"
             },

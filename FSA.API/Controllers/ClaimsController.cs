@@ -28,7 +28,7 @@ namespace FSA.API.Controllers
             if (!Int32.TryParse(User.Identity.Name, out int id))
             { return Forbid(); }
             IClaim claim;
-            ClaimsBusinessLogic logic = new ClaimsBusinessLogic();
+            ClaimsBusinessLogic logic = new ClaimsBusinessLogic(id);
             claim = logic.GetClaim(arg);
             if (claim == null) { return NotFound(); }
 

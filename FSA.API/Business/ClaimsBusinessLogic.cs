@@ -4,20 +4,31 @@ using FSA.API.Models.Interface;
 using FSA.Data.Repository.FSAClaimRepository;
 using FSA.Data.Repository.GenericRepository;
 using FSA.Domain.Entities;
-using System.Security.Claims;
+using FSA.Common.Enums;
+using FSA.Common;
 
 namespace FSA.API.Business
 {
     public class ClaimsBusinessLogic : IFSAClaimBusiness
     {
+
+
+        private int _employeeNumber;
+
+        public ClaimsBusinessLogic(int employeeNumber)
+        {
+            _employeeNumber = employeeNumber;
+        }
+
         public IClaimResult AddClaim(IClaim claim, int id)
         {
             FSAClaimRepository repository = new FSAClaimRepository();
             TRepository<FSARule> tRepo = new TRepository<FSARule>();
-            //var employee
+
+            ClaimApproval approval = ClaimApproval.Pending;
 
             if (claim == null) return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
-            if (claim.ReceiptDate.Year != DateTime.UtcNow.Year) return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
+            if (claim.ReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApproval.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
 
             var employeeClaims = repository.GetList(ec => ec.EmployeeID == id && ec.Status == "Approved" && ec.ApprovalDate.Year == DateTime.Now.Year);
             decimal totalClaims = employeeClaims.Sum(ec => ec.ClaimAmount);
@@ -33,29 +44,38 @@ namespace FSA.API.Business
 
             try
             {
-                var result = repository.Add(new FSAClaim
-                {
-                    ApprovalDate = DateTime.UtcNow,
-                    ClaimAmount = claim.ClaimAmount,
-                    DateSubmitted = DateTime.UtcNow,
-                    Modified = DateTime.UtcNow,
-                    ReceiptAmount = claim.ReceiptAmount,
-                    ReceiptDate = claim.ReceiptDate,
-                    ReceiptNumber = claim.ReceiptNumber,
-                    Status = "Pending",
-                    EmployeeID = id,//get from db or User .Net variable
-                    ReferenceNumber = int.Parse(refNo)// generate a unique number
+                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claim.ReceiptDate, claim.ReceiptNumber, approval, int.Parse(refNo), id);
+                var result = repository.Add(claimAdd);
 
-                });
                 return new ClaimResult { IsSuccess = true, Message = "" };
             }
             catch { return new ClaimResult { IsSuccess = false, Message = "Server Error: Please file a ticket" }; }
 
         }
 
+        private FSAClaim CreateClaim(decimal claimAmount, decimal receiptAmount, DateTime receiptDate, string receiptNumber, ClaimApproval claimApproval, int refNo, int employeeId)
+        {
+            return new FSAClaim
+            {
+                ApprovalDate = DateTime.UtcNow,
+                ClaimAmount = claimAmount,
+                DateSubmitted = DateTime.UtcNow,
+                Modified = DateTime.UtcNow,
+                ReceiptAmount = receiptAmount,
+                ReceiptDate = receiptDate,
+                ReceiptNumber = receiptNumber,
+                Status = claimApproval.ToString(),
+                EmployeeID = employeeId,//get from db or User .Net variable
+                ReferenceNumber = refNo// generate a unique number
+            };
+        }
+
         public IClaimResult Delete(IClaim claim)
         {
-            throw new NotImplementedException();
+            FSAClaimRepository repository = new FSAClaimRepository();
+            var repositoryResult = repository.Delete(c => c.ReceiptDate == claim.ReceiptDate && c.ReceiptNumber == claim.ReceiptNumber);//ew FSAClaim { ReceiptDate = claim.ReceiptDate, ReceiptAmount = claim.ReceiptAmount}
+            if (!repositoryResult.IsSuccess) return new ClaimResult { IsSuccess = false, Message = repositoryResult.Error.Message };
+            return new ClaimResult { IsSuccess = true };
         }
 
         public IClaim GetClaim(int referenceNumber)
@@ -66,16 +86,39 @@ namespace FSA.API.Business
             return new EmployeeClaim { ClaimAmount = claim.ClaimAmount, ReceiptAmount = claim.ReceiptAmount, ReceiptDate = claim.ReceiptDate, ReceiptNumber = claim.ReceiptNumber };
         }
 
-        public List<IClaimTableItem> GetClaimList(int employeeID)
+        public List<IClaimTableItem> GetClaimList()
         {
-            throw new NotImplementedException();
+
+            FSAClaimRepository repository = new FSAClaimRepository();
+            var claimList = repository.GetList(c => c.EmployeeID == _employeeNumber);
+            if (claimList == null || claimList.Count() == 0) return new List<IClaimTableItem>();
+            List<IClaimTableItem> claimItems = new List<IClaimTableItem>();
+            foreach (var claim in claimList)
+            {
+                claimItems.Add(
+                    new ClaimsTableItem
+                    {
+                        ClaimAmount = claim.ClaimAmount,
+                        ReceiptAmount = claim.ReceiptAmount,
+                        ReceiptDate = claim.ReceiptDate,
+                        ReceiptNumber = claim.ReceiptNumber
+                    }
+                    );
+            }
+            return claimItems;
         }
+
 
         public IClaimResult Update(IClaim claim)
         {
             FSAClaimRepository repository = new FSAClaimRepository();
 
-            throw new NotImplementedException();
+            var dbClaim = repository.Get(c => c.EmployeeID == _employeeNumber && c.ReceiptNumber == claim.ReceiptNumber && c.ReceiptDate == claim.ReceiptDate);
+            if (dbClaim == null) return new ClaimResult { IsSuccess = false, Message = ObjectStatus.ObjectNotFound };
+            repository.Update(dbClaim, c => c.ReferenceNumber == c.ReferenceNumber);
+            return new ClaimResult { IsSuccess = true };
         }
+
+
     }
 }
