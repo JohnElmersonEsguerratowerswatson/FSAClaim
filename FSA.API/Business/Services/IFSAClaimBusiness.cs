@@ -12,7 +12,7 @@ namespace FSA.API.Business.Services
 
         public IClaimResult Delete(IClaim claim);
 
-        public IClaimResult AddClaim(IClaim claim, int id);
+        public IClaimResult AddClaim(IClaim claim);
 
     }
 }

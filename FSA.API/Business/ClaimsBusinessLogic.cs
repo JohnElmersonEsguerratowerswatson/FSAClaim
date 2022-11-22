@@ -20,7 +20,7 @@ namespace FSA.API.Business
             _employeeNumber = employeeNumber;
         }
 
-        public IClaimResult AddClaim(IClaim claim, int id)
+        public IClaimResult AddClaim(IClaim claim)
         {
             FSAClaimRepository repository = new FSAClaimRepository();
             TRepository<FSARule> tRepo = new TRepository<FSARule>();
@@ -30,12 +30,12 @@ namespace FSA.API.Business
             if (claim == null) return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
             if (claim.ReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApproval.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
 
-            var employeeClaims = repository.GetList(ec => ec.EmployeeID == id && ec.Status == "Approved" && ec.ApprovalDate.Year == DateTime.Now.Year);
+            var employeeClaims = repository.GetList(ec => ec.EmployeeID == _employeeNumber && ec.Status == "Approved" && ec.ApprovalDate.Year == DateTime.Now.Year);
             decimal totalClaims = employeeClaims.Sum(ec => ec.ClaimAmount);
             string refNo = claim.ReceiptDate.Year.ToString("yyy") + claim.ReceiptDate.Month.ToString("MM") + claim.ReceiptNumber.ToString();
             //employee fsa rule to compare limit to existing
             EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
-            var employeeFSARule = eFSARepository.Get(e => e.ID == id);
+            var employeeFSARule = eFSARepository.Get(e => e.ID == _employeeNumber);
             if (employeeFSARule == null) return new ClaimResult { IsSuccess = false, Message = "FSA NotFound" };
             decimal remainingFSA = employeeFSARule.FSALimit - totalClaims;
 
