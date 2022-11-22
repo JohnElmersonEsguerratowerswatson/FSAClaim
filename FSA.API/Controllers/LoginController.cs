@@ -1,13 +1,80 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FSA.API.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 
 namespace FSA.API.Controllers
 {
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        public IActionResult Index()
+
+        private IConfiguration _configuration;
+        public LoginController(IConfiguration config)
         {
-            return View();
+            _configuration = config;
+        }
+        //[HttpPost]
+        //public ActionResult Login([FromForm] LoginModel login)
+        //{
+        //    //HttpRequest request = new HttpRequest(HttpMethod.Post);
+        //    // LoginModel login;
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        //login = new LoginModel { Username = userName, Password = passWord };
+        //        user = GetUser(login);
+        //    }
+
+        //    else
+        //        return BadRequest();
+
+        //    if (user == null)
+        //        return Unauthorized();
+        //    string forKey = _configuration.GetValue<string>("Authentication:SecretForKey");
+        //    //create token
+        //    var bytes = Encoding.ASCII.GetBytes(
+        //        forKey
+        //        // _configuration["Authentication:SecretForKey"]
+        //        );
+        //    SymmetricSecurityKey key = new SymmetricSecurityKey(bytes);
+        //    SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        //    var claims = new List<Claim>();
+        //    claims.Add(new Claim("sub", user.UserID.ToString()));
+        //    claims.Add(new Claim("Role", user.Role));
+
+        //    var jwt = new JwtSecurityToken(
+        //         _configuration.GetValue<string>("Authentication:Issuer"),
+        //         _configuration.GetValue<string>("Authentication:Audience"),
+        //          //_configuration.Properties["Authentication:Issuer"].ToString(),
+        //          //_configuration.Properties["Authentication:Audience"].ToString(),
+        //          claims,
+        //          DateTime.UtcNow,
+        //          DateTime.UtcNow.AddMinutes(20),
+        //          signingCredentials);
+
+        //    var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+        //    return Ok(token);
+        //}
+//        private User GetUser(LoginModel login)
+//        {
+//            User user = new User("johnwtwco", "John Elmerson", "Esguerra", "Admin");
+//            if (ValidateUser(login))
+//                return user;
+//#pragma warning disable CS8603 // Possible null reference return.
+//            return null;
+//#pragma warning restore CS8603 // Possible null reference return.
+//        }
+
+        private bool ValidateUser(LoginModel login)
+        {
+            return true;
         }
     }
 }

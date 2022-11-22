@@ -15,7 +15,7 @@ namespace FSA.Data.DBContext
         {
             modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e => e.FSAClaims).WithOne();
             modelBuilder.Entity<EmployeeFSA>().HasNoKey();
-            modelBuilder.Entity<Login>().HasNoKey();
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

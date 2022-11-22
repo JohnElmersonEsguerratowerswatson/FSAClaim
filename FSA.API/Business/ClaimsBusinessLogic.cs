@@ -44,7 +44,7 @@ namespace FSA.API.Business
 
             try
             {
-                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claim.ReceiptDate, claim.ReceiptNumber, approval, int.Parse(refNo), id);
+                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claim.ReceiptDate, claim.ReceiptNumber, approval, int.Parse(refNo), _employeeNumber);
                 var result = repository.Add(claimAdd);
 
                 return new ClaimResult { IsSuccess = true, Message = "" };

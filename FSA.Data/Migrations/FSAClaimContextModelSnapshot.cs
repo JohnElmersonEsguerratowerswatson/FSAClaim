@@ -126,6 +126,9 @@ namespace FSA.Data.Migrations
 
             modelBuilder.Entity("FSA.Domain.Entities.Login", b =>
                 {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("EmployeeID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -137,6 +140,8 @@ namespace FSA.Data.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Username");
 
                     b.ToTable("Logins");
                 });

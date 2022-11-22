@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository.LoginRepository
 {
-    public class LoginRepository : GenericRepository<Login>
+    public class LoginRepository :IViewRepository<Login>
     {
 
         private FSAClaimContext _dbContext;
@@ -19,51 +19,23 @@ namespace FSA.Data.Repository.LoginRepository
             _dbContext = new FSAClaimContext();
         }
 
-        public new Login Get(Func<Login, bool> predicate)
+        public Login Get(Func<Login, bool> predicate)
         {
-            try
-            {
-                using (_dbContext)
-                {      
-                    return _dbContext.Logins.SingleOrDefault(predicate);
-                }
-            }
-            catch
-            {
-                return null;
-            }
+            return _dbContext.Logins.SingleOrDefault(predicate);
         }
 
-        public new ICollection<Login>  GetList(Func<Login, bool> criteria)
+
+        #region IViewRepository NOT IMPLEMENTED
+        //NOT IMPLEMENTED
+        public ICollection<Login> GetList(Func<Login, bool> criteria)
         {
-            try
-            {
-                using (_dbContext)
-                {
-
-                    return _dbContext.Logins.Where(criteria).ToList();
-                }
-            }
-            catch
-            {
-                return new List<Login>();
-            }
+            throw new NotImplementedException();
         }
-
-        public new ICollection<Login> GetList()
+        //NOT IMPLEMENTED
+        public ICollection<Login> GetList()
         {
-            try
-            {
-                using (_dbContext)
-                {
-
-                    return _dbContext.Logins.ToList();
-                }
-            }
-            catch
-            {
-                return new List<Login>();
-            }
+            throw new NotImplementedException();
         }
+        #endregion
     }
 }
