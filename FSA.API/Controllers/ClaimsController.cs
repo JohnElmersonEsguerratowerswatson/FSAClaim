@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FSA.API.Models.Interface;
+using FSA.API.Business;
+using FSA.API.Business.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FSA.API.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class ClaimsController : Controller
     {
         // GET: ClaimsController
@@ -13,9 +17,22 @@ namespace FSA.API.Controllers
         }
 
         // GET: ClaimsController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult<IClaim> Details(int arg)
         {
-            return View();
+            //FSAClaimRepository repository = new FSAClaimRepository();
+            //var claim = repository.Get(c => c.ReferenceNumber == arg);
+            //if (claim == null) return NotFound();
+
+            if (User.Identity == null) { return Unauthorized(); }
+            if (!User.Identity.IsAuthenticated) { return Forbid(); }
+            if (!Int32.TryParse(User.Identity.Name, out int id))
+            { return Forbid(); }
+            IClaim claim;
+            ClaimsBusinessLogic logic = new ClaimsBusinessLogic();
+            claim = logic.GetClaim(arg);
+            if (claim == null) { return NotFound(); }
+
+            return Ok(claim);
         }
 
         // GET: ClaimsController/Create

@@ -4,6 +4,7 @@ C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Cons
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\ref\Data.Console.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\bin\Debug\net6.0\Data.Console.pdb
+C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.csproj.AssemblyReference.cache
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.AssemblyInfoInputs.cache
 C:\Users\johne5446\source\repos\FSAClaim\Data.Console\obj\Debug\net6.0\Data.Console.AssemblyInfo.cs

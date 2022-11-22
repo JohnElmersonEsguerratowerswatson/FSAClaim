@@ -10,9 +10,10 @@ namespace FSA.Data.DBContext
 {
     internal class FSAClaimContext : DbContext
     {
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e=>e.FSAClaims).WithOne();
+            modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e => e.FSAClaims).WithOne();
             modelBuilder.Entity<EmployeeFSA>().HasNoKey();
             modelBuilder.Entity<Login>().HasNoKey();
         }
