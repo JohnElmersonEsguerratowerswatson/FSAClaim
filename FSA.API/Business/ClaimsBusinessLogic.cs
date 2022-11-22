@@ -2,6 +2,7 @@
 using FSA.API.Models;
 using FSA.API.Models.Interface;
 using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Data.Repository.GenericRepository;
 using FSA.Domain.Entities;
 using System.Security.Claims;
 
@@ -9,11 +10,26 @@ namespace FSA.API.Business
 {
     public class ClaimsBusinessLogic : IFSAClaimBusiness
     {
-        public bool AddClaim(IClaim claim, int id)
+        public IClaimResult AddClaim(IClaim claim, int id)
         {
             FSAClaimRepository repository = new FSAClaimRepository();
+            TRepository<FSARule> tRepo = new TRepository<FSARule>();
             //var employee
+
+            if (claim == null) return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
+            if (claim.ReceiptDate.Year != DateTime.UtcNow.Year) return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
+
+            var employeeClaims = repository.GetList(ec => ec.EmployeeID == id && ec.Status == "Approved" && ec.ApprovalDate.Year == DateTime.Now.Year);
+            decimal totalClaims = employeeClaims.Sum(ec => ec.ClaimAmount);
             string refNo = claim.ReceiptDate.Year.ToString("yyy") + claim.ReceiptDate.Month.ToString("MM") + claim.ReceiptNumber.ToString();
+            //employee fsa rule to compare limit to existing
+            EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
+            var employeeFSARule = eFSARepository.Get(e => e.ID == id);
+            if (employeeFSARule == null) return new ClaimResult { IsSuccess = false, Message = "FSA NotFound" };
+            decimal remainingFSA = employeeFSARule.FSALimit - totalClaims;
+
+            if (remainingFSA < claim.ClaimAmount) return new ClaimResult { IsSuccess = false, Message = "You only have " + remainingFSA + "." };
+
 
             try
             {
@@ -31,13 +47,13 @@ namespace FSA.API.Business
                     ReferenceNumber = int.Parse(refNo)// generate a unique number
 
                 });
-                return result.IsSuccess;
+                return new ClaimResult { IsSuccess = true, Message = "" };
             }
-            catch { return false; }
+            catch { return new ClaimResult { IsSuccess = false, Message = "Server Error: Please file a ticket" }; }
 
         }
 
-        public bool Delete(IClaim claim)
+        public IClaimResult Delete(IClaim claim)
         {
             throw new NotImplementedException();
         }
@@ -55,8 +71,10 @@ namespace FSA.API.Business
             throw new NotImplementedException();
         }
 
-        public bool Update(IClaim claim)
+        public IClaimResult Update(IClaim claim)
         {
+            FSAClaimRepository repository = new FSAClaimRepository();
+
             throw new NotImplementedException();
         }
     }

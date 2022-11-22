@@ -3,7 +3,7 @@ using FSA.API.Business;
 using FSA.API.Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using FSA.API.Models;
 
 namespace FSA.API.Controllers
 {
@@ -16,7 +16,7 @@ namespace FSA.API.Controllers
             return View();
         }
 
-        // GET: ClaimsController/Details/5
+        // GET: api/ClaimsController/Details/5
         public ActionResult<IClaim> Details(int arg)
         {
             //FSAClaimRepository repository = new FSAClaimRepository();
@@ -44,15 +44,17 @@ namespace FSA.API.Controllers
         // POST: ClaimsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult<IClaimResult> Create([FromBody] IClaim claim)
         {
+            ClaimResult result = new ClaimResult();
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                return Ok(result);
             }
             catch
             {
-                return View();
+                return BadRequest(result);
             }
         }
 
