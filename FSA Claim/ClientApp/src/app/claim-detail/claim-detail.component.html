@@ -1,0 +1,36 @@
+<h1>Details</h1>
+
+<div class="container">
+
+  <div>
+    <label for="refNo">ReferenceNumber:</label>
+    <span id="refNo">{{claim.ReferenceNumber}}</span>
+  </div>
+  <div>
+    <label for="claimAmount">Claim Amount:</label>
+    <span id="claimAmount">{{claim.ClaimAmount}}</span>
+  </div>
+  <div>
+    <label for="receiptNumber">Receipt Number:</label>
+    <span id="receiptNumber">{{claim.ReceiptNumber}}</span>
+  </div>
+
+  <div>
+    <label for="receiptAmount">Receipt Amount:</label>
+    <span id="receiptAmount">{{claim.ReceiptAmount}}</span>
+  </div>
+
+  <div>
+    <label for="receiptDate">Receipt Date:</label>
+    <span id="receiptDate">{{claim.ReceiptDate}}</span>
+  </div>
+
+
+  <div class="col-md-2">
+    <button class="btn btn-secondary" (click)="deleteClaim()">Delete</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary" (click)="editClaim()">Edit</button>
+  </div>
+
+</div>

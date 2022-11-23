@@ -1,0 +1,30 @@
+
+<h1> {{claim.ReferenceNumber}}</h1>
+
+<form>
+
+  <div class="form-group">
+    <label for="claimAmount">Claim Amount:</label>
+    <input type="text" class="form-control" id="claimAmount" placeholder="Enter Claim Amount" [(ngModel)]="claim.ClaimAmount" [ngModelOptions]="{standalone: true}">
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="receiptNumber">Receipt Number:</label>
+    <input type="text" class="form-control" id="receiptNumber" placeholder="Enter Receipt Number" [(ngModel)]="claim.ReceiptNumber" [ngModelOptions]="{standalone: true}">
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="receiptAmount">Receipt Amount:</label>
+    <input type="text" class="form-control" id="receiptAmount" placeholder="Enter Receipt Amount" [(ngModel)]="claim.ReceiptAmount" [ngModelOptions]="{standalone: true}">
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="receiptDate">Receipt Date:</label>
+    <input type="text" class="form-control" id="receiptDate" placeholder="Enter Receipt Date" [(ngModel)]="claim.ReceiptDate" [ngModelOptions]="{standalone: true}">
+  </div>
+  <br />
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>

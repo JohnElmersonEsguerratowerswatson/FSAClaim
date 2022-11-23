@@ -18,7 +18,7 @@ namespace FSA.Test.API.Tests
 
         public APILogic()
         {
-            _logic = new ClaimsBusinessLogic(1);
+            _logic = new ClaimsBusinessLogic(2);
         }
 
         [Fact]
@@ -26,11 +26,11 @@ namespace FSA.Test.API.Tests
         {
             var result = _logic.AddClaim(new TransactClaim
             {
-                ReceiptDate = "02/14/2022",
-                ReceiptAmount = 2000,
+                ReceiptDate = "02/15/2022",
+                ReceiptAmount = 3000,
                 ClaimAmount = 2000,
-                ReceiptNumber = "002FVE03F",
-                ReferenceNumber = ""
+                ReceiptNumber = "1647IJFTHJT",
+                ReferenceNumber = "1647IJFTHJT435467"
             });
             Assert.True(result.IsSuccess);
         }
@@ -54,11 +54,11 @@ namespace FSA.Test.API.Tests
         {
             var result = _logic.Delete(new TransactClaim
             {
-                ReceiptDate = "02/12/2022",
+                ReceiptDate = "09/18/2022",
                 ReceiptAmount = 2000,
-                ClaimAmount = 200,
-                ReceiptNumber = "RBF0103",
-                ReferenceNumber = "2022MM12RBF0103"
+                ClaimAmount = 2000,
+                ReceiptNumber = "TDYKTX45YT544",
+                ReferenceNumber = "TDYKTX45YT544456653425"
             });
             Assert.True(result.IsSuccess);
         }
