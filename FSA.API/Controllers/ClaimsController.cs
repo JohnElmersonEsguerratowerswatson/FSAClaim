@@ -26,7 +26,7 @@ namespace FSA.API.Controllers
         {
             var claim = User.Claims.SingleOrDefault(C => C.Type == "Identity");
             if (claim == null) { _employeeID = 0; }
-            
+
             else if (Int32.TryParse(claim.Value, out int id)) _employeeID = id;
         }
 
@@ -51,7 +51,7 @@ namespace FSA.API.Controllers
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        public ActionResult<IViewClaim> Details(int arg)
+        public ActionResult<IViewClaim> Details(string arg)
         {
             CheckUser(User.Identity);
             if (_employeeID == 0) return Unauthorized();
@@ -72,8 +72,7 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult<IClaimResult> Create([FromBody] IViewClaim claim)
+        public ActionResult<IClaimResult> Create(TransactClaim claim)
         {
 
             try
@@ -82,11 +81,13 @@ namespace FSA.API.Controllers
                 if (_employeeID == 0) return Unauthorized();
 
                 if (!ModelState.IsValid) return BadRequest(ModelState);
+                //return BAD request if claim amount is greater than receipt ammount
+                if (claim.ClaimAmount > claim.ReceiptAmount) { return BadRequest("Amount to be claimed exceeded the receipt amount"); }
 
                 IClaimResult result = new ClaimResult();
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
                 result = logic.AddClaim(claim);
-                if (!result.IsSuccess) return Problem();
+                if (!result.IsSuccess) return BadRequest(result.Message);
                 return Ok(result);
             }
             catch
@@ -129,7 +130,7 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete( TransactClaim claim)
+        public ActionResult Delete(TransactClaim claim)
         {
             try
             {
@@ -139,7 +140,7 @@ namespace FSA.API.Controllers
 
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
                 var result = logic.Delete(claim);
-                if (result.IsSuccess) return Problem();
+                if (!result.IsSuccess) return Problem();
 
                 return Ok(result);
             }
@@ -148,6 +149,5 @@ namespace FSA.API.Controllers
                 return View();
             }
         }
-
     }
 }

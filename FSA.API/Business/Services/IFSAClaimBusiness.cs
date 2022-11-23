@@ -5,7 +5,7 @@ namespace FSA.API.Business.Services
 {
     public interface IFSAClaimBusiness
     {
-        public IViewClaim GetClaim(int referenceNumber);
+        public IViewClaim GetClaim(string referenceNumber);
 
         public List<ClaimsTableItem> GetClaimList();
 
@@ -13,7 +13,7 @@ namespace FSA.API.Business.Services
 
         public IClaimResult Delete(ITransactClaim claim);
 
-        public IClaimResult AddClaim(IViewClaim claim);
+        public IClaimResult AddClaim(ITransactClaim claim);
 
     }
 }

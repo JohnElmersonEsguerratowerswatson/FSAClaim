@@ -23,12 +23,10 @@ namespace FSA.API.Business
         {
             FSAClaimRepository repository = new FSAClaimRepository();
 
-            //get Pending and Approved FSAClaims of employee for the year
-            var employeeClaims = repository.GetList(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Approved" || ec.Status == "Pending") && ec.ApprovalDate.Year == DateTime.Now.Year);
+            //get Pending and Approved FSAClaims of employee for the (year vs the date submitted)
+            var employeeClaims = repository.GetList(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Approved" || ec.Status == "Pending") && ec.DateSubmitted.Year == DateTime.Now.Year);
             //Compute Total Approved Claims for the year
             decimal totalClaims = employeeClaims.Sum(ec => ec.ClaimAmount);
-            
-
 
             //employee fsa rule to compare limit to existing
             EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
@@ -41,17 +39,17 @@ namespace FSA.API.Business
             return remainingFSA;
         }
 
-        public IClaimResult AddClaim(IViewClaim claim)
+        public IClaimResult AddClaim(ITransactClaim claim)
         {
             ClaimApproval approval = ClaimApproval.Pending;
 
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
-            
+
             //Check if Receipt Date is valid
             if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApproval.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
-            
+
             //Compose Reference Number
-            string refNo = claimReceiptDate.ToString("yyy") + claimReceiptDate.Month.ToString("MM") + claim.ReceiptNumber.ToString();
+            string refNo = claimReceiptDate.ToString("yyy") + claimReceiptDate.Month.ToString("MM") + claimReceiptDate.Day.ToString("d") + claim.ReceiptNumber;
 
 
             FSAClaimRepository repository = new FSAClaimRepository();
@@ -67,7 +65,7 @@ namespace FSA.API.Business
 
             try
             {
-                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber, approval, int.Parse(refNo), _employeeNumber);
+                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber, approval, refNo, _employeeNumber);
                 var result = repository.Add(claimAdd);
 
                 return new ClaimResult { IsSuccess = true, Message = "Submitted for approval." };
@@ -76,7 +74,7 @@ namespace FSA.API.Business
 
         }
 
-        private FSAClaim CreateClaim(decimal claimAmount, decimal receiptAmount, DateTime receiptDate, string receiptNumber, ClaimApproval claimApproval, int refNo, int employeeId)
+        private FSAClaim CreateClaim(decimal claimAmount, decimal receiptAmount, DateTime receiptDate, string receiptNumber, ClaimApproval claimApproval, string refNo, int employeeId)
         {
             return new FSAClaim
             {
@@ -97,12 +95,12 @@ namespace FSA.API.Business
         {
             FSAClaimRepository repository = new FSAClaimRepository();
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
-            var repositoryResult = repository.Delete(c => c.ReceiptDate == claimReceiptDate && c.ReceiptNumber == claim.ReceiptNumber);//ew FSAClaim { ReceiptDate = claim.ReceiptDate, ReceiptAmount = claim.ReceiptAmount}
+            var repositoryResult = repository.Delete(c => c.EmployeeID == _employeeNumber && c.ReferenceNumber == claim.ReferenceNumber);//ew FSAClaim { ReceiptDate = claim.ReceiptDate, ReceiptAmount = claim.ReceiptAmount}
             if (!repositoryResult.IsSuccess) return new ClaimResult { IsSuccess = false, Message = repositoryResult.Error.Message };
             return new ClaimResult { IsSuccess = true };
         }
 
-        public IViewClaim GetClaim(int referenceNumber)
+        public IViewClaim GetClaim(string referenceNumber)
         {
             FSAClaimRepository repository = new FSAClaimRepository();
             var claim = repository.Get(c => c.ReferenceNumber == referenceNumber);

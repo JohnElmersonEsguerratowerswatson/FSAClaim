@@ -18,6 +18,6 @@ namespace FSA.Domain.Entities
         public int EmployeeID { get; set; }
         public DateTime Modified { get; set; }
         public DateTime ApprovalDate { get; set; }
-        public int ReferenceNumber { get; set; }
+        public string ReferenceNumber { get; set; }
     }
 }
