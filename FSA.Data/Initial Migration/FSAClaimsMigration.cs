@@ -1,4 +1,4 @@
-﻿using FSA.Data.Entities;
+﻿using FSA.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ namespace FSA.Data.Initial_Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             //CREATE Employees Table
             migrationBuilder.CreateTable(
                 name: "Employees",
@@ -38,7 +37,6 @@ namespace FSA.Data.Initial_Migration
                     YearCoverage = table.Column<int>(nullable: false)
                 },
                 constraints: table => table.PrimaryKey("PK_FSARule", f => f.ID)
-
 
             );
 

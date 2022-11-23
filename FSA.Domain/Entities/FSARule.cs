@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSA.Data.Entities
+namespace FSA.Domain.Entities
 {
     public class FSARule
     {
         public int ID { get; set; }
-        public int FSALimit { get; set; }
+        public decimal FSALimit { get; set; }
         public int YearCoverage { get; set; }
 
        

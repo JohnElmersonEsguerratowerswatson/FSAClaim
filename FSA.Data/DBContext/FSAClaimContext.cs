@@ -1,4 +1,4 @@
-﻿using FSA.Data.Entities;
+﻿using FSA.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,11 +10,12 @@ namespace FSA.Data.DBContext
 {
     public class FSAClaimContext : DbContext
     {
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e=>e.FSAClaims).WithOne();
+            modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e => e.FSAClaims).WithOne();
             modelBuilder.Entity<EmployeeFSA>().HasNoKey();
-            modelBuilder.Entity<Login>().HasNoKey();
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

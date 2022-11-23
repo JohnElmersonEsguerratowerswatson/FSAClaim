@@ -22,7 +22,7 @@ namespace FSA.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FSA.Data.Entities.Employee", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.Employee", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace FSA.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.EmployeeFSA", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.EmployeeFSA", b =>
                 {
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
@@ -58,7 +58,7 @@ namespace FSA.Data.Migrations
                     b.ToTable("EmployeeFSAs");
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.FSAClaim", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.FSAClaim", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -69,8 +69,8 @@ namespace FSA.Data.Migrations
                     b.Property<DateTime>("ApprovalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ClaimAmount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("ClaimAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("DateSubmitted")
                         .HasColumnType("datetime2");
@@ -81,8 +81,8 @@ namespace FSA.Data.Migrations
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReceiptAmount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("ReceiptAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ReceiptDate")
                         .HasColumnType("datetime2");
@@ -91,8 +91,9 @@ namespace FSA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReferenceNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("ReferenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -105,7 +106,7 @@ namespace FSA.Data.Migrations
                     b.ToTable("FSAClaims");
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.FSARule", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.FSARule", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -113,8 +114,8 @@ namespace FSA.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("FSALimit")
-                        .HasColumnType("int");
+                    b.Property<decimal>("FSALimit")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("YearCoverage")
                         .HasColumnType("int");
@@ -124,11 +125,13 @@ namespace FSA.Data.Migrations
                     b.ToTable("FSARules");
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.Login", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.Login", b =>
                 {
-                    b.Property<string>("EmployeeID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -138,19 +141,21 @@ namespace FSA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasKey("Username");
+
                     b.ToTable("Logins");
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.FSAClaim", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.FSAClaim", b =>
                 {
-                    b.HasOne("FSA.Data.Entities.Employee", null)
+                    b.HasOne("FSA.Domain.Entities.Employee", null)
                         .WithMany("FSAClaims")
                         .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FSA.Data.Entities.Employee", b =>
+            modelBuilder.Entity("FSA.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("FSAClaims");
                 });

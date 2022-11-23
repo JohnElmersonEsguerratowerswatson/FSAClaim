@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSA.Data.Entities
+namespace FSA.Domain.Entities
 {
     public class EmployeeFSA
     {
