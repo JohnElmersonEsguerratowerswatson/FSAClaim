@@ -126,7 +126,7 @@ namespace FSA.API.Controllers
         // POST: ClaimsController/Delete/5
         /// <summary>
         /// DELETE CLAIM
-        /// </summary>
+        /// </summary>*
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]

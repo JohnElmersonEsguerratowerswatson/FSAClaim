@@ -15,23 +15,22 @@ namespace FSA.Data.Repository.FSAClaimRepository
     public class FSAClaimRepository : GenericRepository<FSAClaim>
     {
 
-        private FSAClaimContext _dbContext;
 
-        public FSAClaimRepository()
+        public FSAClaimRepository(bool test = false)
         {
-            _dbContext = new FSAClaimContext();
-
+            _test = test;
+            ClaimContext = new FSAClaimContext();
         }
 
-
+        protected override FSAClaimContext ClaimContext { get; set; }
 
         public new IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
-                    var claim = _dbContext.FSAClaims.SingleOrDefault(predicate);
+                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
                     claim.ReceiptAmount = fSAClaim.ReceiptAmount;
@@ -40,7 +39,7 @@ namespace FSA.Data.Repository.FSAClaimRepository
                     claim.ClaimAmount = fSAClaim.ClaimAmount;
                     claim.ReceiptNumber = fSAClaim.ReceiptNumber;
 
-                    int rows = _dbContext.SaveChanges();
+                    int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
                 }
@@ -50,6 +49,9 @@ namespace FSA.Data.Repository.FSAClaimRepository
                 return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
             }
         }
+
+
+
         //public IRepositoryResult Add(FSAClaim entity)
         //{
         //    try

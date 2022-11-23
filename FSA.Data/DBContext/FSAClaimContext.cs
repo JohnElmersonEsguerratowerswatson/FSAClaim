@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.DBContext
 {
-    internal class FSAClaimContext : DbContext
+    public class FSAClaimContext : DbContext
     {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

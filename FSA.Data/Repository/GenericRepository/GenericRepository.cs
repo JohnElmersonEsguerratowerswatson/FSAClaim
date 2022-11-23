@@ -10,21 +10,18 @@ namespace FSA.Data.Repository.GenericRepository
 {
     public abstract class GenericRepository<T> : IViewRepository<T>, ITransactRepository<T> where T : class
     {
-        private FSAClaimContext _dbContext;
+        protected abstract  FSAClaimContext ClaimContext { get; set; }
+        protected bool _test = false;//FOR Unit Testing
 
-        public GenericRepository()
-        {
-            _dbContext = new FSAClaimContext();
-        }
         public IRepositoryResult Add(T entity)
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
-                    _dbContext.Add(entity);
+                    ClaimContext.Add(entity);
 
-                    int rows = _dbContext.SaveChanges();
+                    int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
                 }
@@ -40,13 +37,13 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
 
-                    T? entity = _dbContext.Set<T>().Where(predicate).SingleOrDefault();
+                    T? entity = ClaimContext.Set<T>().Where(predicate).SingleOrDefault();
                     if (entity == null) return new ClaimRepositoryResult(false, "Not Found", "");
-                    _dbContext.Remove<T>(entity);
-                    int rows = _dbContext.SaveChanges();
+                    ClaimContext.Remove<T>(entity);
+                    int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
                 }
@@ -61,10 +58,10 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
 
-                    var list = _dbContext.Set<T>().AsQueryable().Where<T>(criteria);
+                    var list = ClaimContext.Set<T>().AsQueryable().Where<T>(criteria);
                     return list.ToList();
                 }
             }
@@ -78,10 +75,10 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
 
-                    var list = _dbContext.Set<T>().AsQueryable();
+                    var list = ClaimContext.Set<T>().AsQueryable();
                     return list.ToList();
                 }
             }
@@ -95,10 +92,10 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
 
-                    T? entity = _dbContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
+                    T? entity = ClaimContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
                     return entity;
                 }
             }
@@ -112,13 +109,13 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (_dbContext)
+                using (ClaimContext)
                 {
-                    var claim = _dbContext.Set<T>().SingleOrDefault<T>(predicate);
+                    var claim = ClaimContext.Set<T>().SingleOrDefault<T>(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
                     claim = entity;
 
-                    int rows = _dbContext.SaveChanges();
+                    int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
                 }
@@ -130,6 +127,11 @@ namespace FSA.Data.Repository.GenericRepository
 
         }
 
-
+        protected int Save(FSAClaimContext dbContext)
+        {
+            if (_test) return 1;//return success do not save changes
+            int rows = dbContext.SaveChanges();
+            return rows;
+        }
     }
 }

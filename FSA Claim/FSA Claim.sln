@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSA Claim", "FSA Claim.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSA.Data", "..\FSA.Data\FSA.Data.csproj", "{15A0E68C-9EAF-47B7-B38C-64882BD826EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Test", "..\Data.Test\Data.Test.csproj", "{345234E3-BA52-4B6E-9EDF-55728A4757FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSA.Test", "..\Data.Test\FSA.Test.csproj", "{345234E3-BA52-4B6E-9EDF-55728A4757FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Console", "..\Data.Console\Data.Console.csproj", "{4D0D356A-1871-4287-B25D-B3829BB3F565}"
 EndProject
