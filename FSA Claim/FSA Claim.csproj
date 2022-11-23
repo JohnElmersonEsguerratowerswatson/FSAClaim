@@ -24,22 +24,36 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
-    <None Remove="ClientApp\src\app\claim-data-transfer-objects\ITransactClaim.ts" />
-    <None Remove="ClientApp\src\app\claim-data-transfer-objects\IViewClaim.ts" />
+    <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\ILogin.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\ILoginResult.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\ITransactClaim.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\ITransactClaimResult.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\IViewClaim.ts" />
     <None Remove="ClientApp\src\app\claim-detail\claim-detail.component.ts" />
     <None Remove="ClientApp\src\app\claim-table\claim-table.component.ts" />
+    <None Remove="ClientApp\src\app\services\claim-construct.service.ts" />
+    <None Remove="ClientApp\src\app\services\claim-detail.service.ts" />
+    <None Remove="ClientApp\src\app\services\claim-list.service.ts" />
+    <None Remove="ClientApp\src\app\services\login.service.ts" />
+    <None Remove="ClientApp\src\app\shared\logged-out-notification.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\claim-data-transfer-objects\ITransactClaim.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\claim-data-transfer-objects\IViewClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILogin.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILoginResult.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ITransactClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ITransactClaimResult.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IViewClaim.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\claim-detail\claim-detail.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\claim-table\claim-table.component.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\services\" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\claim-construct.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\claim-detail.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\claim-list.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\logged-out-notification.component.ts" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

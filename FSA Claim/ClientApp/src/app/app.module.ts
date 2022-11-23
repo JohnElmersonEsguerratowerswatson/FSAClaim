@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ClaimTableComponent } from './claim-table/claim-table.component';
 import { ClaimDetailComponent } from './claim-detail/claim-detail.component';
 import { ClaimConstructComponent } from './claim-construct/claim-construct.component';
+import { LoginComponent } from './login/login.component';
+import { LoggedOutNotificationComponent } from './shared/logged-out-notification.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ClaimConstructComponent } from './claim-construct/claim-construct.compo
     FetchDataComponent,
     ClaimTableComponent,
     ClaimDetailComponent,
-    ClaimConstructComponent
+    ClaimConstructComponent,
+    LoginComponent,
+    LoggedOutNotificationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,10 +34,12 @@ import { ClaimConstructComponent } from './claim-construct/claim-construct.compo
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: ClaimTableComponent, pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'claim-detail', component: ClaimDetailComponent },
       { path: 'claim-data', component: ClaimConstructComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      
     ])
   ],
   providers: [],

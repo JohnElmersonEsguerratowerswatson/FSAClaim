@@ -24,6 +24,12 @@ namespace FSA.Data.Repository.FSAClaimRepository
 
         protected override FSAClaimContext ClaimContext { get; set; }
 
+        /// <summary>
+        /// UPDATE FSACLAIM
+        /// </summary>
+        /// <param name="fSAClaim"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public new IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
         {
             try
@@ -50,7 +56,33 @@ namespace FSA.Data.Repository.FSAClaimRepository
             }
         }
 
+        /// <summary>
+        /// UPDATE APPROVAL {ADMIN ONLY}
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+                using (ClaimContext)
+                {
+                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
+                    claim.Status = status;
+
+                    int rows = Save(ClaimContext);
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
 
         //public IRepositoryResult Add(FSAClaim entity)
         //{

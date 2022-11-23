@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ITransactClaim } from "../claim-data-transfer-objects/ITransactClaim";
+import { ITransactClaim } from "../services/interfaces/ITransactClaim";
 
 @Component({
   selector: 'app-claim-const-component',
@@ -20,6 +20,5 @@ export class ClaimConstructComponent implements OnInit{
    
     
   }
-
 
 }

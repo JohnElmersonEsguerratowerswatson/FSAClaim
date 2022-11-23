@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IViewClaim } from "../claim-data-transfer-objects/IViewClaim";
+import { IViewClaim } from "../services/interfaces/IViewClaim";
 
 @Component({
   selector: 'app-claims-component',

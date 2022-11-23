@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IViewClaim } from "../claim-data-transfer-objects/IViewClaim";
+import { IViewClaim } from "../services/interfaces/IViewClaim";
 
 @Component({
   selector: 'app-claim-const-component',
