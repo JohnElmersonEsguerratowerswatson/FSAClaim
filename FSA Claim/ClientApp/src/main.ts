@@ -20,7 +20,7 @@ export function getClaimEditUrl() {
   return 'https://localhost:7254/api/Claims/Edit';
 }
 export function getClaimDeleteUrl() {
-  return 'https://localhost:7254/api/Claims/Edit';
+  return 'https://localhost:7254/api/Claims/Delete';
 }
 export function getClaimAddUrl() {
   return 'https://localhost:7254/api/Claims/Create';

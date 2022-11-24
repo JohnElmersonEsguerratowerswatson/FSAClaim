@@ -41,6 +41,7 @@ import { LoggedOutNotificationComponent } from './shared/logged-out-notification
       { path: 'claim-data', component: ClaimConstructComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       
+      
     ])
   ],
   providers: [],

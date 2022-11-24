@@ -37,7 +37,7 @@ namespace FSA.API.Controllers
         /// GET LIST CLAIM
         /// </summary>
         /// <returns></returns>
-   
+
         public ActionResult<IGetClaimsResult> GetList()
         {
             //CheckUser(User.Identity);
@@ -56,7 +56,7 @@ namespace FSA.API.Controllers
         /// <returns></returns>
         public ActionResult<IViewClaim> Details(string arg)
         {
-           // CheckUser(User.Identity);
+            // CheckUser(User.Identity);
             //if (_employeeID == 0) return Unauthorized();
 
             IViewClaim claim;
@@ -75,9 +75,8 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<IClaimResult> Create(TransactClaim claim)
+        public ActionResult<IClaimResult> Create([FromBody] TransactClaim claim)
         {
-
             try
             {
                 //CheckUser(User.Identity);
@@ -107,12 +106,12 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<IClaimResult> Edit(TransactClaim claim)
+        public ActionResult<IClaimResult> Edit([FromBody] TransactClaim claim)
         {
             try
             {
                 //CheckUser(User.Identity);
-               // if (_employeeID == 0) return Unauthorized();
+                // if (_employeeID == 0) return Unauthorized();
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
                 var result = logic.Update(claim);
@@ -133,12 +132,12 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete(TransactClaim claim)
+        public ActionResult Delete([FromBody] TransactClaim claim)
         {
             try
             {
-               // CheckUser(User.Identity);
-               // if (_employeeID == 0) return Unauthorized();
+                // CheckUser(User.Identity);
+                // if (_employeeID == 0) return Unauthorized();
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);

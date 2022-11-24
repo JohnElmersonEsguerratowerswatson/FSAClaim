@@ -1,7 +1,7 @@
 
-<h1> {{claim.referenceNumber}}</h1>
+<h1 *ngIf="claim"> {{claim.referenceNumber}}</h1>
 
-<form>
+<form >
 
   <div class="form-group">
     <label for="claimAmount">Claim Amount:</label>
@@ -25,10 +25,8 @@
   <br />
 
   <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
   </div>
 </form>
 
-<logged-out-notif-component>
 
-</logged-out-notif-component>

@@ -5,15 +5,15 @@ import { ITransactClaim } from "./interfaces/ITransactClaim";
 import { ITransactClaimResult } from "./interfaces/ITransactClaimResult";
 
 @Injectable({ providedIn: 'root' })
-export class ClaimConstructService {
-
-  private url: string = "";
-  constructor(private http: HttpClient, @Inject('CLAIMADD_URL') private urlAdd: string, @Inject('CLAIMEDIT_URL') private urlEdit: string) {
+export class ClaimDeleteService {
+   
+                                      //@Inject('CLAIMDETAIL_URL') private url: string
+  constructor(private http: HttpClient, @Inject('CLAIMDELETE_URL') private url: string) {
 
   }
 
-  claimConstructAPI(isNew: boolean, claim: ITransactClaim): Observable<any> {
-    this.url = isNew ? this.urlAdd : this.urlEdit;
+  claimDeleteAPI(claim: ITransactClaim): Observable<any> {
+    this.url = this.url;
     let headers: HttpHeaders = new HttpHeaders();
     headers.append("Accept", "/");
     headers.append("Accept-Encoding", "gzip, deflate, br");
@@ -26,11 +26,7 @@ export class ClaimConstructService {
 
 
     return this.http.post<any>(this.url, claim, options);
-    //.pipe(tap(data => console.log("All", JSON.stringify(data))))
-    /// .pipe(catchError(this.handleError));
 
-    //let headers: Headers = new Headers();
-    //headers.append("Authorization", "Bearer " + bearer)
   }
 
   private handleError(err: HttpErrorResponse) {
