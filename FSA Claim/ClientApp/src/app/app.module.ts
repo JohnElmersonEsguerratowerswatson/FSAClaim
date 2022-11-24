@@ -34,7 +34,8 @@ import { LoggedOutNotificationComponent } from './shared/logged-out-notification
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: ClaimTableComponent, pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
+      { path: 'claim-list', component: ClaimTableComponent },
+      //{ path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'claim-detail', component: ClaimDetailComponent },
       { path: 'claim-data', component: ClaimConstructComponent },

@@ -3,16 +3,17 @@ import { Inject, Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
 import { ITransactClaimResult } from "./interfaces/ITransactClaimResult";
 
-@Injectable()
+@Injectable(@Injectable({ providedIn: 'root' })
 export class ClaimConstructService {
 
+  private url: string = "";
   constructor(private http: HttpClient, @Inject('CLAIMADD_URL') private urlAdd: string, @Inject('CLAIMEDIT_URL') private urlEdit: string) {
 
   }
 
-  getClaimDetailsAPI(): Observable<ITransactClaimResult> {
-    let url: string = "";
-    return this.http.get<ITransactClaimResult>(url)
+  claimConstructAPI(isNew: boolean): Observable<ITransactClaimResult> {
+    this.url = isNew ? this.urlAdd : this.urlEdit;
+    return this.http.get<ITransactClaimResult>(this.url)
       .pipe(tap(data => console.log("All", JSON.stringify(data))))
       .pipe(catchError(this.handleError));
   }

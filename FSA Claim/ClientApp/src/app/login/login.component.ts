@@ -1,3 +1,4 @@
+import { state } from "@angular/animations";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -14,9 +15,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public loginModel: ILogin;
   private subscription: Subscription | undefined;
+  public showError: boolean = false;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private router: Router) {
     this.loginModel = {} as ILogin;
+//alert(this.loginService.bearer);
   }
 
   ngOnInit(): void {
@@ -24,15 +27,30 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   }
 
+  login(): void {
+    //  let loginResult = ;
+    this.showError = false;
 
-  login() {
-    this.subscription = this.loginService.login(this.loginModel.Username, this.loginModel.Password).subscribe();
-    alert("sdf");
+    this.subscription = this.loginService.login(this.loginModel.Username, this.loginModel.Password).subscribe(
+      loginResult => {
+        this.routToHome();
+      },
+      errorResult => {
+        this.showErrorMessage();
+      }
+    );
   }
 
+  routToHome(): void {
+    this.router.navigateByUrl("/claim-list", { state: this.loginService.bearer });
+  }
+
+  showErrorMessage(): void {
+    this.showError = true;
+  }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    //this.subscription?.unsubscribe();
   }
 
 }

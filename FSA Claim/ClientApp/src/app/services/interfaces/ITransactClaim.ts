@@ -1,7 +1,7 @@
 export interface ITransactClaim {
-  ReferenceNumber: string;
-  ClaimAmount: number;
-  ReceiptNumber: string;
-  ReceiptAmount: number;
-  ReceiptDate: string;
+  referenceNumber: string;
+  claimAmount: number;
+  receiptNumber: string;
+  receiptAmount: number;
+  receiptDate: string;
 }

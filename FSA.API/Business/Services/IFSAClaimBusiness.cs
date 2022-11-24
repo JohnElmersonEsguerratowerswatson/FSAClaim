@@ -7,7 +7,7 @@ namespace FSA.API.Business.Services
     {
         public IViewClaim GetClaim(string referenceNumber);
 
-        public List<ClaimsTableItem> GetClaimList();
+        public IGetClaimsResult GetClaimsResult();
 
         public IClaimResult Update(ITransactClaim claim);
 

@@ -1,10 +1,10 @@
 export interface IViewClaim {
-  ReferenceNumber: string;
-  ClaimAmount: number;
-  ReceiptNumber: string;
-  ReceiptAmount: number;
-  ReceiptDate: string;
-  DateSubmitted: string;
-  Status: string;
-  TotalClaimAmount: number;
+  referenceNumber: string;
+  claimAmount: number;
+  receiptNumber: string;
+  receiptAmount: number;
+  receiptDate: string;
+  dateSubmitted: string;
+  status: string;
+  totalClaimAmount: number;
 }

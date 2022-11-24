@@ -1,9 +1,11 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
+import { ViewClaim } from "../data-classes/ViewClaim";
+import { IGetClaimResult } from "./interfaces/IGetClaimsResult";
 import { IViewClaim } from "./interfaces/IViewClaim";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ClaimListService {
 
 
@@ -11,10 +13,14 @@ export class ClaimListService {
 
   }
 
-  getClaimsAPI(): Observable<IViewClaim[]> {
-    return this.http.get<IViewClaim[]>(this.url)
-      .pipe(tap(data => console.log("All", JSON.stringify(data))))
+  getClaimsAPI(): Observable<IGetClaimResult> {
+    //let headers: Headers = new Headers();
+    //headers.append("Authorization", "Bearer " + bearer)
+
+    return this.http.get<IGetClaimResult>(this.url)
+      
       .pipe(catchError(this.handleError));
+    //.pipe(tap(data => console.log("All", JSON.stringify(data))))
   }
 
   private handleError(err: HttpErrorResponse) {

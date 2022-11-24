@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
 import { IViewClaim } from "./interfaces/IViewClaim";
 
-@Injectable()
+@Injectable(@Injectable({ providedIn: 'root' })
 export class ClaimDetailService {
 
   constructor(private http: HttpClient, @Inject('CLAIMDETAIL_URL') private url: string) {

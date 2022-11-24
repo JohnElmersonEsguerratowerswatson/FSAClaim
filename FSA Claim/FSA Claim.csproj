@@ -24,7 +24,9 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
+    <None Remove="ClientApp\src\app\data-classes\ViewClaim.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ILogin.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ILoginResult.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ITransactClaim.ts" />
@@ -41,7 +43,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\data-classes\ViewClaim.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILogin.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILoginResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ITransactClaim.ts" />

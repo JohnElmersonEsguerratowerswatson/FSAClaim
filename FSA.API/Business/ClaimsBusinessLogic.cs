@@ -6,6 +6,7 @@ using FSA.Data.Repository.GenericRepository;
 using FSA.Domain.Entities;
 using FSA.Common.Enums;
 using FSA.Common;
+using System.Collections.Generic;
 
 namespace FSA.API.Business
 {
@@ -19,23 +20,70 @@ namespace FSA.API.Business
             _employeeNumber = employeeNumber;
         }
 
-        public decimal ComputeRemainingFSA()
+        private Employee GetEmployee()
+        {
+            TRepository<Employee> tdb = new TRepository<Employee>();
+            return tdb.Get(e => e.ID == _employeeNumber);
+        }
+
+        private IEnumerable<FSAClaim> GetApprovedFSAClaimsByEmployee(IEnumerable<FSAClaim> fSAClaims)
+        {
+
+            return fSAClaims.Where(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Approved")).ToList();
+        }
+
+        private IEnumerable<FSAClaim> GetPendingFSAClaimsByEmployee(IEnumerable<FSAClaim> fSAClaims)
+        {
+
+            return fSAClaims.Where(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Pending")).ToList();
+        }
+
+        private IEnumerable<FSAClaim> GetFSAClaimsByEmployee()
         {
             FSAClaimRepository repository = new FSAClaimRepository();
+            return repository.GetList(c => c.EmployeeID == _employeeNumber && c.DateSubmitted.Year == DateTime.Now.Year).ToList();
+        }
 
-            //get Pending and Approved FSAClaims of employee for the (year vs the date submitted)
-            var employeeClaims = repository.GetList(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Approved" || ec.Status == "Pending") && ec.DateSubmitted.Year == DateTime.Now.Year);
-            //Compute Total Approved Claims for the year
-            decimal totalClaims = employeeClaims.Sum(ec => ec.ClaimAmount);
+        private Decimal ComputeApprovedClaims(IEnumerable<FSAClaim> claims)
+        {
+            return claims.Where(ec => ec.Status == "Approved").Sum(ec => ec.ClaimAmount);
+        }
 
-            //employee fsa rule to compare limit to existing
+        private Decimal ComputePendingClaims(IEnumerable<FSAClaim> claims)
+        {
+            return claims.Where(ec => ec.Status == "Pending").Sum(ec => ec.ClaimAmount);
+        }
+
+        private FSARule GetFSARule()
+        {
             EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
 
             var employeeFSARule = eFSARepository.Get(e => e.ID == _employeeNumber);
 
+            return employeeFSARule;
+        }
+
+        private Decimal ComputeTotalClaims(Decimal approvedClaims, Decimal pendingClaims)
+        {
+
+            return approvedClaims + pendingClaims; ;
+        }
+
+        private decimal ComputeRemainingFSA(Decimal approvedClaims, Decimal pendingClaims)
+        {
+            //get Pending and Approved FSAClaims of employee for the (year vs the date submitted)
+            var employeeClaims = GetFSAClaimsByEmployee(); //repository.GetList(ec => ec.EmployeeID == _employeeNumber && (ec.Status == "Approved" || ec.Status == "Pending") && ec.DateSubmitted.Year == DateTime.Now.Year);
+            //Compute Total Approved Claims for the year
+            decimal totalClaims = ComputeTotalClaims(approvedClaims, pendingClaims);
+
+            //employee fsa rule to compare limit to existing
+
+            var employeeFSARule = GetFSARule();
             if (employeeFSARule == null) throw new KeyNotFoundException();
+
             //Compute Remaining FSA
             decimal remainingFSA = employeeFSARule.FSALimit - totalClaims;
+
             return remainingFSA;
         }
 
@@ -51,13 +99,15 @@ namespace FSA.API.Business
             //Compose Reference Number
             string refNo = claimReceiptDate.ToString("yyy") + claimReceiptDate.Month.ToString("MM") + claimReceiptDate.Day.ToString("d") + claim.ReceiptNumber;
 
-
             FSAClaimRepository repository = new FSAClaimRepository();
-
 
             //Compute Remaining FSA
             decimal remainingFSA = 0;
-            try { remainingFSA = ComputeRemainingFSA(); }
+            var fsaClaims = GetFSAClaimsByEmployee();
+
+            decimal approvedClaims = ComputeApprovedClaims(fsaClaims);
+            decimal pendingClaims = ComputePendingClaims(fsaClaims);
+            try { remainingFSA = ComputeRemainingFSA(approvedClaims, pendingClaims); }
             catch { return new ClaimResult { IsSuccess = false, Message = ObjectStatus.ObjectNotFound }; }
 
             //Check if FSA amount is greater than Remaining FSA
@@ -108,12 +158,35 @@ namespace FSA.API.Business
             if (claim == null) return null;
             return new EmployeeClaim { ClaimAmount = claim.ClaimAmount, ReceiptAmount = claim.ReceiptAmount, ReceiptDate = claim.ReceiptDate.ToString("MM/dd/yyyy"), ReceiptNumber = claim.ReceiptNumber, DateSubmitted = claim.DateSubmitted.ToString("MM/dd/yyyy"), ReferenceNumber = claim.ReferenceNumber.ToString(), Status = claim.Status, TotalClaimAmount = claim.ClaimAmount };
         }
-
-        public List<ClaimsTableItem> GetClaimList()
+        /// <summary>
+        /// GET LIST VIEW LOGIC
+        /// </summary>
+        /// <returns></returns>
+        public IGetClaimsResult GetClaimsResult()
         {
+            GetClaimsResult result = new GetClaimsResult();
+            var claims = GetFSAClaimsByEmployee();
+            result.Claims = GetClaimList();
+            result.EmployeeID = _employeeNumber;
+            var fsaRule = GetFSARule();
+            result.FSAAmount = fsaRule.FSALimit;
+            result.YearCoverage = fsaRule.YearCoverage;
+            var employee = GetEmployee();
 
-            FSAClaimRepository repository = new FSAClaimRepository();
-            var claimList = repository.GetList(c => c.EmployeeID == _employeeNumber);
+            result.EmployeeName = employee.FirstName + " " + employee.LastName;
+            result.ApprovedClaims = ComputeApprovedClaims(claims);
+            result.PendingClaims = ComputePendingClaims(claims);
+
+
+            result.AvailableFSA = ComputeRemainingFSA(result.ApprovedClaims, result.PendingClaims);
+
+            return result;
+        }
+
+        private List<ClaimsTableItem> GetClaimList()
+        {
+            //FSAClaimRepository repository = new FSAClaimRepository();
+            var claimList = GetFSAClaimsByEmployee();// repository.GetList(c => c.EmployeeID == _employeeNumber);
             if (claimList == null || claimList.Count() == 0) return new List<ClaimsTableItem>();
             List<ClaimsTableItem> claimItems = new List<ClaimsTableItem>();
             foreach (var claim in claimList)
@@ -153,6 +226,7 @@ namespace FSA.API.Business
             var result = repository.Update(dbClaim, c => c.ReferenceNumber.ToString() == claim.ReferenceNumber);
             return new ClaimResult { IsSuccess = result.IsSuccess };
         }
+
 
     }
 }

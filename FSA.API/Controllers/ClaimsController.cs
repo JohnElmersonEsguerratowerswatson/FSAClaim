@@ -7,15 +7,17 @@ using FSA.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Cors;
 
 namespace FSA.API.Controllers
 {
-    [Authorize]
+    [EnableCors("ClientApp")]
+    //[Authorize]
     [Route("api/[controller]/[action]")]
     public class ClaimsController : Controller
     {
 
-        private int _employeeID = 0;
+        private int _employeeID = 1;//employee ID 1
 
         public ClaimsController()
         {
@@ -35,12 +37,13 @@ namespace FSA.API.Controllers
         /// GET LIST CLAIM
         /// </summary>
         /// <returns></returns>
-        public ActionResult<IEnumerable<IViewClaim>> GetList()
+   
+        public ActionResult<IGetClaimsResult> GetList()
         {
-            CheckUser(User.Identity);
-            if (_employeeID == 0) return Unauthorized();
+            //CheckUser(User.Identity);
+            //if (_employeeID == 0) return Unauthorized();
             ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-            var claims = logic.GetClaimList().ToList();
+            var claims = logic.GetClaimsResult();
             return Ok(claims);
         }
 
@@ -53,8 +56,8 @@ namespace FSA.API.Controllers
         /// <returns></returns>
         public ActionResult<IViewClaim> Details(string arg)
         {
-            CheckUser(User.Identity);
-            if (_employeeID == 0) return Unauthorized();
+           // CheckUser(User.Identity);
+            //if (_employeeID == 0) return Unauthorized();
 
             IViewClaim claim;
             ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
@@ -77,8 +80,8 @@ namespace FSA.API.Controllers
 
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
+                //CheckUser(User.Identity);
+                //if (_employeeID == 0) return Unauthorized();
 
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 //return BAD request if claim amount is greater than receipt ammount
@@ -108,8 +111,8 @@ namespace FSA.API.Controllers
         {
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
+                //CheckUser(User.Identity);
+               // if (_employeeID == 0) return Unauthorized();
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
                 var result = logic.Update(claim);
@@ -134,8 +137,8 @@ namespace FSA.API.Controllers
         {
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
+               // CheckUser(User.Identity);
+               // if (_employeeID == 0) return Unauthorized();
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
