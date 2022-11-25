@@ -28,7 +28,9 @@ export function getClaimAddUrl() {
 export function getLoginUrl() {
   return 'https://localhost:7254/api/Login';
 }
-
+export function getFSARuleURL() {
+  return 'https://localhost:7254/api/FSARule/Get';
+}
 
 
   const providers = [
@@ -39,7 +41,8 @@ export function getLoginUrl() {
     { provide: 'CLAIMEDIT_URL', useFactory: getClaimEditUrl, deps: [] },
     { provide: 'CLAIMDELETE_URL', useFactory: getClaimDeleteUrl, deps: [] },
     { provide: 'CLAIMADD_URL', useFactory: getClaimAddUrl, deps: [] },
-    { provide: 'LOGIN_URL', useFactory: getLoginUrl, deps: [] }
+    { provide: 'LOGIN_URL', useFactory: getLoginUrl, deps: [] },
+    { provide: 'FSARULE_URL', useFactory: getFSARuleURL, deps: [] }
   ];
 
   if (environment.production) {

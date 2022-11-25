@@ -183,7 +183,7 @@ namespace FSA.API.Business
             return result;
         }
 
-        private List<ClaimsTableItem> GetClaimList()
+        public List<ClaimsTableItem> GetClaimList()
         {
             //FSAClaimRepository repository = new FSAClaimRepository();
             var claimList = GetFSAClaimsByEmployee();// repository.GetList(c => c.EmployeeID == _employeeNumber);

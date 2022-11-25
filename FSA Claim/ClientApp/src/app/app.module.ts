@@ -14,6 +14,7 @@ import { ClaimDetailComponent } from './claim-detail/claim-detail.component';
 import { ClaimConstructComponent } from './claim-construct/claim-construct.component';
 import { LoginComponent } from './login/login.component';
 import { LoggedOutNotificationComponent } from './shared/logged-out-notification.component';
+import { FSARuleComponent } from './fsa-rule-admin/fsa-rule.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoggedOutNotificationComponent } from './shared/logged-out-notification
     ClaimDetailComponent,
     ClaimConstructComponent,
     LoginComponent,
-    LoggedOutNotificationComponent
+    LoggedOutNotificationComponent,
+    FSARuleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,6 +41,7 @@ import { LoggedOutNotificationComponent } from './shared/logged-out-notification
       { path: 'counter', component: CounterComponent },
       { path: 'claim-detail', component: ClaimDetailComponent },
       { path: 'claim-data', component: ClaimConstructComponent },
+      { path: 'fsa-rule', component: FSARuleComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       
       

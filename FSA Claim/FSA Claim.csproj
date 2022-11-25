@@ -24,11 +24,15 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
+    <None Remove="ClientApp\src\app\data-classes\FSARule.ts" />
     <None Remove="ClientApp\src\app\data-classes\GetClaimsResult.ts" />
     <None Remove="ClientApp\src\app\data-classes\TransactClaim.ts" />
     <None Remove="ClientApp\src\app\data-classes\ViewClaim.ts" />
+    <None Remove="ClientApp\src\app\fsa-rule-admin\fsa-rule.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\services\fsa-rule.service.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\claim-delete.service.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\IFSARule.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ILogin.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ILoginResult.ts" />
@@ -46,11 +50,15 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\data-classes\FSARule.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\data-classes\GetClaimsResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\data-classes\TransactClaim.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\data-classes\ViewClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\fsa-rule-admin\fsa-rule.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\claim-delete.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\fsa-rule.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IFSARule.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILogin.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILoginResult.ts" />

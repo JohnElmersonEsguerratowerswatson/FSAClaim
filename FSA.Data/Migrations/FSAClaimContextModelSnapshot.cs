@@ -55,6 +55,9 @@ namespace FSA.Data.Migrations
                     b.Property<int>("FSAID")
                         .HasColumnType("int");
 
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
                     b.ToTable("EmployeeFSAs");
                 });
 
