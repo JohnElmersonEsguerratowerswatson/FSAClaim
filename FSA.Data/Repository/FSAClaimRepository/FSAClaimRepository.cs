@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FSA.Data.Repository.GenericRepository;
+using FSA.Common.Enums;
 
 namespace FSA.Data.Repository.FSAClaimRepository
 {
@@ -99,7 +100,7 @@ namespace FSA.Data.Repository.FSAClaimRepository
                     var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.Status = approve ? "Approve" : "Denied";
+                    claim.Status = approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
                     claim.ApprovalDate = DateTime.Now;
 
                     int rows = Save(ClaimContext);

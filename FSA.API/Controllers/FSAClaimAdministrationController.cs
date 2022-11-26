@@ -1,6 +1,7 @@
 ﻿using FSA.API.Business;
 using FSA.API.Models;
 using FSA.API.Models.Interface;
+using FSA.Common.Enums;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,7 @@ namespace FSA.API.Controllers
             ClaimsApprovalLogic claimApprovalLogic = new ClaimsApprovalLogic();
             bool IsSuccess = claimApprovalLogic.ApproveClaim(claimApproval);
             //claimApprovalLogic
-            string approval = claimApproval.Approve ? "Approved" : "Denied";
+            string approval = claimApproval.Approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
             if (!IsSuccess) return Problem();
             return Ok(new { IsSuccess = IsSuccess, Message = "Successfully " + claimApproval + " claim" });
         }
