@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
-import { ITransactClaim } from "./interfaces/ITransactClaim";
-import { ITransactClaimResult } from "./interfaces/ITransactClaimResult";
+import { IFSARule } from "./interfaces/IFSARule";
+
 
 @Injectable({ providedIn: 'root' })
 export class FSARuleService {
@@ -12,24 +12,20 @@ export class FSARuleService {
 
   }
 
-  getEmployeeFSARule(employeeID: number): Observable<any> {
-    this.url = this.urlFSARule;
+  addEmployeeFSARule(fsaRule: IFSARule): Observable<any> {
+    this.url = this.urlFSARule; console.log(this.url);
     let headers: HttpHeaders = new HttpHeaders();
     headers.append("Accept", "/");
     headers.append("Accept-Encoding", "gzip, deflate, br");
     headers.append("Connection", "keep-alive");
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let body = { employeeID: employeeID };
+    let body = fsaRule;
     let options = {
       headers: headers
     };
 
-    return this.http.get<any>(this.url + '?args=' + employeeID);
-    //.pipe(tap(data => console.log("All", JSON.stringify(data))))
-    /// .pipe(catchError(this.handleError));
+    return this.http.post<any>(this.url,body,options);
 
-    //let headers: Headers = new Headers();
-    //headers.append("Authorization", "Bearer " + bearer)
   }
 
   private handleError(err: HttpErrorResponse) {

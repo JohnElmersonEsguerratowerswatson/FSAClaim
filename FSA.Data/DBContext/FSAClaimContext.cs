@@ -14,7 +14,8 @@ namespace FSA.Data.DBContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().HasMany<FSAClaim>(e => e.FSAClaims).WithOne();
-            modelBuilder.Entity<EmployeeFSA>().HasNoKey();
+            //modelBuilder.Entity<Employee>().HasMany<EmployeeFSA>().WithOne();
+            //modelBuilder.Entity<FSARule>().HasMany<EmployeeFSA>().WithOne();
 
         }
 

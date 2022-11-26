@@ -1,5 +1,5 @@
-import { IGetClaimResult } from "../services/interfaces/IGetClaimsResult";
-import { IViewClaim } from "../services/interfaces/IViewClaim";
+import { IGetClaimResult } from "../interfaces/IGetClaimsResult";
+import { IViewClaim } from "../interfaces/IViewClaim";
 
 export class GetClaimsResult implements IGetClaimResult {
   claims: IViewClaim[] = [];

@@ -29,9 +29,16 @@ export function getLoginUrl() {
   return 'https://localhost:7254/api/Login';
 }
 export function getFSARuleURL() {
-  return 'https://localhost:7254/api/FSARule/Get';
+  return 'https://localhost:7254/api/FSARule/Add';
 }
 
+export function getFSAClaimsForApprovalURL() {
+  return 'https://localhost:7254/api/FSAClaimAdministration/Index';
+}
+
+export function getFSAClaimAapprovalURL() {
+  return 'https://localhost:7254/api/FSAClaimAdministration/ClaimApproval';
+}
 
   const providers = [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
@@ -42,7 +49,9 @@ export function getFSARuleURL() {
     { provide: 'CLAIMDELETE_URL', useFactory: getClaimDeleteUrl, deps: [] },
     { provide: 'CLAIMADD_URL', useFactory: getClaimAddUrl, deps: [] },
     { provide: 'LOGIN_URL', useFactory: getLoginUrl, deps: [] },
-    { provide: 'FSARULE_URL', useFactory: getFSARuleURL, deps: [] }
+    { provide: 'FSARULE_URL', useFactory: getFSARuleURL, deps: [] },
+    { provide: 'FSAFORAPPROVALLIST_URL', useFactory: getFSAClaimsForApprovalURL, deps: [] },
+    { provide: 'FSAAPPROVAL_URL', useFactory: getFSAClaimAapprovalURL, deps: [] }
   ];
 
   if (environment.production) {

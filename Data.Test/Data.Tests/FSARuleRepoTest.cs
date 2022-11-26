@@ -10,12 +10,12 @@ namespace FSA.Test.Data.Tests
 {
     public class FSARuleRepoTest
     {
-        private TransactAssociateEntityRerpository repository;
+        private TransactAssociateEntityRepository repository;
         private int _employeeID;
         public FSARuleRepoTest()
         {
-            repository = new TransactAssociateEntityRerpository();
-          
+            repository = new TransactAssociateEntityRepository();
+            _employeeID = 1;
         }
         [Fact]
         public void Add()
@@ -23,7 +23,7 @@ namespace FSA.Test.Data.Tests
             var result = repository.Add(new Domain.Entities.FSARule
             {
                 FSALimit = 5000,
-                YearCoverage = 2024
+                YearCoverage = 2022
             }, _employeeID);
 
             Assert.True(result.IsSuccess);

@@ -15,6 +15,7 @@ import { ClaimConstructComponent } from './claim-construct/claim-construct.compo
 import { LoginComponent } from './login/login.component';
 import { LoggedOutNotificationComponent } from './shared/logged-out-notification.component';
 import { FSARuleComponent } from './fsa-rule-admin/fsa-rule.component';
+import { ClaimApprovalComponent } from './claim-approval-admin/claim-approval.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FSARuleComponent } from './fsa-rule-admin/fsa-rule.component';
     ClaimConstructComponent,
     LoginComponent,
     LoggedOutNotificationComponent,
-    FSARuleComponent
+    FSARuleComponent,
+    ClaimApprovalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,9 +44,10 @@ import { FSARuleComponent } from './fsa-rule-admin/fsa-rule.component';
       { path: 'claim-detail', component: ClaimDetailComponent },
       { path: 'claim-data', component: ClaimConstructComponent },
       { path: 'fsa-rule', component: FSARuleComponent },
+      { path: 'fsa-approval', component: ClaimApprovalComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      
-      
+
+
     ])
   ],
   providers: [],

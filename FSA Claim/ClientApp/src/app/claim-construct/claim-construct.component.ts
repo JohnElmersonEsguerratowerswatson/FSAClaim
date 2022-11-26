@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { TransactClaim } from "../data-classes/TransactClaim";
+import { TransactClaim } from "../services/data-classes/TransactClaim";
 import { ClaimConstructService } from "../services/claim-construct.service";
 import { ITransactClaim } from "../services/interfaces/ITransactClaim";
 import { ITransactClaimResult } from "../services/interfaces/ITransactClaimResult";

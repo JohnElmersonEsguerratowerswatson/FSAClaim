@@ -1,4 +1,4 @@
-import { ITransactClaim } from "../services/interfaces/ITransactClaim";
+import { ITransactClaim } from "../interfaces/ITransactClaim";
 
 export class TransactClaim implements ITransactClaim {
   referenceNumber: string = "";

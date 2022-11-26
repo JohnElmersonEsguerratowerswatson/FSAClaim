@@ -84,6 +84,35 @@ namespace FSA.Data.Repository.FSAClaimRepository
             }
         }
 
+        /// <summary>
+        /// Update Claim Approval(Approve Or Deny)
+        /// </summary>
+        /// <param name="approve"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IRepositoryResult Update(bool approve, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+                using (ClaimContext)
+                {
+                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                    claim.Status = approve ? "Approve" : "Denied";
+                    claim.ApprovalDate = DateTime.Now;
+
+                    int rows = Save(ClaimContext);
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
+
         //public IRepositoryResult Add(FSAClaim entity)
         //{
         //    try

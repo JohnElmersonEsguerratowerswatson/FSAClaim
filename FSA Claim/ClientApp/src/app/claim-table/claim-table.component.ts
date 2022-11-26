@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Route, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { ViewClaim } from "../data-classes/ViewClaim";
+import { ViewClaim } from "../services/data-classes/ViewClaim";
 import { ClaimListService } from "../services/claim-list.service";
 import { IGetClaimResult } from "../services/interfaces/IGetClaimsResult";
 import { IViewClaim } from "../services/interfaces/IViewClaim";

@@ -1,8 +1,6 @@
-﻿using FSA.API.Models.Interface;
-
-namespace FSA.API.Models
+﻿namespace FSA.API.Models.Interface
 {
-    public class GetFSARule : IGetFSARule
+    public interface ITransactFSARule
     {
         public int EmployeeID { get; set; }
         public string EmployeeName { get; set; }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,15 +23,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\claim-approval-admin\claim-approval.component.ts" />
     <None Remove="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
-    <None Remove="ClientApp\src\app\data-classes\FSARule.ts" />
-    <None Remove="ClientApp\src\app\data-classes\GetClaimsResult.ts" />
-    <None Remove="ClientApp\src\app\data-classes\TransactClaim.ts" />
-    <None Remove="ClientApp\src\app\data-classes\ViewClaim.ts" />
+    <None Remove="ClientApp\src\app\services\claim-approval.service.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\ClaimApproval.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\ClaimApprovalItem.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\FSARule.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\GetClaimsResult.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\TransactClaim.ts" />
+    <None Remove="ClientApp\src\app\services\data-classes\ViewClaim.ts" />
     <None Remove="ClientApp\src\app\fsa-rule-admin\fsa-rule.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\services\fsa-rule.service.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\claim-delete.service.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\IApproveClaim.ts" />
+    <None Remove="ClientApp\src\app\services\interfaces\IClaimApprovalItem.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\IFSARule.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <None Remove="ClientApp\src\app\services\interfaces\ILogin.ts" />
@@ -49,15 +55,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\claim-approval-admin\claim-approval.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\claim-construct\claim-construct.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\data-classes\FSARule.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\data-classes\GetClaimsResult.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\data-classes\TransactClaim.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\data-classes\ViewClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\claim-approval.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\ClaimApproval.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\ClaimApprovalItem.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\FSARule.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\GetClaimsResult.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\TransactClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data-classes\ViewClaim.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\fsa-rule-admin\fsa-rule.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\claim-delete.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\fsa-rule.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IApproveClaim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IClaimApprovalItem.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IFSARule.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\IGetClaimsResult.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\interfaces\ILogin.ts" />

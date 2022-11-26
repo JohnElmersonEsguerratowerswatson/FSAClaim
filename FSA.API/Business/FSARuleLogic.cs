@@ -1,6 +1,7 @@
 ﻿using FSA.API.Models;
 using FSA.API.Models.Interface;
 using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Data.Repository.FSARuleRepository;
 using FSA.Data.Repository.GenericRepository;
 using FSA.Domain.Entities;
 
@@ -30,12 +31,12 @@ namespace FSA.API.Business
             return fsaRule;
         }
 
-        public GetFSARule Get()
+        public TransactFSARule Get()
         {
             var employee = GetEmployee();
             var fsaRule = GetFSARule();
             if (fsaRule == null) fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
-            return new GetFSARule
+            return new TransactFSARule
             {
                 FSAAmount = fsaRule.FSALimit,
                 EmployeeID = _employeeID,
@@ -46,11 +47,21 @@ namespace FSA.API.Business
 
 
 
-        public IAddFSARuleResult AddFSARule(GetFSARule getFSA)
+        public IAddFSARuleResult AddFSARule(ITransactFSARule getFSA)
         {
-            TRepository<FSARule> repository  = new TRepository<FSARule>();
-
-            return new AddFSARuleResult();//  repository.Add();
+            try
+            {
+                // TRepository<FSARule> repository  = new TRepository<FSARule>();
+                TransactAssociateEntityRepository repo = new TransactAssociateEntityRepository();
+                var repoResult = repo.Add(
+                    new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }, _employeeID
+                    );
+                return new AddFSARuleResult { IsSuccess = repoResult.IsSuccess };//  repository.Add();
+            }
+            catch
+            {
+                return new AddFSARuleResult { IsSuccess = false, Message = "There was a problem Adding FSA rule" };
+            }
         }
     }
 }

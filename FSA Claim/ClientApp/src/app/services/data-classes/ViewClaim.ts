@@ -1,4 +1,4 @@
-import { IViewClaim } from "../services/interfaces/IViewClaim";
+import { IViewClaim } from "../interfaces/IViewClaim";
 
 export class ViewClaim implements IViewClaim {
   referenceNumber: string = "";

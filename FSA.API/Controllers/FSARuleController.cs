@@ -1,13 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FSA.API.Business;
+using FSA.API.Models;
+using FSA.API.Models.Interface;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSA.API.Controllers
 {
-    [Route("/api/[controller/[action]")]
+    [EnableCors("ClientApp")]
+    [Route("api/[controller]/[action]")]
     public class FSARuleController : Controller
     {
-        public IActionResult Get()
+        [HttpPost]
+        public ActionResult<IAddFSARuleResult> Add([FromBody] TransactFSARule fsaRule)
         {
-            return View();
+            if (!ModelState.IsValid) return BadRequest();
+            FSARuleLogic logic = new FSARuleLogic(fsaRule.EmployeeID);
+            var result = logic.AddFSARule(fsaRule);
+            if (!result.IsSuccess) return Problem(result.Message);
+            return Ok(result);
+
+        }
+
+        public ActionResult ClaimApproval(ClaimApproval claimApproval)
+        {
+            
+            return Ok();
         }
     }
 }

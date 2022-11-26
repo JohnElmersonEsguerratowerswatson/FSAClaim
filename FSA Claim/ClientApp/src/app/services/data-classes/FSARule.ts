@@ -1,4 +1,4 @@
-import { IFSARule } from "../services/interfaces/IFSARule";
+import { IFSARule } from "../interfaces/IFSARule";
 
 export class FSARule implements IFSARule {
   fSAAmount: number = 0;

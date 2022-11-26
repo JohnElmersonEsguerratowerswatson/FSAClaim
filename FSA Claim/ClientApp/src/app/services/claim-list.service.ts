@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
-import { ViewClaim } from "../data-classes/ViewClaim";
+import { ViewClaim } from "./data-classes/ViewClaim";
 import { IGetClaimResult } from "./interfaces/IGetClaimsResult";
 import { IViewClaim } from "./interfaces/IViewClaim";
 

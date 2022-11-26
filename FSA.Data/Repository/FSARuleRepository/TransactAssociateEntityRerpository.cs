@@ -10,24 +10,26 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository.FSARuleRepository
 {
-    public class TransactAssociateEntityRerpository : ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>
+    public class TransactAssociateEntityRepository : ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>
     {
         private FSAClaimContext _dbContext;
 
-        public TransactAssociateEntityRerpository()
+        public TransactAssociateEntityRepository()
         {
             _dbContext = new FSAClaimContext();
         }
+
         public IRepositoryResult Add(FSARule entity, int innerID)
         {
+
             try
             {
                 _dbContext.FSARules.Add(entity);
-                
+                _dbContext.SaveChanges();
                 var employeeFSA = new EmployeeFSA { EmployeeID = innerID, FSAID = entity.ID };
                 _dbContext.Add(employeeFSA);
                 _dbContext.SaveChanges();
-                //_dbContext.SaveChanges();
+                //
                 var result = new ClaimRepositoryResult(true);
                 return result;
             }
@@ -41,6 +43,7 @@ namespace FSA.Data.Repository.FSARuleRepository
         {
             return null;
         }
+
     }
 
 }

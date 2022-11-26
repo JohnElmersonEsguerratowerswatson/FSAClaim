@@ -15,10 +15,11 @@ namespace FSA.Data.Migrations
                 table: "EmployeeFSAs",
                 type: "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0).Annotation("SqlServer:Identity", "1, 1");
             migrationBuilder.AddPrimaryKey("PK_EmployeeFSAs", "EmployeeFSAs", "ID");
             migrationBuilder.AddForeignKey("FK_Employee_FSA_Employee_ID", "EmployeeFSAs", "EmployeeID", "Employees");
             migrationBuilder.AddForeignKey("FK_FSARule_FSA_FSARule_ID", "EmployeeFSAs", "FSAID", "FSARules");
+
         }
 
         /// <inheritdoc />

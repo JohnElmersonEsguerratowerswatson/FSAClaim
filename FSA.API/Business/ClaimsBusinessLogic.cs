@@ -89,12 +89,12 @@ namespace FSA.API.Business
 
         public IClaimResult AddClaim(ITransactClaim claim)
         {
-            ClaimApproval approval = ClaimApproval.Pending;
+            ClaimApprovals approval = ClaimApprovals.Pending;
 
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 
             //Check if Receipt Date is valid
-            if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApproval.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
+            if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApprovals.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
 
             //Compose Reference Number
             string refNo = claimReceiptDate.ToString("yyy") + claimReceiptDate.Month.ToString("MM") + claimReceiptDate.Day.ToString("d") + claim.ReceiptNumber;
@@ -115,7 +115,8 @@ namespace FSA.API.Business
 
             try
             {
-                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber, approval, refNo, _employeeNumber);
+                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber,approval, refNo, _employeeNumber);
+
                 var result = repository.Add(claimAdd);
 
                 return new ClaimResult { IsSuccess = true, Message = "Submitted for approval." };
@@ -124,7 +125,7 @@ namespace FSA.API.Business
 
         }
 
-        private FSAClaim CreateClaim(decimal claimAmount, decimal receiptAmount, DateTime receiptDate, string receiptNumber, ClaimApproval claimApproval, string refNo, int employeeId)
+        private FSAClaim CreateClaim(decimal claimAmount, decimal receiptAmount, DateTime receiptDate, string receiptNumber, ClaimApprovals claimApproval, string refNo, int employeeId)
         {
             return new FSAClaim
             {
@@ -164,29 +165,39 @@ namespace FSA.API.Business
         /// <returns></returns>
         public IGetClaimsResult GetClaimsResult()
         {
-            GetClaimsResult result = new GetClaimsResult();
-            var claims = GetFSAClaimsByEmployee();
-            result.Claims = GetClaimList();
-            result.EmployeeID = _employeeNumber;
-            var fsaRule = GetFSARule();
-            result.FSAAmount = fsaRule.FSALimit;
-            result.YearCoverage = fsaRule.YearCoverage;
-            var employee = GetEmployee();
+            try
+            {
+                GetClaimsResult result = new GetClaimsResult();
+                var claims = GetFSAClaimsByEmployee();
+                result.Claims = GetClaimList();
+                result.EmployeeID = _employeeNumber;
+                var fsaRule = GetFSARule();
+                if (fsaRule == null) fsaRule = new FSARule();
+                result.FSAAmount = fsaRule.FSALimit;
+                result.YearCoverage = fsaRule.YearCoverage;
+                var employee = GetEmployee();
 
-            result.EmployeeName = employee.FirstName + " " + employee.LastName;
-            result.ApprovedClaims = ComputeApprovedClaims(claims);
-            result.PendingClaims = ComputePendingClaims(claims);
+                result.EmployeeName = employee.FirstName + " " + employee.LastName;
+                result.ApprovedClaims = ComputeApprovedClaims(claims);
+                result.PendingClaims = ComputePendingClaims(claims);
 
 
-            result.AvailableFSA = ComputeRemainingFSA(result.ApprovedClaims, result.PendingClaims);
+                result.AvailableFSA = ComputeRemainingFSA(result.ApprovedClaims, result.PendingClaims);
 
-            return result;
+                return result;
+            }
+            catch
+            {
+                return new GetClaimsResult();
+            }
         }
+
 
         public List<ClaimsTableItem> GetClaimList()
         {
             //FSAClaimRepository repository = new FSAClaimRepository();
             var claimList = GetFSAClaimsByEmployee();// repository.GetList(c => c.EmployeeID == _employeeNumber);
+
             if (claimList == null || claimList.Count() == 0) return new List<ClaimsTableItem>();
             List<ClaimsTableItem> claimItems = new List<ClaimsTableItem>();
             foreach (var claim in claimList)
@@ -227,6 +238,7 @@ namespace FSA.API.Business
             return new ClaimResult { IsSuccess = result.IsSuccess };
         }
 
+        
 
     }
 }
