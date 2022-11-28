@@ -50,7 +50,7 @@ export class ClaimApprovalComponent implements OnInit, OnDestroy {
   
     this.subscription.unsubscribe();
     this.subscription = this.service.claimApprovalAPI(claimApprovalParam).subscribe(
-      result => { alert("Successfully approved claim."); },
+      result => { alert("Successfully denied claim."); },
       errorResult => { alert("Failed to deny claim."); }
     );
   }

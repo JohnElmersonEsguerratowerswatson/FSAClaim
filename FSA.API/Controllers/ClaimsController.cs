@@ -83,13 +83,18 @@ namespace FSA.API.Controllers
                 //if (_employeeID == 0) return Unauthorized();
 
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                //return BAD request if claim amount is greater than receipt ammount
-                if (claim.ClaimAmount > claim.ReceiptAmount) { return BadRequest("Amount to be claimed exceeded the receipt amount"); }
-
                 IClaimResult result = new ClaimResult();
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
+                //return BAD request if claim amount is greater than receipt ammount
+                if (claim.ClaimAmount > claim.ReceiptAmount)
+                {
+                    result.Message = "Claim Amount cannot exceed Receipt Amount";
+                    return BadRequest(result);
+                }
+
+
                 result = logic.AddClaim(claim);
-                if (!result.IsSuccess) return BadRequest(result.Message);
+                if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
             }
             catch

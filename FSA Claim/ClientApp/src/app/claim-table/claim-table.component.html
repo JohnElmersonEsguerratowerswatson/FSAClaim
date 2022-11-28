@@ -37,7 +37,10 @@
           <td>{{ claim.receiptAmount }}</td>
           <td>{{ claim.claimAmount }}</td>
           <td>{{ claim.totalClaimAmount }}</td>
-          <td><a [routerLink]="['/claim-detail' ]" [state]="claim"> {{ claim.referenceNumber }}</a></td>
+          <td>
+            <a *ngIf="claim.status=='Pending'" [routerLink]="['/claim-detail' ]" [state]="claim"> {{ claim.referenceNumber }}</a>
+            <span *ngIf="claim.status!='Pending'">{{ claim.referenceNumber }}</span>
+          </td>
         </tr>
       </tbody>
     </table>

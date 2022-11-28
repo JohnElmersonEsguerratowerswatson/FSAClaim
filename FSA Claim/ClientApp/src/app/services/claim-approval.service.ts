@@ -24,7 +24,7 @@ export class ClaimApprovalService {
     let options = {
       headers: headers
     };
-    alert(claimApproval.referenceNumber);
+    //alert(claimApproval.referenceNumber);
     return this.http.post<any>(this.url, claimApproval, options);
   }
 

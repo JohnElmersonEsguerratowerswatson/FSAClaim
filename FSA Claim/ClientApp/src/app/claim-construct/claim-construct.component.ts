@@ -13,7 +13,7 @@ import { ITransactClaimResult } from "../services/interfaces/ITransactClaimResul
 
 export class ClaimConstructComponent implements OnInit {
 
-  public claim: TransactClaim ;
+  public claim: TransactClaim;
   public subscription: Subscription;
   public claimResult: ITransactClaimResult;
   constructor(private router: Router, private claimConstructService: ClaimConstructService) {
@@ -37,14 +37,26 @@ export class ClaimConstructComponent implements OnInit {
         alert("Successfull submitted claim for approval.");
         this.router.navigateByUrl("claim-list");
       },
-      err => { alert("There was a problem fetching your claims."); }
+      err => { alert(err.error.message); }
     );
 
   }
 
   ngOnInit(): void {
 
-
+    let response = {
+      "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+      },
+      "status": 400,
+      "statusText": "OK",
+      "url": "https://localhost:7254/api/Claims/Create",
+      "ok": false,
+      "name": "HttpErrorResponse",
+      "message": "Http failure response for https://localhost:7254/api/Claims/Create: 400 OK",
+      "error": { "message": "You only have 0.00.", "isSuccess": false }
+    }
   }
 
 }

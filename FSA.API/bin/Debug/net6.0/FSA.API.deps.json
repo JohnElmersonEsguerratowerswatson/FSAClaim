@@ -762,6 +762,7 @@
       },
       "FSA.Data/1.0.0": {
         "dependencies": {
+          "FSA.Common": "1.0.0",
           "FSA.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0"
         },

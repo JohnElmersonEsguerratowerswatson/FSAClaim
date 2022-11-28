@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FSA.Common\FSA.Common.csproj" />
     <ProjectReference Include="..\FSA.Domain\FSA.Domain.csproj" />
   </ItemGroup>
 
