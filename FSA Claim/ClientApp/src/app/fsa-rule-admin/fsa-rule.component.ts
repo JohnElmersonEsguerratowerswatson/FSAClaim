@@ -22,7 +22,7 @@ export class FSARuleComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.subscription = this.fsaRuleService.addEmployeeFSARule(this.fsaRule).subscribe(
       result => { alert("Successfully created FSA"); },
-      errorResult => { }
+      errorResult => { alert(errorResult.error.message); }
     );
   }
 

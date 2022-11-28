@@ -12,13 +12,13 @@ using FSA.API.Models;
 
 namespace FSA.Test.API.Tests
 {
-    public class APILogic
+    public class APIEmployeeClaimLogic
     {
         private ClaimsBusinessLogic _logic;
-
-        public APILogic()
+        private const int _employeeID = 2;// CHANGE EMPLOYEE ID
+        public APIEmployeeClaimLogic()
         {
-            _logic = new ClaimsBusinessLogic(2);
+            _logic = new ClaimsBusinessLogic(_employeeID);
         }
 
         [Fact]
@@ -76,5 +76,7 @@ namespace FSA.Test.API.Tests
             var claim = _logic.GetClaim("2022MM12RBF0103");
             Assert.NotNull(claim);
         }
+
+
     }
 }

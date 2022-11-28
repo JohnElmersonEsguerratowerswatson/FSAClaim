@@ -35,29 +35,6 @@ namespace FSA.Data.Repository.FSAClaimRepository
             //initialize nullable FSARule return variable
             FSARule? fSARule = null;
 
-            //loop thru each EmployeeFSA then query dbContext for FSA where EmployeeFSA Employee.ID. T
-            ////inside loop query FSARules for EmployeeFSA.FSAID AND Year Coverage is equal to this year
-            //select one and return
-            //employeeFSAs.AsQueryable().ForEachAsync(eF =>
-            //{
-            //    if (eF.EmployeeID != employee.ID) return;
-            //    fSARule = _dbContext.FSARules.SingleOrDefault(fR => fR.ID == eF.FSAID && fR.YearCoverage == DateTime.UtcNow.Year);
-            //    if (fSARule != null) return;
-
-            //});
-
-            //        var Track = db.Track
-            //.Join(db.MediaType,
-            //    o => o.MediaTypeId,
-            //    i => i.MediaTypeId,
-            //    (o, i) =>
-            //    new
-            //    {
-            //        Name = o.Name,
-            //        Composer = o.Composer,
-            //        MediaType = i.Name
-            //    }
-            //)
             var rule = _dbContext.FSARules.Join(_dbContext.EmployeeFSAs.Where(ef => ef.EmployeeID == employee.ID), r => r.ID, ef => ef.FSAID,
             (ir, ief) => new FSARule
             {

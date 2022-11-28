@@ -11,12 +11,13 @@ namespace FSA.Test.Data.Tests
     public class FSARuleRepoTest
     {
         private TransactAssociateEntityRepository repository;
-        private int _employeeID;
+        private int _employeeID;//Change value accdgly
         public FSARuleRepoTest()
         {
             repository = new TransactAssociateEntityRepository();
-            _employeeID = 1;
+            _employeeID = 3;
         }
+
         [Fact]
         public void Add()
         {

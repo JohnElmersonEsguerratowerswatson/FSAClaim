@@ -10,16 +10,35 @@ namespace FSA.API.Business
     public class FSARuleLogic
     {
         private int _employeeID;
-        public FSARuleLogic(int employeeID)
+        private string _employeeName;
+        public FSARuleLogic(int employeeID, string employeeName)
         {
             _employeeID = employeeID;
+            _employeeName = employeeName.Trim();
+        }
 
+        private bool ValidateEmployeeNameAndID(Employee employee)
+        {
+
+            bool qualifiedByFirsNameLastName = false;//FirstName LastName
+            bool qualifiedByWholeName = false;//FirstName MiddleName LastName
+            bool qualifiedByFullName = false; //FirstName MI. LastName
+            bool qualifiedByID = false;//employeeID
+
+            qualifiedByID = employee.ID == _employeeID;
+            if (!qualifiedByID) return false;
+
+            qualifiedByFirsNameLastName = employee.FirstName + " " + employee.LastName == _employeeName;
+            qualifiedByWholeName = employee.FirstName + " " + employee.MiddleName.Substring(0, 1) + ". " + employee.LastName == _employeeName;
+            qualifiedByFullName = employee.FirstName + " " + employee.MiddleName + " " + employee.LastName == _employeeName;
+
+            return qualifiedByFirsNameLastName || qualifiedByFullName || qualifiedByWholeName;
         }
 
         private Employee GetEmployee()
         {
             TRepository<Employee> repoE = new TRepository<Employee>();
-            var employee = repoE.Get(e => e.ID == _employeeID);
+            var employee = repoE.Get(e => ValidateEmployeeNameAndID(e));
             if (employee == null) throw new KeyNotFoundException("Employee not found.");
             return employee;
         }
@@ -35,7 +54,7 @@ namespace FSA.API.Business
         {
             var employee = GetEmployee();
             var fsaRule = GetFSARule();
-            if (fsaRule == null) fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
+            // if (fsaRule == null) fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
             return new TransactFSARule
             {
                 FSAAmount = fsaRule.FSALimit,
@@ -46,13 +65,15 @@ namespace FSA.API.Business
         }
 
 
-
         public IAddFSARuleResult AddFSARule(ITransactFSARule getFSA)
         {
             try
             {
                 // TRepository<FSARule> repository  = new TRepository<FSARule>();
+
                 TransactAssociateEntityRepository repo = new TransactAssociateEntityRepository();
+                var rule = GetFSARule();
+
                 var repoResult = repo.Add(
                     new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }, _employeeID
                     );
