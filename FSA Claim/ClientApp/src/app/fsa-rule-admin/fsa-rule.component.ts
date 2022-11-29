@@ -13,6 +13,7 @@ export class FSARuleComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   constructor(private fsaRuleService: FSARuleService) {
     this.fsaRule = new FSARule();
+    this.fsaRule.yearCoverage = new Date().getFullYear();
     //this.fsaRule.employeeID = 1;
     //this.fsaRule.employeeName = "John Doe";
     //this.fsaRule.fSAAmount = 5000;

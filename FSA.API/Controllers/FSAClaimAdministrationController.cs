@@ -1,6 +1,7 @@
 ﻿using FSA.API.Business;
 using FSA.API.Models;
 using FSA.API.Models.Interface;
+using FSA.Common;
 using FSA.Common.Enums;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace FSA.API.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest();
+               
                 ClaimsApprovalLogic claimsApprovalLogic = new ClaimsApprovalLogic();
                 var tableItems = claimsApprovalLogic.GetTableView();
                 if (tableItems == null) return NotFound();
@@ -27,13 +28,19 @@ namespace FSA.API.Controllers
         [HttpPost]
         public ActionResult ClaimApproval([FromBody] ClaimApproval claimApproval)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            IClaimResult result = new ClaimResult();
+            if (!ModelState.IsValid)
+            {
+                result.IsSuccess = false;
+                result.Message = ObjectStatus.ModelStateInvalid;
+                return BadRequest(result);
+            }
             ClaimsApprovalLogic claimApprovalLogic = new ClaimsApprovalLogic();
             bool IsSuccess = claimApprovalLogic.ApproveClaim(claimApproval);
             //claimApprovalLogic
             string approval = claimApproval.Approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
             if (!IsSuccess) return Problem();
-            return Ok(new { IsSuccess = IsSuccess, Message = "Successfully " + claimApproval + " claim" });
+            return Ok(new ClaimResult{ IsSuccess = IsSuccess, Message = "Successfully " + claimApproval + " claim" });
         }
     }
 }

@@ -97,9 +97,15 @@ namespace FSA.API.Business
             if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApprovals.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
 
             //Compose Reference Number
-            string refNo = claimReceiptDate.ToString("yyy") + claimReceiptDate.Month.ToString("MM") + claimReceiptDate.Day.ToString("d") + claim.ReceiptNumber;
+            string refNo = claimReceiptDate.Year.ToString() + claimReceiptDate.Month.ToString() + claimReceiptDate.Day.ToString() + claim.ReceiptNumber;
+
 
             FSAClaimRepository repository = new FSAClaimRepository();
+
+            //check for duplicate receipts
+            //bool duplicateReceipt = repository.GetList(c => c.ReceiptNumber == claim.ReceiptNumber).Any();
+            //if (duplicateReceipt) return new ClaimResult { IsSuccess = false, Message = "Invalid receipt." };
+
 
             //Compute Remaining FSA
             decimal remainingFSA = 0;
@@ -115,7 +121,7 @@ namespace FSA.API.Business
 
             try
             {
-                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber,approval, refNo, _employeeNumber);
+                var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber, approval, refNo, _employeeNumber);
 
                 var result = repository.Add(claimAdd);
 
@@ -165,9 +171,10 @@ namespace FSA.API.Business
         /// <returns></returns>
         public IGetClaimsResult GetClaimsResult()
         {
+            GetClaimsResult result = new GetClaimsResult();
             try
             {
-                GetClaimsResult result = new GetClaimsResult();
+
                 var claims = GetFSAClaimsByEmployee();
                 result.Claims = GetClaimList();
                 result.EmployeeID = _employeeNumber;
@@ -186,7 +193,11 @@ namespace FSA.API.Business
 
                 return result;
             }
-            catch
+            catch (KeyNotFoundException kE)
+            {
+                return result;
+            }
+            catch (Exception ex)
             {
                 return new GetClaimsResult();
             }
@@ -224,6 +235,8 @@ namespace FSA.API.Business
         {
             FSAClaimRepository repository = new FSAClaimRepository();
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
+            //bool duplicateReceipt = repository.GetList(c => c.ReceiptNumber == claim.ReceiptNumber && c.ReferenceNumber != claim.ReferenceNumber).Any();
+            //if (duplicateReceipt) return new ClaimResult { IsSuccess = false, Message = "Invalid receipt." };
 
             var dbClaim = new FSAClaim
             {
@@ -238,7 +251,7 @@ namespace FSA.API.Business
             return new ClaimResult { IsSuccess = result.IsSuccess };
         }
 
-        
+
 
     }
 }

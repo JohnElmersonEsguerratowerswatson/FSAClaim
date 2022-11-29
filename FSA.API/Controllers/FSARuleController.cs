@@ -1,6 +1,7 @@
 ﻿using FSA.API.Business;
 using FSA.API.Models;
 using FSA.API.Models.Interface;
+using FSA.Common;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,8 +15,15 @@ namespace FSA.API.Controllers
         [HttpPost]
         public ActionResult<IAddFSARuleResult> Add([FromBody] TransactFSARule fsaRule)
         {
-            if (!ModelState.IsValid) return BadRequest();
             IAddFSARuleResult result = new AddFSARuleResult();
+            if (!ModelState.IsValid)
+            {
+                result.IsSuccess = false;
+                result.Message = ObjectStatus.ModelStateInvalid;
+                return BadRequest(result);
+            }
+           result = new AddFSARuleResult();
+
             //Validate ID and Name
             FSARuleLogic logic = new FSARuleLogic(fsaRule.EmployeeID, fsaRule.EmployeeName);
             TransactFSARule rule;

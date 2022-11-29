@@ -38,7 +38,7 @@ export class ClaimApprovalComponent implements OnInit, OnDestroy {
     claimApprovalParam.referenceNumber = referenceNumber;
     this.subscription.unsubscribe();
     this.subscription = this.service.claimApprovalAPI(claimApprovalParam).subscribe(
-      result => { alert("Successfully approved claim."); },
+      result => { alert("Successfully approved claim."); location.reload(); },
       errorResult => { alert("Failed to approve claim."); }
     );
   }
@@ -50,7 +50,7 @@ export class ClaimApprovalComponent implements OnInit, OnDestroy {
   
     this.subscription.unsubscribe();
     this.subscription = this.service.claimApprovalAPI(claimApprovalParam).subscribe(
-      result => { alert("Successfully denied claim."); },
+      result => { alert("Successfully denied claim."); location.reload();},
       errorResult => { alert("Failed to deny claim."); }
     );
   }

@@ -24,8 +24,12 @@ namespace FSA.Data.Repository.FSARuleRepository
 
             try
             {
-                _dbContext.FSARules.Add(entity);
-                _dbContext.SaveChanges();
+                if (entity.ID == 0)
+                {
+                    _dbContext.FSARules.Add(entity);
+                    _dbContext.SaveChanges();
+                }
+
                 var employeeFSA = new EmployeeFSA { EmployeeID = innerID, FSAID = entity.ID };
                 _dbContext.Add(employeeFSA);
                 _dbContext.SaveChanges();

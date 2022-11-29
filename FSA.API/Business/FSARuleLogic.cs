@@ -1,5 +1,6 @@
 ﻿using FSA.API.Models;
 using FSA.API.Models.Interface;
+using FSA.Data.Repository;
 using FSA.Data.Repository.FSAClaimRepository;
 using FSA.Data.Repository.FSARuleRepository;
 using FSA.Data.Repository.GenericRepository;
@@ -43,18 +44,25 @@ namespace FSA.API.Business
             return employee;
         }
 
-        private FSARule GetFSARule()
+        private FSARule GetEmployeeFSARule()
         {
             EmployeeFSARepository repoeFSA = new EmployeeFSARepository();
             var fsaRule = repoeFSA.Get(e => e.ID == _employeeID);
             return fsaRule;
         }
 
+        private FSARule GetFSARuleFromYearAndAmount(int year, decimal amount)
+        {
+            TRepository<FSARule> repository = new TRepository<FSARule>();
+            var rule = repository.Get(r => r.FSALimit == amount && r.YearCoverage == year);
+            return rule;
+        }
+
         public TransactFSARule Get()
         {
             var employee = GetEmployee();
-            var fsaRule = GetFSARule();
-            // if (fsaRule == null) fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
+            var fsaRule = GetEmployeeFSARule();
+            if (fsaRule == null) return null;//fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
             return new TransactFSARule
             {
                 FSAAmount = fsaRule.FSALimit,
@@ -64,19 +72,21 @@ namespace FSA.API.Business
             };
         }
 
-
         public IAddFSARuleResult AddFSARule(ITransactFSARule getFSA)
         {
             try
             {
                 // TRepository<FSARule> repository  = new TRepository<FSARule>();
-
+                IRepositoryResult repoResult;
                 TransactAssociateEntityRepository repo = new TransactAssociateEntityRepository();
-                var rule = GetFSARule();
-
-                var repoResult = repo.Add(
-                    new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }, _employeeID
+                //check for existing Rule with same Year and Amount
+                FSARule rule = GetFSARuleFromYearAndAmount(getFSA.YearCoverage, getFSA.FSAAmount);
+                //Add new Rule
+                if (rule == null) { rule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
+                repoResult = repo.Add(
+                   rule, _employeeID
                     );
+
                 return new AddFSARuleResult { IsSuccess = repoResult.IsSuccess };//  repository.Add();
             }
             catch

@@ -22,7 +22,7 @@ namespace FSA.Data.Repository.GenericRepository
                     ClaimContext.Add(entity);
 
                     int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Add Failed");
                     return new ClaimRepositoryResult(true);
                 }
             }
@@ -44,7 +44,7 @@ namespace FSA.Data.Repository.GenericRepository
                     if (entity == null) return new ClaimRepositoryResult(false, "Not Found", "");
                     ClaimContext.Remove<T>(entity);
                     int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Delete Failed");
                     return new ClaimRepositoryResult(true);
                 }
             }
