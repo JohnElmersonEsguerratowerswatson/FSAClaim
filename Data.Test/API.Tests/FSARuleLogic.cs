@@ -18,7 +18,7 @@ namespace FSA.Test.API.Tests
         private string _employeeName = "Gale Erickson";
         public APIFSARuleLogic()
         {
-            _fSARuleLogic = new FSARuleLogic(_employeeID, _employeeName);
+            _fSARuleLogic = new FSARuleLogic(_employeeID);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace FSA.Test.API.Tests
         {
             var rule = new TransactFSARule();
             rule.EmployeeID = _employeeID;
-            rule.EmployeeName = _employeeName;
+            //rule.EmployeeName = _employeeName;
             rule.FSAAmount = 5000;
             rule.YearCoverage = 2022;
             var result = _fSARuleLogic.AddFSARule(rule);
@@ -39,7 +39,7 @@ namespace FSA.Test.API.Tests
             _employeeName = "John Doe";
 
             ITransactFSARule rule;
-            _fSARuleLogic = new FSARuleLogic(_employeeID, _employeeName);
+            _fSARuleLogic = new FSARuleLogic(_employeeID);
             try
             {
                 rule = _fSARuleLogic.Get();

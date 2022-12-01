@@ -74,6 +74,17 @@ namespace FSA.API.Controllers
             catch { return false; }
         }
 
+        private bool ValidateInput(TransactClaim claim)
+        {
+            if (claim == null) { return false; };
+            bool validClaimAmount = false;
+            bool validReceiptAmount = false;
+            bool validRecieptDate = CheckDateInput(claim.ReceiptDate);
+            validClaimAmount = decimal.TryParse(claim.ClaimAmount.ToString(), out decimal claimAmount);
+            validReceiptAmount = decimal.TryParse(claim.ReceiptAmount.ToString(), out decimal receiptAmount);
+            return validClaimAmount && validReceiptAmount && validRecieptDate;
+        }
+
 
         // POST: ClaimsController/Create
         /// <summary>
@@ -86,11 +97,12 @@ namespace FSA.API.Controllers
         {
             try
             {
+
                 //CheckUser(User.Identity);
                 //if (_employeeID == 0) return Unauthorized();
                 IClaimResult result = new ClaimResult();
-                bool validDate = CheckDateInput(claim.ReceiptDate);
-                if (!ModelState.IsValid || !validDate)
+                bool validInputs = ValidateInput(claim);
+                if (!ModelState.IsValid || !validInputs)
                 {
                     result.IsSuccess = false;
                     result.Message = ObjectStatus.ModelStateInvalid;
@@ -126,22 +138,25 @@ namespace FSA.API.Controllers
         [HttpPost]
         public ActionResult<IClaimResult> Edit([FromBody] TransactClaim claim)
         {
+
             try
             {
+                bool validInputs = ValidateInput(claim);
                 //CheckUser(User.Identity);
                 // if (_employeeID == 0) return Unauthorized();
-                bool validDate = CheckDateInput(claim.ReceiptDate);
                 IClaimResult result = new ClaimResult();
-                if (!ModelState.IsValid || !validDate)
+                if (!ModelState.IsValid || !validInputs)
                 {
                     result.IsSuccess = false;
                     result.Message = ObjectStatus.ModelStateInvalid;
                     return BadRequest(result);
                 }
+
                 ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
                 result = logic.Update(claim);
-                if (!result.IsSuccess) return Problem();
+                if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
+
             }
             catch
             {

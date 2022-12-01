@@ -6,8 +6,10 @@ using FSA.Common.Enums;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace FSA.API.Controllers
 {
+
     [EnableCors("ClientApp")]
     [Route("api/[controller]/[action]")]
     public class FSAClaimAdministrationController : Controller
@@ -16,7 +18,6 @@ namespace FSA.API.Controllers
         {
             try
             {
-               
                 ClaimsApprovalLogic claimsApprovalLogic = new ClaimsApprovalLogic();
                 var tableItems = claimsApprovalLogic.GetTableView();
                 if (tableItems == null) return NotFound();

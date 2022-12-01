@@ -18,7 +18,7 @@ namespace FSA.API.Business
             var employees = employeeRepository.GetList(e => true);
             foreach (var employee in employees)
             {
-                var claims = claimRepositorys.GetList(c => c.EmployeeID == employee.ID && c.Status == ClaimApprovals.Pending.ToString() && c.DateSubmitted.Year == DateTime.UtcNow.Year);
+                var claims = claimRepositorys.GetList(c => c.isCancelled == false && c.EmployeeID == employee.ID && c.Status == ClaimApprovals.Pending.ToString() && c.DateSubmitted.Year == DateTime.UtcNow.Year);
                 foreach (var claim in claims)
                     items.Add(new ClaimsApprovalTableItems
                     {

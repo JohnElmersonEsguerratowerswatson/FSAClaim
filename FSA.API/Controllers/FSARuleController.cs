@@ -12,6 +12,11 @@ namespace FSA.API.Controllers
     public class FSARuleController : Controller
     {
 
+        public FSARuleController()
+        {
+
+        }
+
         [HttpPost]
         public ActionResult<IAddFSARuleResult> Add([FromBody] TransactFSARule fsaRule)
         {
@@ -22,10 +27,10 @@ namespace FSA.API.Controllers
                 result.Message = ObjectStatus.ModelStateInvalid;
                 return BadRequest(result);
             }
-           result = new AddFSARuleResult();
+            result = new AddFSARuleResult();
 
             //Validate ID and Name
-            FSARuleLogic logic = new FSARuleLogic(fsaRule.EmployeeID, fsaRule.EmployeeName);
+            FSARuleLogic logic = new FSARuleLogic(fsaRule.EmployeeID);
             TransactFSARule rule;
             try
             {
@@ -55,6 +60,7 @@ namespace FSA.API.Controllers
 
             return Ok(result);
         }
+
 
     }
 }

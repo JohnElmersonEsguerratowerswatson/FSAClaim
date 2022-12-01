@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { FSARule } from "../services/data-classes/FSARule";
+import { EmployeeService } from "../services/employee-service";
 import { FSARuleService } from "../services/fsa-rule.service";
+import { IEmployeeOptionItem } from "../services/interfaces/IEmployeeOptionItem";
 
 @Component({
   templateUrl: 'fsa-rule.component.html',
@@ -10,14 +12,27 @@ import { FSARuleService } from "../services/fsa-rule.service";
 export class FSARuleComponent implements OnInit, OnDestroy {
 
   public fsaRule: FSARule;
+  public employees: any[];
+
   private subscription: Subscription = new Subscription();
-  constructor(private fsaRuleService: FSARuleService) {
+
+
+  constructor(private fsaRuleService: FSARuleService, private employeeService: EmployeeService) {
     this.fsaRule = new FSARule();
+    this.employees = [];
     this.fsaRule.yearCoverage = new Date().getFullYear();
-    //this.fsaRule.employeeID = 1;
-    //this.fsaRule.employeeName = "John Doe";
-    //this.fsaRule.fSAAmount = 5000;
-    //this.fsaRule.yearCoverage = 2022;
+
+  }
+
+  getEmployees(): void {
+    //this.subscription.unsubscribe();
+    this.subscription = this.employeeService.getEmployees().subscribe(
+      result => {
+        this.employees = result as IEmployeeOptionItem[];
+        if (this.employees.length > 0) { this.fsaRule.employeeID = this.employees[0].id; }
+      },
+      errorResult => { alert("Failed to fetch employees."); }
+    );
   }
 
   onSubmit(): void {
@@ -27,10 +42,17 @@ export class FSARuleComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getEmployees();
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onSelectEmployee(value: string): void {
+    this.fsaRule.employeeID = parseInt(value);
+    console.log(value);
   }
 
 }

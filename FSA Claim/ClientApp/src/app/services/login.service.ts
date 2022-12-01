@@ -5,9 +5,7 @@ import { ILogin } from "./interfaces/ILogin";
 import { ILoginResult } from "./interfaces/ILoginResult";
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class LoginService {
 
   public bearer: any;

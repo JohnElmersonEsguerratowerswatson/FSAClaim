@@ -40,6 +40,10 @@ export function getFSAClaimAapprovalURL() {
   return 'https://localhost:7254/api/FSAClaimAdministration/ClaimApproval';
 }
 
+export function getEmployeeListUrl() {
+  return 'https://localhost:7254/api/Employee/Index';
+}
+
   const providers = [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ,
@@ -51,7 +55,8 @@ export function getFSAClaimAapprovalURL() {
     { provide: 'LOGIN_URL', useFactory: getLoginUrl, deps: [] },
     { provide: 'FSARULE_URL', useFactory: getFSARuleURL, deps: [] },
     { provide: 'FSAFORAPPROVALLIST_URL', useFactory: getFSAClaimsForApprovalURL, deps: [] },
-    { provide: 'FSAAPPROVAL_URL', useFactory: getFSAClaimAapprovalURL, deps: [] }
+    { provide: 'FSAAPPROVAL_URL', useFactory: getFSAClaimAapprovalURL, deps: [] },
+    { provide: 'EMPLOYEELIST_URL', useFactory: getEmployeeListUrl, deps: [] }
   ];
 
   if (environment.production) {

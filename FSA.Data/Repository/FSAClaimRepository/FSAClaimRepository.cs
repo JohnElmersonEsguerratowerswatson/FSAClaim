@@ -16,7 +16,6 @@ namespace FSA.Data.Repository.FSAClaimRepository
     public class FSAClaimRepository : GenericRepository<FSAClaim>
     {
 
-
         public FSAClaimRepository(bool test = false)
         {
             _test = test;
@@ -101,6 +100,36 @@ namespace FSA.Data.Repository.FSAClaimRepository
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
                     claim.Status = approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
+                    claim.ApprovalDate = DateTime.Now;
+
+                    int rows = Save(ClaimContext);
+                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                    return new ClaimRepositoryResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
+
+
+        /// <summary>
+        /// Update Claim Approval(Approve Or Deny)
+        /// </summary>
+        /// <param name="approve"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IRepositoryResult Delete(bool delete, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+                using (ClaimContext)
+                {
+                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                    claim.isCancelled = delete;
                     claim.ApprovalDate = DateTime.Now;
 
                     int rows = Save(ClaimContext);

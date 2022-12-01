@@ -19,5 +19,6 @@ namespace FSA.Domain.Entities
         public DateTime Modified { get; set; }
         public DateTime ApprovalDate { get; set; }
         public string ReferenceNumber { get; set; }
+        public bool isCancelled { get; set; } 
     }
 }

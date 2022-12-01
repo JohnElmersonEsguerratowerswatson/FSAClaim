@@ -10,24 +10,22 @@ namespace FSA.API.Business
 {
     public class FSARuleLogic
     {
+        private Employee _employee;
         private int _employeeID;
         private string _employeeName;
-        public FSARuleLogic(int employeeID, string employeeName)
+        public FSARuleLogic(int employeeID)
         {
+
             _employeeID = employeeID;
-            _employeeName = employeeName.Trim();
+            _employee = GetEmployee();
+            _employeeName = _employee.FirstName + " " + _employee.LastName;
         }
 
-        private bool ValidateEmployeeNameAndID(Employee employee)
+        private bool ValidateEmployeeName(Employee employee)
         {
-
             bool qualifiedByFirsNameLastName = false;//FirstName LastName
             bool qualifiedByWholeName = false;//FirstName MiddleName LastName
             bool qualifiedByFullName = false; //FirstName MI. LastName
-            bool qualifiedByID = false;//employeeID
-
-            qualifiedByID = employee.ID == _employeeID;
-            if (!qualifiedByID) return false;
 
             qualifiedByFirsNameLastName = employee.FirstName + " " + employee.LastName == _employeeName;
             qualifiedByWholeName = employee.FirstName + " " + employee.MiddleName.Substring(0, 1) + ". " + employee.LastName == _employeeName;
@@ -39,7 +37,7 @@ namespace FSA.API.Business
         private Employee GetEmployee()
         {
             TRepository<Employee> repoE = new TRepository<Employee>();
-            var employee = repoE.Get(e => ValidateEmployeeNameAndID(e));
+            var employee = repoE.Get(e => e.ID == _employeeID);
             if (employee == null) throw new KeyNotFoundException("Employee not found.");
             return employee;
         }
@@ -47,7 +45,7 @@ namespace FSA.API.Business
         private FSARule GetEmployeeFSARule()
         {
             EmployeeFSARepository repoeFSA = new EmployeeFSARepository();
-            var fsaRule = repoeFSA.Get(e => e.ID == _employeeID);
+            var fsaRule = repoeFSA.Get(e => e.ID == _employee.ID);
             return fsaRule;
         }
 
@@ -62,12 +60,11 @@ namespace FSA.API.Business
         {
             var employee = GetEmployee();
             var fsaRule = GetEmployeeFSARule();
-            if (fsaRule == null) return null;//fsaRule = new FSARule { FSALimit = 0, ID = _employeeID, YearCoverage = DateTime.UtcNow.Year };
+            if (fsaRule == null) return null;
             return new TransactFSARule
             {
                 FSAAmount = fsaRule.FSALimit,
-                EmployeeID = _employeeID,
-                EmployeeName = employee.FirstName + " " + employee.LastName,
+                //EmployeeName = employee.FirstName + " " + employee.LastName,
                 YearCoverage = fsaRule.YearCoverage
             };
         }
@@ -84,7 +81,7 @@ namespace FSA.API.Business
                 //Add new Rule
                 if (rule == null) { rule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
                 repoResult = repo.Add(
-                   rule, _employeeID
+                   rule, _employee.ID
                     );
 
                 return new AddFSARuleResult { IsSuccess = repoResult.IsSuccess };//  repository.Add();

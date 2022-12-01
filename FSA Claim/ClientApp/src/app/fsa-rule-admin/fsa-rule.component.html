@@ -16,17 +16,24 @@
         <input type="text" class="form-control" id="yearCoverage" readonly placeholder="Enter Year Coverage" [(ngModel)]="fsaRule.yearCoverage" [ngModelOptions]="{standalone: true}">
       </div>
       <br />
-      <div class="form-group">
+      <!--<div class="form-group">
         <label for="employeeID">Employee ID:</label>
         <input type="text" class="form-control" id="employeeID" placeholder="Enter Employee ID" [(ngModel)]="fsaRule.employeeID" [ngModelOptions]="{standalone: true}">
       </div>
-      <br />
-      <div class="form-group">
+      <br />-->
+      <!--<div class="form-group">
         <label for="employeeName">Employee Name:</label>
         <input type="text" class="form-control" id="employeeName" placeholder="Enter Employee Name" [(ngModel)]="fsaRule.employeeName" [ngModelOptions]="{standalone: true}">
       </div>
-      <br />
 
+        <br />-->
+
+      <select #selectEmployee class="form-control" name="employeeID" *ngIf = "employees" (change)="onSelectEmployee(selectEmployee.value)">
+        <option *ngFor = "let employee of employees" [value] ="employee.id" > {{employee.name}} </option>
+      </select>
+
+
+      <br />
       <div class="form-group">
         <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
       </div>

@@ -1,3 +1,5 @@
+using FSA.API.Business;
+using FSA.API.Business.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -20,6 +22,7 @@ builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 
+builder.Services.AddSingleton<IEmployeeService,EmployeeService>();
 builder.Services.AddControllers();
 
 //builder.Services.AddAntiforgery();
