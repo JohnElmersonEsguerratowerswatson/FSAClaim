@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository.GenericRepository
 {
-    public abstract class GenericRepository<T> : IViewRepository<T>, ITransactRepository<T> where T : class
+    public abstract class GenericRepository<T> : IRepository<T> where T : class
     {
-        protected abstract  FSAClaimContext ClaimContext { get; set; }
+        protected abstract FSAClaimContext ClaimContext { get; set; }
         protected bool _test = false;//FOR Unit Testing
 
         public IRepositoryResult Add(T entity)
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     ClaimContext.Add(entity);
 
@@ -37,7 +37,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
 
                     T? entity = ClaimContext.Set<T>().Where(predicate).SingleOrDefault();
@@ -58,7 +58,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
 
                     var list = ClaimContext.Set<T>().AsQueryable().Where<T>(criteria);
@@ -75,7 +75,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
 
                     var list = ClaimContext.Set<T>().AsQueryable();
@@ -92,7 +92,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
 
                     T? entity = ClaimContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
@@ -105,11 +105,11 @@ namespace FSA.Data.Repository.GenericRepository
             }
         }
 
-        public IRepositoryResult Update(T entity, Func<T, bool> predicate)
+        public virtual IRepositoryResult Update(T entity, Func<T, bool> predicate)
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     var claim = ClaimContext.Set<T>().SingleOrDefault<T>(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
@@ -127,13 +127,31 @@ namespace FSA.Data.Repository.GenericRepository
 
         }
 
-        
+
 
         protected int Save(FSAClaimContext dbContext)
         {
             if (_test) return 1;//return success do not save changes
             int rows = dbContext.SaveChanges();
             return rows;
+        }
+
+        public virtual IRepositoryResult Delete(bool delete, Func<T, bool> predicate)
+        {
+            try
+            {
+                using (ClaimContext = new FSAClaimContext())
+                {
+                    var entity = ClaimContext.Set<T>().SingleOrDefault();
+                    if (entity == null) return new ClaimRepositoryResult(false, "Claim not found");
+                    ClaimContext.Set<T>().Remove(entity);
+                    return new ClaimRepositoryResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
         }
     }
 }

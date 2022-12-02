@@ -7,17 +7,25 @@ using FSA.Domain.Entities;
 using FSA.Common.Enums;
 using FSA.Common;
 using System.Collections.Generic;
+using FSA.Data.Repository;
 
 namespace FSA.API.Business
 {
-    public class ClaimsBusinessLogic : IFSAClaimBusiness
+    public class ClaimsBusinessLogic : IFSAClaimBusinessService
     {
+        private IRepository<FSAClaim> _fsaClaimRepository;
 
         private int _employeeNumber;
+        public int EmployeeID { get { return _employeeNumber; } set { _employeeNumber = value; } }
 
-        public ClaimsBusinessLogic(int employeeNumber)
+        //public ClaimsBusinessLogic(int employeeNumber)
+        //{
+        //    _employeeNumber = employeeNumber;
+        //}
+
+        public ClaimsBusinessLogic(IRepository<FSAClaim> fsaClaimRepository)
         {
-            _employeeNumber = employeeNumber;
+            _fsaClaimRepository = fsaClaimRepository;
         }
 
         private Employee GetEmployee()
@@ -40,8 +48,7 @@ namespace FSA.API.Business
 
         private IEnumerable<FSAClaim> GetFSAClaimsByEmployee()
         {
-            FSAClaimRepository repository = new FSAClaimRepository();
-            return repository.GetList(c => c.isCancelled == false && c.EmployeeID == _employeeNumber && c.DateSubmitted.Year == DateTime.Now.Year).ToList();
+            return _fsaClaimRepository.GetList(c => c.isCancelled == false && c.EmployeeID == _employeeNumber && c.DateSubmitted.Year == DateTime.Now.Year).ToList();
         }
 
         private Decimal ComputeApprovedClaims(IEnumerable<FSAClaim> claims)
@@ -87,9 +94,32 @@ namespace FSA.API.Business
             return remainingFSA;
         }
 
+        private bool CheckDateInput(string date)
+        {
+            try { var d = DateTime.ParseExact(date, new String[] { "MM/dd/yyyy" }, null, style: System.Globalization.DateTimeStyles.AssumeLocal); return true; }
+
+            catch { return false; }
+        }
+        private bool ValidateInput(ITransactClaim claim)
+        {
+            if (claim == null) { return false; };
+            bool validClaimAmount = false;
+            bool validReceiptAmount = false;
+            bool validRecieptDate = CheckDateInput(claim.ReceiptDate);
+            validClaimAmount = decimal.TryParse(claim.ClaimAmount.ToString(), out decimal claimAmount);
+            validReceiptAmount = decimal.TryParse(claim.ReceiptAmount.ToString(), out decimal receiptAmount);
+            return validClaimAmount && validReceiptAmount && validRecieptDate;
+        }
         public IClaimResult AddClaim(ITransactClaim claim)
         {
             ClaimApprovals approval = ClaimApprovals.Pending;
+            bool validInputs = ValidateInput(claim);
+            if (claim.ClaimAmount > claim.ReceiptAmount)
+            {
+                return new ClaimResult { Message = "Claim Amount cannot exceed Receipt Amount", IsSuccess = false };
+                //  return BadRequest(result);
+            }
+
 
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 
@@ -100,7 +130,7 @@ namespace FSA.API.Business
             string refNo = claimReceiptDate.Year.ToString() + claimReceiptDate.Month.ToString() + claimReceiptDate.Day.ToString() + claim.ReceiptNumber;
 
 
-            FSAClaimRepository repository = new FSAClaimRepository();
+            //FSAClaimRepository repository = new FSAClaimRepository();
 
             //check for duplicate receipts
             //bool duplicateReceipt = repository.GetList(c => c.ReceiptNumber == claim.ReceiptNumber).Any();
@@ -123,7 +153,7 @@ namespace FSA.API.Business
             {
                 var claimAdd = CreateClaim(claim.ClaimAmount, claim.ReceiptAmount, claimReceiptDate, claim.ReceiptNumber, approval, refNo, _employeeNumber);
 
-                var result = repository.Add(claimAdd);
+                var result = _fsaClaimRepository.Add(claimAdd);
 
                 return new ClaimResult { IsSuccess = true, Message = "Submitted for approval." };
             }
@@ -150,17 +180,17 @@ namespace FSA.API.Business
 
         public IClaimResult Delete(ITransactClaim claim)
         {
-            FSAClaimRepository repository = new FSAClaimRepository();
+
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
-            var repositoryResult = repository.Delete(true, c => c.EmployeeID == _employeeNumber && c.ReferenceNumber == claim.ReferenceNumber);//ew FSAClaim { ReceiptDate = claim.ReceiptDate, ReceiptAmount = claim.ReceiptAmount}
+            var repositoryResult = _fsaClaimRepository.Delete(true, c => c.EmployeeID == _employeeNumber && c.ReferenceNumber == claim.ReferenceNumber);//ew FSAClaim { ReceiptDate = claim.ReceiptDate, ReceiptAmount = claim.ReceiptAmount}
             if (!repositoryResult.IsSuccess) return new ClaimResult { IsSuccess = false, Message = repositoryResult.Error.Message };
             return new ClaimResult { IsSuccess = true };
         }
 
         public IViewClaim GetClaim(string referenceNumber)
         {
-            FSAClaimRepository repository = new FSAClaimRepository();
-            var claim = repository.Get(c => c.ReferenceNumber == referenceNumber);
+
+            var claim = _fsaClaimRepository.Get(c => c.ReferenceNumber == referenceNumber);
             //var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
             if (claim == null) return null;
             return new EmployeeClaim { ClaimAmount = claim.ClaimAmount, ReceiptAmount = claim.ReceiptAmount, ReceiptDate = claim.ReceiptDate.ToString("MM/dd/yyyy"), ReceiptNumber = claim.ReceiptNumber, DateSubmitted = claim.DateSubmitted.ToString("MM/dd/yyyy"), ReferenceNumber = claim.ReferenceNumber.ToString(), Status = claim.Status, TotalClaimAmount = claim.ClaimAmount };
@@ -233,7 +263,10 @@ namespace FSA.API.Business
 
         public IClaimResult Update(ITransactClaim claim)
         {
-            FSAClaimRepository repository = new FSAClaimRepository();
+
+            bool validInputs = ValidateInput(claim);
+            if (!validInputs) return new ClaimResult { IsSuccess = false, Message = "Please check your inputs." };
+            
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 
             ClaimApprovals approval = ClaimApprovals.Pending;
@@ -274,7 +307,7 @@ namespace FSA.API.Business
                 Status = approval.ToString()
             };
 
-            var result = repository.Update(dbClaim, c => c.ReferenceNumber.ToString() == claim.ReferenceNumber);
+            var result = _fsaClaimRepository.Update(dbClaim, c => c.ReferenceNumber.ToString() == claim.ReferenceNumber);
             return new ClaimResult { IsSuccess = result.IsSuccess };
         }
 

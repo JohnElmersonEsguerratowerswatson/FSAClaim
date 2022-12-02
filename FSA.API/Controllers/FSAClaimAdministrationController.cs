@@ -14,12 +14,19 @@ namespace FSA.API.Controllers
     [Route("api/[controller]/[action]")]
     public class FSAClaimAdministrationController : Controller
     {
+        private IClaimsApprovalService _service;
+
+        public FSAClaimAdministrationController(IClaimsApprovalService service)
+        {
+            _service = service;
+        }
+
         public ActionResult<IEnumerable<ClaimsApprovalTableItems>> Index()
         {
             try
             {
-                ClaimsApprovalLogic claimsApprovalLogic = new ClaimsApprovalLogic();
-                var tableItems = claimsApprovalLogic.GetTableView();
+                //ClaimsApprovalLogic claimsApprovalLogic = new ClaimsApprovalLogic();
+                var tableItems = _service.GetTableView();
                 if (tableItems == null) return NotFound();
                 return Ok(tableItems);
             }
@@ -36,9 +43,7 @@ namespace FSA.API.Controllers
                 result.Message = ObjectStatus.ModelStateInvalid;
                 return BadRequest(result);
             }
-            ClaimsApprovalLogic claimApprovalLogic = new ClaimsApprovalLogic();
-            bool IsSuccess = claimApprovalLogic.ApproveClaim(claimApproval);
-            //claimApprovalLogic
+            bool IsSuccess = _service.ApproveClaim(claimApproval);
             string approval = claimApproval.Approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
             if (!IsSuccess) return Problem();
             return Ok(new ClaimResult{ IsSuccess = IsSuccess, Message = "Successfully " + claimApproval + " claim" });

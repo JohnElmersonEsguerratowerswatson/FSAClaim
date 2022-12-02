@@ -19,10 +19,11 @@ namespace FSA.API.Controllers
     {
 
         private int _employeeID = 1;//employee ID 1
-
-        public ClaimsController()
+        private IFSAClaimBusinessService _service;
+        public ClaimsController(IFSAClaimBusinessService service)
         {
-
+            this._service = service;  
+            this._service.EmployeeID = _employeeID;
         }
 
         private void CheckUser(IIdentity identity)
@@ -43,8 +44,8 @@ namespace FSA.API.Controllers
         {
             //CheckUser(User.Identity);
             //if (_employeeID == 0) return Unauthorized();
-            ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-            var claims = logic.GetClaimsResult();
+            //ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
+            var claims = _service.GetClaimsResult();
             return Ok(claims);
         }
 
@@ -59,31 +60,17 @@ namespace FSA.API.Controllers
         {
             // CheckUser(User.Identity);
             //if (_employeeID == 0) return Unauthorized();
-            IViewClaim claim;
-            ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-            claim = logic.GetClaim(arg);
+            
+            //ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
+            IViewClaim claim = _service.GetClaim(arg);
             if (claim == null) { return NotFound(); }
 
             return Ok(claim);
         }
 
-        private bool CheckDateInput(string date)
-        {
-            try { var d = DateTime.ParseExact(date, new String[] { "MM/dd/yyyy" }, null, style: System.Globalization.DateTimeStyles.AssumeLocal); return true; }
+       
 
-            catch { return false; }
-        }
-
-        private bool ValidateInput(TransactClaim claim)
-        {
-            if (claim == null) { return false; };
-            bool validClaimAmount = false;
-            bool validReceiptAmount = false;
-            bool validRecieptDate = CheckDateInput(claim.ReceiptDate);
-            validClaimAmount = decimal.TryParse(claim.ClaimAmount.ToString(), out decimal claimAmount);
-            validReceiptAmount = decimal.TryParse(claim.ReceiptAmount.ToString(), out decimal receiptAmount);
-            return validClaimAmount && validReceiptAmount && validRecieptDate;
-        }
+      
 
 
         // POST: ClaimsController/Create
@@ -101,24 +88,15 @@ namespace FSA.API.Controllers
                 //CheckUser(User.Identity);
                 //if (_employeeID == 0) return Unauthorized();
                 IClaimResult result = new ClaimResult();
-                bool validInputs = ValidateInput(claim);
-                if (!ModelState.IsValid || !validInputs)
+                
+                if (!ModelState.IsValid)
                 {
                     result.IsSuccess = false;
                     result.Message = ObjectStatus.ModelStateInvalid;
                     return BadRequest(result);
                 }
 
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                //return BAD request if claim amount is greater than receipt ammount
-                if (claim.ClaimAmount > claim.ReceiptAmount)
-                {
-                    result.Message = "Claim Amount cannot exceed Receipt Amount";
-                    return BadRequest(result);
-                }
-
-
-                result = logic.AddClaim(claim);
+                result = _service.AddClaim(claim);
                 if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
             }
@@ -138,22 +116,20 @@ namespace FSA.API.Controllers
         [HttpPost]
         public ActionResult<IClaimResult> Edit([FromBody] TransactClaim claim)
         {
-
             try
             {
-                bool validInputs = ValidateInput(claim);
+                
                 //CheckUser(User.Identity);
                 // if (_employeeID == 0) return Unauthorized();
                 IClaimResult result = new ClaimResult();
-                if (!ModelState.IsValid || !validInputs)
+                if (!ModelState.IsValid)
                 {
                     result.IsSuccess = false;
                     result.Message = ObjectStatus.ModelStateInvalid;
                     return BadRequest(result);
                 }
-
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                result = logic.Update(claim);
+               
+                result = _service.Update(claim);
                 if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
 
@@ -177,8 +153,8 @@ namespace FSA.API.Controllers
             try
             {
                 IClaimResult result = new ClaimResult();
-                bool validDate = CheckDateInput(claim.ReceiptDate);
-                if (!ModelState.IsValid || !validDate)
+                
+                if (!ModelState.IsValid)
                 {
                     result.IsSuccess = false;
                     result.Message = ObjectStatus.ModelStateInvalid;
@@ -186,10 +162,9 @@ namespace FSA.API.Controllers
                 }
                 // CheckUser(User.Identity);
                 // if (_employeeID == 0) return Unauthorized();
-                if (!ModelState.IsValid) return BadRequest(ModelState);
+                
 
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                result = logic.Delete(claim);
+                result = _service.Delete(claim);
                 if (!result.IsSuccess) return Problem();
 
                 return Ok(result);

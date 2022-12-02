@@ -8,14 +8,22 @@ using FSA.Domain.Entities;
 
 namespace FSA.API.Business
 {
-    public class FSARuleLogic
+    public class FSARuleLogic : IFSARuleService
     {
         private Employee _employee;
         private int _employeeID;
         private string _employeeName;
-        public FSARuleLogic(int employeeID)
+
+        public int EmployeeID { get { return _employeeID; } set { SetEmployee(value); } }
+
+        public FSARuleLogic()
         {
 
+           
+        }
+
+        private void SetEmployee(int employeeID)
+        {
             _employeeID = employeeID;
             _employee = GetEmployee();
             _employeeName = _employee.FirstName + " " + _employee.LastName;
@@ -73,15 +81,36 @@ namespace FSA.API.Business
         {
             try
             {
+                TransactFSARule rule;
+                try
+                {
+                    rule = Get();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return new AddFSARuleResult { IsSuccess=false, Message = "Unable to find employee." };
+                }
+                catch (Exception)
+                {
+                    return new AddFSARuleResult { IsSuccess = false, Message = "There was a problem adding FSA." };
+                }
+
+
+                if (rule != null)
+                {
+                    
+                    return new AddFSARuleResult { IsSuccess = false, Message = "Employee already has FSA." };
+                }
                 // TRepository<FSARule> repository  = new TRepository<FSARule>();
                 IRepositoryResult repoResult;
                 TransactAssociateEntityRepository repo = new TransactAssociateEntityRepository();
                 //check for existing Rule with same Year and Amount
-                FSARule rule = GetFSARuleFromYearAndAmount(getFSA.YearCoverage, getFSA.FSAAmount);
+                FSARule dbRule = GetFSARuleFromYearAndAmount(getFSA.YearCoverage, getFSA.FSAAmount);
                 //Add new Rule
-                if (rule == null) { rule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
+                
+                if (dbRule == null) { dbRule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
                 repoResult = repo.Add(
-                   rule, _employee.ID
+                   dbRule, _employee.ID
                     );
 
                 return new AddFSARuleResult { IsSuccess = repoResult.IsSuccess };//  repository.Add();

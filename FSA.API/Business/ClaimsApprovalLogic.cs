@@ -8,8 +8,9 @@ using FSA.Domain.Entities;
 
 namespace FSA.API.Business
 {
-    public class ClaimsApprovalLogic
+    public class ClaimsApprovalLogic : IClaimsApprovalService
     {
+        
         public List<ClaimsApprovalTableItems> GetTableView()
         {
             TRepository<Employee> employeeRepository = new TRepository<Employee>();

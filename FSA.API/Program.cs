@@ -1,5 +1,8 @@
 using FSA.API.Business;
 using FSA.API.Business.Services;
+using FSA.Data.Repository;
+using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -22,7 +25,14 @@ builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 
-builder.Services.AddSingleton<IEmployeeService,EmployeeService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IFSAClaimBusinessService, ClaimsBusinessLogic>();
+builder.Services.AddTransient<IClaimsApprovalService, ClaimsApprovalLogic>();
+builder.Services.AddTransient<IFSARuleService, FSARuleLogic>();
+
+builder.Services.AddTransient<IRepository<FSAClaim>, FSAClaimRepository>();
+
+
 builder.Services.AddControllers();
 
 //builder.Services.AddAntiforgery();

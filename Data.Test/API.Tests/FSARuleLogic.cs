@@ -18,7 +18,7 @@ namespace FSA.Test.API.Tests
         private string _employeeName = "Gale Erickson";
         public APIFSARuleLogic()
         {
-            _fSARuleLogic = new FSARuleLogic(_employeeID);
+           // _fSARuleLogic = new FSARuleLogic(_employeeID);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace FSA.Test.API.Tests
             _employeeName = "John Doe";
 
             ITransactFSARule rule;
-            _fSARuleLogic = new FSARuleLogic(_employeeID);
+            _fSARuleLogic = new FSARuleLogic();
             try
             {
                 rule = _fSARuleLogic.Get();

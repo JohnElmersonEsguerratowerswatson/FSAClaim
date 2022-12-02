@@ -36,6 +36,13 @@ export class FSARuleComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.validateClaimAmount();
+
+    if (!this.validClaimAmount) {
+      alert("Please check you amount input.");
+      return;
+    }
+
     this.subscription = this.fsaRuleService.addEmployeeFSARule(this.fsaRule).subscribe(
       result => { alert("Successfully created FSA"); },
       errorResult => { alert(errorResult.error.message); }
@@ -54,5 +61,18 @@ export class FSARuleComponent implements OnInit, OnDestroy {
     this.fsaRule.employeeID = parseInt(value);
     console.log(value);
   }
+
+
+  onNumberChange(e: KeyboardEvent): void {
+    if (e.key == "e") e.preventDefault();
+    this.validateClaimAmount();
+  }
+
+  validateClaimAmount(): void {
+    //if (e != null && e.key == "e") e.preventDefault();
+    this.validClaimAmount = this.fsaRule.fSAAmount > 0;
+  }
+
+  public validClaimAmount: boolean = true;
 
 }

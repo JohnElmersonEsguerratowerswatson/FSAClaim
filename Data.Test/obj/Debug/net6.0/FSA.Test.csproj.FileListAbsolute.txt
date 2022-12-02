@@ -1,9 +1,4 @@
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\CoverletSourceRootsMapping
-C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.csproj.AssemblyReference.cache
-C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.AssemblyInfoInputs.cache
-C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.AssemblyInfo.cs
-C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.csproj.CoreCompileInputs.cache
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\testhost.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.API.deps.json
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.API.runtimeconfig.json
@@ -22,6 +17,7 @@ C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\ref\FSA.Test
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.Test.pdb
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Castle.Core.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
@@ -56,6 +52,7 @@ C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.Te
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.TestPlatform.Utilities.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.VisualStudio.TestPlatform.Common.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Moq.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\NuGet.Frameworks.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -158,6 +155,11 @@ C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.API.pdb
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.Data.pdb
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.Domain.pdb
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\FSA.Common.pdb
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.csproj.AssemblyReference.cache
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.AssemblyInfoInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.AssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.csproj.CoreCompileInputs.cache
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.csproj.CopyComplete
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\ref\FSA.Test.dll

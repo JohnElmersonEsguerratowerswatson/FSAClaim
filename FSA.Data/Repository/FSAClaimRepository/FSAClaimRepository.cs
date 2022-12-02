@@ -30,11 +30,11 @@ namespace FSA.Data.Repository.FSAClaimRepository
         /// <param name="fSAClaim"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public new IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
+        public override IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
@@ -66,7 +66,7 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
@@ -94,7 +94,7 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
@@ -120,11 +120,11 @@ namespace FSA.Data.Repository.FSAClaimRepository
         /// <param name="approve"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public IRepositoryResult Delete(bool delete, Func<FSAClaim, bool> predicate)
+        public override IRepositoryResult Delete(bool delete, Func<FSAClaim, bool> predicate)
         {
             try
             {
-                using (ClaimContext)
+                using (ClaimContext = new FSAClaimContext())
                 {
                     var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
