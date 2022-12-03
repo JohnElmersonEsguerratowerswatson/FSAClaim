@@ -66,7 +66,7 @@ namespace FSA.Test.API.Tests
             // Assert.True(success);))
         }
 
-        [Fact]
+        //[Fact]
         public void GetClaimsForApproval()
         {
 
@@ -74,14 +74,14 @@ namespace FSA.Test.API.Tests
             Assert.NotEmpty(claims);
         }
 
-        [Fact]
+        //[Fact]
         public void ApproveClaim()
         {
             bool success = _serviceMoq.Object.ApproveClaim(claimApproval);
             Assert.True(success);
         }
 
-        [Fact]
+       // [Fact]
         public void DenyClaim()
         {
             bool success = _serviceMoq.Object.ApproveClaim(claimApprovalDeny);
@@ -89,14 +89,14 @@ namespace FSA.Test.API.Tests
         }
 
 
-        [Fact]
+      //  [Fact]
         public void ApproveClaim_Should_Fail()
         {
             bool success = _serviceMoq.Object.ApproveClaim(new ClaimApproval { Approve = true, ReferenceNumber = "324H34G23F4" });
             Assert.False(success);
         }
 
-        [Fact]
+       // [Fact]
         public void DenyClaim_Should_Fail()
         {
             bool success = _serviceMoq.Object.ApproveClaim(new ClaimApproval { Approve = false, ReferenceNumber = "324H34G23F4" });

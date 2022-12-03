@@ -21,7 +21,7 @@ namespace FSA.Test.API.Tests
            //_logic = new ClaimsBusinessLogic();
         }
 
-        [Fact]
+      // [Fact]
         public void AddClaim()
         {
             var result = _logic.AddClaim(new TransactClaim
@@ -35,7 +35,7 @@ namespace FSA.Test.API.Tests
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+      //  [Fact]
         public void UpdateClaim()
         {
             var result = _logic.Update(new TransactClaim
@@ -49,7 +49,7 @@ namespace FSA.Test.API.Tests
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+       // [Fact]
         public void DeleteClaim()
         {
             var result = _logic.Delete(new TransactClaim
@@ -63,14 +63,14 @@ namespace FSA.Test.API.Tests
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+      //  [Fact]
         public void GetClaims()
         {
             var claims = _logic.GetClaimList();
             Assert.NotEmpty(claims);
         }
 
-        [Fact]
+       // [Fact]
         public void GetClaim()
         {
             var claim = _logic.GetClaim("2022MM12RBF0103");

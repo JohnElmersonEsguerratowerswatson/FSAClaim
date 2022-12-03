@@ -21,7 +21,7 @@ namespace FSA.Test.API.Tests
            // _fSARuleLogic = new FSARuleLogic(_employeeID);
         }
 
-        [Fact]
+       // [Fact]
         public void AddFSARuletoEmployee()
         {
             var rule = new TransactFSARule();
@@ -32,7 +32,7 @@ namespace FSA.Test.API.Tests
             var result = _fSARuleLogic.AddFSARule(rule);
             Assert.True(result.IsSuccess);
         }
-        [Fact]
+       // [Fact]
         public void AddFSARuletoEmployeeFail()
         {
             _employeeID = 3;

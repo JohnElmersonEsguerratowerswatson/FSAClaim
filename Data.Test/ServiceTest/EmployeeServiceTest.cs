@@ -24,6 +24,7 @@ namespace FSA.Test.ServiceTest
             _employeeService = new EmployeeService(_employeeRepository.Object);
             Setup();
         }
+
         private void Setup()
         {
             _employeeRepository.Setup(r => r.GetList()).Returns(GenerateEmployeeList());

@@ -18,7 +18,7 @@ namespace FSA.Test.Data.Tests
             _employeeID = 3;
         }
 
-        [Fact]
+        //[Fact]
         public void Add()
         {
             var result = repository.Add(new Domain.Entities.FSARule
