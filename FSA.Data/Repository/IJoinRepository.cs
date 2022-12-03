@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FSA.Data.Repository
 {
-    internal interface IJoinRepository<T, U, V> where T : class where U : class where V : class
+    public interface IJoinRepository<T, U, V> where T : class where U : class where V : class
 
     {
         public ICollection<V> GetList(Func<T, bool> criteria);

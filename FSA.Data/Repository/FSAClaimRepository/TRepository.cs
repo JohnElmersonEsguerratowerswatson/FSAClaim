@@ -1,4 +1,5 @@
 ﻿using FSA.Data.DBContext;
+using FSA.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace FSA.Data.Repository.GenericRepository
         public TRepository()
         {
             ClaimContext = new FSAClaimContext();
+        }
+
+        public override IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

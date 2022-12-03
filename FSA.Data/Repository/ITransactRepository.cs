@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FSA.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace FSA.Data.Repository
 
 
         public IRepositoryResult Update(T entity, Func<T, bool> predicate);
+        public IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate);
         public IRepositoryResult Delete(Func<T, bool> predicate);
         public IRepositoryResult Delete(bool delete, Func<T, bool> predicate);
         public IRepositoryResult Add(T entity);

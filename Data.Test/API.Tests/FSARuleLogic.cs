@@ -39,7 +39,7 @@ namespace FSA.Test.API.Tests
             _employeeName = "John Doe";
 
             ITransactFSARule rule;
-            _fSARuleLogic = new FSARuleLogic();
+           // _fSARuleLogic = new FSARuleLogic();
             try
             {
                 rule = _fSARuleLogic.Get();

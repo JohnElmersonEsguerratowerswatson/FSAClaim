@@ -2,6 +2,8 @@ using FSA.API.Business;
 using FSA.API.Business.Services;
 using FSA.Data.Repository;
 using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Data.Repository.GenericRepository;
+using FSA.Data.Repository.LoginRepository;
 using FSA.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -24,14 +26,19 @@ builder.Services.AddSwaggerGen();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 // Add services to the container.
-
+//SERVICES/ BUSINESS LOGIC
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddTransient<IFSAClaimBusinessService, ClaimsBusinessLogic>();
 builder.Services.AddTransient<IClaimsApprovalService, ClaimsApprovalLogic>();
 builder.Services.AddTransient<IFSARuleService, FSARuleLogic>();
+builder.Services.AddTransient<ILoginService, LoginLogic>();
 
+//REPOSITORIES
+builder.Services.AddTransient<IJoinRepository<Employee, EmployeeFSA, FSARule>, EmployeeFSARepository>();
 builder.Services.AddTransient<IRepository<FSAClaim>, FSAClaimRepository>();
-
+builder.Services.AddTransient<IRepository<Employee>, TRepository<Employee>>();
+builder.Services.AddTransient<IRepository<FSARule>, TRepository<FSARule>>();
+builder.Services.AddTransient<IViewRepository<Login>,LoginRepository>();
 
 builder.Services.AddControllers();
 

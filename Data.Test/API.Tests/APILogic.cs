@@ -18,7 +18,7 @@ namespace FSA.Test.API.Tests
         private const int _employeeID = 2;// CHANGE EMPLOYEE ID
         public APIEmployeeClaimLogic()
         {
-            _logic = new ClaimsBusinessLogic(_employeeID);
+           //_logic = new ClaimsBusinessLogic();
         }
 
         [Fact]

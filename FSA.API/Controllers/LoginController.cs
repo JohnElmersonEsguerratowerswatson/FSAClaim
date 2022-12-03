@@ -15,11 +15,12 @@ namespace FSA.API.Controllers
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-
+        private ILoginService _loginService;
         private IConfiguration _configuration;
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, ILoginService loginService)
         {
             _configuration = config;
+            _loginService = loginService;   
         }
 
         [HttpPost]
@@ -28,8 +29,8 @@ namespace FSA.API.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                LoginLogic login = new LoginLogic();
-                var validatedLogin = login.ValidateLogin(model);
+                
+                var validatedLogin = _loginService.ValidateLogin(model);
                 if (validatedLogin == null) return Unauthorized();
 
 

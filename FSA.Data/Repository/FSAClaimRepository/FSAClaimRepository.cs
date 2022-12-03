@@ -62,7 +62,7 @@ namespace FSA.Data.Repository.FSAClaimRepository
         /// <param name="status"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
+        public override IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
         {
             try
             {

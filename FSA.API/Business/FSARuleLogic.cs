@@ -13,13 +13,17 @@ namespace FSA.API.Business
         private Employee _employee;
         private int _employeeID;
         private string _employeeName;
+        private IRepository<Employee> _employeeRepository;
+        private IJoinRepository<Employee, EmployeeFSA, FSARule> _employeeFSARepository;
+        private IRepository<FSARule> _fsaRuleRepository;
 
         public int EmployeeID { get { return _employeeID; } set { SetEmployee(value); } }
 
-        public FSARuleLogic()
+        public FSARuleLogic(IRepository<Employee> employeeRepository, IJoinRepository<Employee, EmployeeFSA, FSARule> employeeFSARepository, IRepository<FSARule> fsaRuleRepository)
         {
-
-           
+            _employeeRepository = employeeRepository;
+            _employeeFSARepository = employeeFSARepository; 
+            _fsaRuleRepository = fsaRuleRepository; 
         }
 
         private void SetEmployee(int employeeID)
@@ -44,23 +48,23 @@ namespace FSA.API.Business
 
         private Employee GetEmployee()
         {
-            TRepository<Employee> repoE = new TRepository<Employee>();
-            var employee = repoE.Get(e => e.ID == _employeeID);
+
+            var employee = _employeeRepository.Get(e => e.ID == _employeeID);
             if (employee == null) throw new KeyNotFoundException("Employee not found.");
             return employee;
         }
 
         private FSARule GetEmployeeFSARule()
         {
-            EmployeeFSARepository repoeFSA = new EmployeeFSARepository();
-            var fsaRule = repoeFSA.Get(e => e.ID == _employee.ID);
+            
+            var fsaRule = _employeeFSARepository.Get(e => e.ID == _employee.ID);
             return fsaRule;
         }
 
         private FSARule GetFSARuleFromYearAndAmount(int year, decimal amount)
         {
-            TRepository<FSARule> repository = new TRepository<FSARule>();
-            var rule = repository.Get(r => r.FSALimit == amount && r.YearCoverage == year);
+          
+            var rule = _fsaRuleRepository.Get(r => r.FSALimit == amount && r.YearCoverage == year);
             return rule;
         }
 
@@ -88,7 +92,7 @@ namespace FSA.API.Business
                 }
                 catch (KeyNotFoundException ex)
                 {
-                    return new AddFSARuleResult { IsSuccess=false, Message = "Unable to find employee." };
+                    return new AddFSARuleResult { IsSuccess = false, Message = "Unable to find employee." };
                 }
                 catch (Exception)
                 {
@@ -98,7 +102,7 @@ namespace FSA.API.Business
 
                 if (rule != null)
                 {
-                    
+
                     return new AddFSARuleResult { IsSuccess = false, Message = "Employee already has FSA." };
                 }
                 // TRepository<FSARule> repository  = new TRepository<FSARule>();
@@ -107,7 +111,7 @@ namespace FSA.API.Business
                 //check for existing Rule with same Year and Amount
                 FSARule dbRule = GetFSARuleFromYearAndAmount(getFSA.YearCoverage, getFSA.FSAAmount);
                 //Add new Rule
-                
+
                 if (dbRule == null) { dbRule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
                 repoResult = repo.Add(
                    dbRule, _employee.ID

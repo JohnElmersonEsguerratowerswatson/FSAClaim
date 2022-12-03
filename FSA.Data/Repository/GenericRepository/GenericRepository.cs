@@ -1,5 +1,6 @@
 ﻿using FSA.Data.DBContext;
 using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -153,5 +154,13 @@ namespace FSA.Data.Repository.GenericRepository
                 return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
             }
         }
+
+        public abstract IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate);
+
+
+        //public  IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

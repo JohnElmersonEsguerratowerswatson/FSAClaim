@@ -14,7 +14,8 @@ namespace FSA.API.Business
     public class ClaimsBusinessLogic : IFSAClaimBusinessService
     {
         private IRepository<FSAClaim> _fsaClaimRepository;
-
+        private IJoinRepository<Employee, EmployeeFSA, FSARule> _employeeFSARepository;
+        private IRepository<Employee> _employeeRepository;
         private int _employeeNumber;
         public int EmployeeID { get { return _employeeNumber; } set { _employeeNumber = value; } }
 
@@ -23,15 +24,17 @@ namespace FSA.API.Business
         //    _employeeNumber = employeeNumber;
         //}
 
-        public ClaimsBusinessLogic(IRepository<FSAClaim> fsaClaimRepository)
+        public ClaimsBusinessLogic(IRepository<FSAClaim> fsaClaimRepository, IJoinRepository<Employee, EmployeeFSA, FSARule> emplyeeFFSARepository, IRepository<Employee> employeeRepository)
         {
             _fsaClaimRepository = fsaClaimRepository;
+            _employeeFSARepository = emplyeeFFSARepository;
+            _employeeRepository = employeeRepository;
         }
 
         private Employee GetEmployee()
         {
-            TRepository<Employee> tdb = new TRepository<Employee>();
-            return tdb.Get(e => e.ID == _employeeNumber);
+           // TRepository<Employee> tdb = new TRepository<Employee>();
+            return _employeeRepository.Get(e => e.ID == _employeeNumber);
         }
 
         private IEnumerable<FSAClaim> GetApprovedFSAClaimsByEmployee(IEnumerable<FSAClaim> fSAClaims)
@@ -63,9 +66,9 @@ namespace FSA.API.Business
 
         private FSARule GetFSARule()
         {
-            EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
+            //EmployeeFSARepository eFSARepository = new EmployeeFSARepository();
 
-            var employeeFSARule = eFSARepository.Get(e => e.ID == _employeeNumber);
+            var employeeFSARule = _employeeFSARepository.Get(e => e.ID == _employeeNumber);
 
             return employeeFSARule;
         }
@@ -120,7 +123,6 @@ namespace FSA.API.Business
                 //  return BadRequest(result);
             }
 
-
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 
             //Check if Receipt Date is valid
@@ -128,7 +130,6 @@ namespace FSA.API.Business
 
             //Compose Reference Number
             string refNo = claimReceiptDate.Year.ToString() + claimReceiptDate.Month.ToString() + claimReceiptDate.Day.ToString() + claim.ReceiptNumber;
-
 
             //FSAClaimRepository repository = new FSAClaimRepository();
 
@@ -266,7 +267,7 @@ namespace FSA.API.Business
 
             bool validInputs = ValidateInput(claim);
             if (!validInputs) return new ClaimResult { IsSuccess = false, Message = "Please check your inputs." };
-            
+
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 
             ClaimApprovals approval = ClaimApprovals.Pending;
