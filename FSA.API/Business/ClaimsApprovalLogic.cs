@@ -24,7 +24,7 @@ namespace FSA.API.Business
         {
 
             List<ClaimsApprovalTableItems> items = new List<ClaimsApprovalTableItems>();
-            var employees = _employeeRepository.GetList(e => true);
+            var employees = _employeeRepository.GetList();
             foreach (var employee in employees)
             {
                 var claims = _fsaClaimRepository.GetList(c => c.isCancelled == false && c.EmployeeID == employee.ID && c.Status == ClaimApprovals.Pending.ToString() && c.DateSubmitted.Year == DateTime.UtcNow.Year);

@@ -16,14 +16,17 @@ namespace FSA.API.Business
         private IRepository<Employee> _employeeRepository;
         private IJoinRepository<Employee, EmployeeFSA, FSARule> _employeeFSARepository;
         private IRepository<FSARule> _fsaRuleRepository;
+        private ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule> _employeeFSATransactRepository;
 
         public int EmployeeID { get { return _employeeID; } set { SetEmployee(value); } }
 
-        public FSARuleLogic(IRepository<Employee> employeeRepository, IJoinRepository<Employee, EmployeeFSA, FSARule> employeeFSARepository, IRepository<FSARule> fsaRuleRepository)
+        public FSARuleLogic(IRepository<Employee> employeeRepository, IJoinRepository<Employee, EmployeeFSA, FSARule> employeeFSARepository,
+            IRepository<FSARule> fsaRuleRepository, ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule> employeeFSATransactRepository)
         {
             _employeeRepository = employeeRepository;
-            _employeeFSARepository = employeeFSARepository; 
-            _fsaRuleRepository = fsaRuleRepository; 
+            _employeeFSARepository = employeeFSARepository;
+            _fsaRuleRepository = fsaRuleRepository;
+            _employeeFSATransactRepository = employeeFSATransactRepository;
         }
 
         private void SetEmployee(int employeeID)
@@ -56,14 +59,14 @@ namespace FSA.API.Business
 
         private FSARule GetEmployeeFSARule()
         {
-            
+
             var fsaRule = _employeeFSARepository.Get(e => e.ID == _employee.ID);
             return fsaRule;
         }
 
         private FSARule GetFSARuleFromYearAndAmount(int year, decimal amount)
         {
-          
+
             var rule = _fsaRuleRepository.Get(r => r.FSALimit == amount && r.YearCoverage == year);
             return rule;
         }
@@ -107,13 +110,13 @@ namespace FSA.API.Business
                 }
                 // TRepository<FSARule> repository  = new TRepository<FSARule>();
                 IRepositoryResult repoResult;
-                TransactAssociateEntityRepository repo = new TransactAssociateEntityRepository();
+
                 //check for existing Rule with same Year and Amount
                 FSARule dbRule = GetFSARuleFromYearAndAmount(getFSA.YearCoverage, getFSA.FSAAmount);
                 //Add new Rule
 
                 if (dbRule == null) { dbRule = new FSARule { FSALimit = getFSA.FSAAmount, YearCoverage = getFSA.YearCoverage }; }
-                repoResult = repo.Add(
+                repoResult = _employeeFSATransactRepository.Add(
                    dbRule, _employee.ID
                     );
 

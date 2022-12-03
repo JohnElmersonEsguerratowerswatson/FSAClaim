@@ -2,6 +2,7 @@ using FSA.API.Business;
 using FSA.API.Business.Services;
 using FSA.Data.Repository;
 using FSA.Data.Repository.FSAClaimRepository;
+using FSA.Data.Repository.FSARuleRepository;
 using FSA.Data.Repository.GenericRepository;
 using FSA.Data.Repository.LoginRepository;
 using FSA.Domain.Entities;
@@ -39,6 +40,7 @@ builder.Services.AddTransient<IRepository<FSAClaim>, FSAClaimRepository>();
 builder.Services.AddTransient<IRepository<Employee>, TRepository<Employee>>();
 builder.Services.AddTransient<IRepository<FSARule>, TRepository<FSARule>>();
 builder.Services.AddTransient<IViewRepository<Login>,LoginRepository>();
+builder.Services.AddTransient<ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>, TransactAssociateEntityRepository>();
 
 builder.Services.AddControllers();
 
