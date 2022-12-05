@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mmgl9dlLpUTJ5B3ML8lIpv9Si0qGk6SZF+eEZsvq7PthGDidYyrmY7DkmodqY+plFT/lugabO6fpBgjTube5dA==",
+  "dgSpecHash": "K4PEPbyZGmdiL9qrblvGetcj6DW0PNuzoWLukECKGAtEDdbrje2GLZotM1AqDBn4FXCPZGwJu5JzmKxPXqQuwQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\johne5446\\source\\repos\\FSAClaim\\Data.Test\\FSA.Test.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.0\\microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",
+    "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\7.0.0\\microsoft.entityframeworkcore.inmemory.7.0.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.0\\microsoft.entityframeworkcore.relational.7.0.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\7.0.0\\microsoft.entityframeworkcore.sqlserver.7.0.0.nupkg.sha512",
     "C:\\Users\\johne5446\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",

@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="API.Tests\**" />
+    <Compile Remove="Data.Tests\**" />
+    <EmbeddedResource Remove="API.Tests\**" />
+    <EmbeddedResource Remove="Data.Tests\**" />
+    <None Remove="API.Tests\**" />
+    <None Remove="Data.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.17.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
     <PackageReference Include="AutoFixture.Xunit" Version="4.17.0" />

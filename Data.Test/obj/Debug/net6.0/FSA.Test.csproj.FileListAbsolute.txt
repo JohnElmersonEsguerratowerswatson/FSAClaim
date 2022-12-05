@@ -169,3 +169,4 @@ C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\ref\FSA.Test.dll
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.pdb
 C:\Users\johne5446\source\repos\FSAClaim\Data.Test\obj\Debug\net6.0\FSA.Test.genruntimeconfig.cache
+C:\Users\johne5446\source\repos\FSAClaim\Data.Test\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll

@@ -42,8 +42,6 @@ namespace FSA.Test.ServiceTest
             _employeeRepository.Setup(r => r.Get(It.IsAny<Func<Employee, bool>>())).Returns(GenerateEmployee());
         }
 
-
-
         public ClaimsServiceTest()
         {
             _claimRepository = new Mock<IRepository<FSAClaim>>();

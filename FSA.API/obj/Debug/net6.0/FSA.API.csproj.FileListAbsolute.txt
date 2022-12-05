@@ -87,3 +87,4 @@ C:\Users\johne5446\source\repos\FSAClaim\FSA.API\obj\Debug\net6.0\FSA.API.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\obj\Debug\net6.0\ref\FSA.API.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\obj\Debug\net6.0\FSA.API.pdb
 C:\Users\johne5446\source\repos\FSAClaim\FSA.API\obj\Debug\net6.0\FSA.API.genruntimeconfig.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
