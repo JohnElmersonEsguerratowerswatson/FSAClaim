@@ -18,7 +18,6 @@ namespace FSA.Data.Repository.FSAClaimRepository
             _dbContext = dbContext;
         }
 
-
         public FSARule? Get(Func<Employee, bool> criteria)
         {
             //select the employee with the supplied ID etc.

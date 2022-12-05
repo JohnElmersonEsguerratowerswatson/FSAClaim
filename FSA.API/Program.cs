@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(
     options =>
@@ -22,6 +23,7 @@ builder.Services.AddCors(
     )
     );
 
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
@@ -31,12 +33,20 @@ builder.Services.AddSwaggerGen();
 
 
 // Add services to the container.
-//SERVICES/ BUSINESS LOGIC
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IFSAClaimBusinessService, ClaimsBusinessLogic>();
-builder.Services.AddScoped<IClaimsApprovalService, ClaimsApprovalLogic>();
-builder.Services.AddScoped<IFSARuleService, FSARuleLogic>();
-builder.Services.AddScoped<ILoginService, LoginLogic>();
+
+//DbContext
+
+
+
+//DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder();
+//dbContextOptionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false");
+//FSAClaimContext claimContext = new FSAClaimContext(dbContextOptionsBuilder);
+
+builder.Services.AddDbContext<FSAClaimContext>(
+optionsBuilder => optionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false")
+    , ServiceLifetime.Scoped
+    );
+
 
 //REPOSITORIES
 builder.Services.AddScoped<IJoinRepository<Employee, EmployeeFSA, FSARule>, EmployeeFSARepository>();
@@ -46,11 +56,13 @@ builder.Services.AddScoped<IRepository<FSARule>, TRepository<FSARule>>();
 builder.Services.AddScoped<IViewRepository<Login>, LoginRepository>();
 builder.Services.AddScoped<ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>, TransactAssociateEntityRepository>();
 
-//DbContext
-builder.Services.AddDbContext<FSAClaimContext>(
-    optionsBuilder => optionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false")
-    , ServiceLifetime.Scoped
-    );
+
+//SERVICES/ BUSINESS LOGIC
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IFSAClaimBusinessService, ClaimsBusinessLogic>();
+builder.Services.AddScoped<IClaimsApprovalService, ClaimsApprovalLogic>();
+builder.Services.AddScoped<IFSARuleService, FSARuleLogic>();
+builder.Services.AddScoped<ILoginService, LoginLogic>();
 
 
 builder.Services.AddControllers();

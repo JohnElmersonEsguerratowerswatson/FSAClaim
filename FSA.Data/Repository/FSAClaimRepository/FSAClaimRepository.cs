@@ -16,9 +16,10 @@ namespace FSA.Data.Repository.FSAClaimRepository
     public class FSAClaimRepository : GenericRepository<FSAClaim>
     {
 
-        public FSAClaimRepository(FSAClaimContext dbContext, bool test = false)
+        public FSAClaimRepository(FSAClaimContext dbContext)
         {
-            _test = test;
+
+            _test = false;
             ClaimContext = dbContext;
         }
 

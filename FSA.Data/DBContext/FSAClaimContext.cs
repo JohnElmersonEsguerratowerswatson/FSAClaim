@@ -12,9 +12,10 @@ namespace FSA.Data.DBContext
     {
         //private DbContextOptionsBuilder _optionsBuilder;
 
-        public FSAClaimContext(DbContextOptionsBuilder<FSAClaimContext> optionsBuilder)
+        public FSAClaimContext(DbContextOptions<FSAClaimContext> options):
+            base(options)
         {
-
+            
         }
    
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,11 +25,11 @@ namespace FSA.Data.DBContext
             //modelBuilder.Entity<FSARule>().HasMany<EmployeeFSA>().WithOne();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false");
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //optionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
         public DbSet<Employee> Employees { get; set; }
 
