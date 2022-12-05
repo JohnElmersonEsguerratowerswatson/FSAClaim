@@ -11,9 +11,9 @@ namespace FSA.Data.Repository.GenericRepository
     public class TRepository<T> : GenericRepository<T> where T : class
     {
         protected override FSAClaimContext ClaimContext { get; set; }
-        public TRepository()
+        public TRepository(FSAClaimContext dbContext)
         {
-            ClaimContext = new FSAClaimContext();
+            ClaimContext = dbContext;
         }
 
         public override IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)

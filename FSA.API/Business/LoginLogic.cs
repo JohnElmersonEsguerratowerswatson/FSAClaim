@@ -17,8 +17,8 @@ namespace FSA.API.Business
         }
         public IValidatedLogin ValidateLogin(LoginModel loginModel)
         {
-            LoginRepository loginRepository = new LoginRepository();
-            var login = loginRepository.Get(l => l.Username == loginModel.Username && l.Password == loginModel.Password);
+           //LoginRepository loginRepository = new LoginRepository();
+            var login = _loginRepository.Get(l => l.Username == loginModel.Username && l.Password == loginModel.Password);
             if (login == null) return null;
             return new ValidatedLogin(login.EmployeeID, login.Role);
         }

@@ -14,9 +14,9 @@ namespace FSA.Data.Repository.FSARuleRepository
     {
         private FSAClaimContext _dbContext;
 
-        public TransactAssociateEntityRepository()
+        public TransactAssociateEntityRepository(FSAClaimContext dbContext)
         {
-            _dbContext = new FSAClaimContext();
+            _dbContext = dbContext;
         }
 
         public IRepositoryResult Add(FSARule entity, int innerID)

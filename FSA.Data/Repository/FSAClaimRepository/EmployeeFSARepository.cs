@@ -13,9 +13,9 @@ namespace FSA.Data.Repository.FSAClaimRepository
     {
         private FSAClaimContext _dbContext;
 
-        public EmployeeFSARepository()
+        public EmployeeFSARepository(FSAClaimContext dbContext)
         {
-            _dbContext = new FSAClaimContext();
+            _dbContext = dbContext;
         }
 
 

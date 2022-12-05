@@ -16,10 +16,10 @@ namespace FSA.Data.Repository.FSAClaimRepository
     public class FSAClaimRepository : GenericRepository<FSAClaim>
     {
 
-        public FSAClaimRepository(bool test = false)
+        public FSAClaimRepository(FSAClaimContext dbContext, bool test = false)
         {
             _test = test;
-            ClaimContext = new FSAClaimContext();
+            ClaimContext = dbContext;
         }
 
         protected override FSAClaimContext ClaimContext { get; set; }
@@ -34,21 +34,20 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
-                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
-                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.ReceiptAmount = fSAClaim.ReceiptAmount;
-                    claim.Modified = DateTime.UtcNow;
-                    claim.ReceiptDate = fSAClaim.ReceiptDate;
-                    claim.ClaimAmount = fSAClaim.ClaimAmount;
-                    claim.ReceiptNumber = fSAClaim.ReceiptNumber;
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
-                    return new ClaimRepositoryResult(true);
-                }
+                claim.ReceiptAmount = fSAClaim.ReceiptAmount;
+                claim.Modified = DateTime.UtcNow;
+                claim.ReceiptDate = fSAClaim.ReceiptDate;
+                claim.ClaimAmount = fSAClaim.ClaimAmount;
+                claim.ReceiptNumber = fSAClaim.ReceiptNumber;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
             }
             catch (Exception ex)
             {
@@ -66,18 +65,17 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
-                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
-                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.Status = status;
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
-                    return new ClaimRepositoryResult(true);
-                }
+                claim.Status = status;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
             }
+
             catch (Exception ex)
             {
                 return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
@@ -94,18 +92,17 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
-                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
-                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.Status = approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
-                    claim.ApprovalDate = DateTime.Now;
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
-                    return new ClaimRepositoryResult(true);
-                }
+                claim.Status = approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
+                claim.ApprovalDate = DateTime.Now;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
             }
             catch (Exception ex)
             {
@@ -124,18 +121,17 @@ namespace FSA.Data.Repository.FSAClaimRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
-                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
-                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.isCancelled = delete;
-                    claim.ApprovalDate = DateTime.Now;
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
-                    return new ClaimRepositoryResult(true);
-                }
+                claim.isCancelled = delete;
+                claim.ApprovalDate = DateTime.Now;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
             }
             catch (Exception ex)
             {

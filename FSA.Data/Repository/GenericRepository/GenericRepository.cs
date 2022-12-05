@@ -18,14 +18,13 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+
                     ClaimContext.Add(entity);
 
                     int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Add Failed");
                     return new ClaimRepositoryResult(true);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -38,8 +37,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+        
 
                     T? entity = ClaimContext.Set<T>().Where(predicate).SingleOrDefault();
                     if (entity == null) return new ClaimRepositoryResult(false, "Not Found", "");
@@ -47,7 +45,7 @@ namespace FSA.Data.Repository.GenericRepository
                     int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Delete Failed");
                     return new ClaimRepositoryResult(true);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -59,12 +57,11 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+           
 
                     var list = ClaimContext.Set<T>().AsQueryable().Where<T>(criteria);
                     return list.ToList();
-                }
+                
             }
             catch (Exception ex)
             {
@@ -76,12 +73,11 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+              
 
                     var list = ClaimContext.Set<T>().AsQueryable();
                     return list.ToList();
-                }
+                
             }
             catch (Exception ex)
             {
@@ -93,12 +89,11 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+              
 
                     T? entity = ClaimContext.Set<T>().AsQueryable().SingleOrDefault<T>(criteria);
                     return entity;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -110,8 +105,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+              
                     var claim = ClaimContext.Set<T>().SingleOrDefault<T>(predicate);
                     if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
                     claim = entity;
@@ -119,7 +113,7 @@ namespace FSA.Data.Repository.GenericRepository
                     int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
                     return new ClaimRepositoryResult(true);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -141,13 +135,12 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-                using (ClaimContext = new FSAClaimContext())
-                {
+  
                     var entity = ClaimContext.Set<T>().SingleOrDefault();
                     if (entity == null) return new ClaimRepositoryResult(false, "Claim not found");
                     ClaimContext.Set<T>().Remove(entity);
                     return new ClaimRepositoryResult(true);
-                }
+                
             }
             catch (Exception ex)
             {
