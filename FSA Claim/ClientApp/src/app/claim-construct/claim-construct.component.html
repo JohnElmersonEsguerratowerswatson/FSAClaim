@@ -1,0 +1,70 @@
+<h1 *ngIf="claim"> {{claim.referenceNumber}}</h1>
+
+<form>
+  <div class="form-group">
+    <label for="claimAmount">Claim Amount:</label>
+    <input #claimAmountField required type="number" class="form-control" id="claimAmount" placeholder="Enter Claim Amount"
+           [(ngModel)]="claim.claimAmount" [ngModelOptions]="{standalone: true}" #claimAmount="ngModel" (keydown)="validateClaim($event)">
+    <span *ngIf="validClaim && claimAmount.invalid && (claimAmount.dirty || claimAmount.touched)"
+          class="alert" >
+      <span class="alert" *ngIf="claimAmount.errors?.['required']">
+        This is a required field
+      </span>
+    </span>
+    <span *ngIf="!validClaim">
+      Please enter a valid amount.
+    </span>
+  </div>
+
+  <br />
+  <div class="form-group">
+    <label for="receiptNumber">Receipt Number:</label>
+    <input required type="text" class="form-control" id="receiptNumber" placeholder="Enter Receipt Number"
+           [(ngModel)]="claim.receiptNumber" [ngModelOptions]="{standalone: true}" #receiptNumber="ngModel" (keydown)="validateReceiptNumber($event)">
+    <span *ngIf="validReceiptNumber && receiptNumber.invalid && (receiptNumber.dirty || receiptNumber.touched)"
+          class="alert">
+      <span class="alert" *ngIf="receiptNumber.errors?.['required']">
+        This is a required field
+      </span>
+    </span>
+    <span *ngIf="!validReceiptNumber">
+      Please enter a receipt number.
+    </span>
+  </div>
+
+  <br />
+  <div class="form-group">
+    <label for="receiptAmount">Receipt Amount:</label>
+    <input #receiptAmountField required type="number" class="form-control" id="receiptAmount" placeholder="Enter Receipt Amount"
+           [(ngModel)]="claim.receiptAmount" [ngModelOptions]="{standalone: true}" #receiptAmount="ngModel" (keydown)="validateReceiptAmount($event)">
+    <span *ngIf="validReceiptAmount && receiptAmount.invalid && (receiptAmount.dirty || receiptAmount.touched)"
+          class="alert">
+      <span class="alert" *ngIf="receiptAmount.errors?.['required']">
+        This is a required field
+      </span>
+    </span>
+    <span *ngIf="!validReceiptAmount">
+      Please enter a valid amount.
+    </span>
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="receiptDate">Receipt Date:</label>
+    <input required type="text" class="form-control" id="receiptDate" placeholder="Enter Receipt Date" [(ngModel)]="claim.receiptDate"
+           [ngModelOptions]="{standalone: true}" #receiptDate="ngModel" (keydown)="validateReceiptDate($event)">
+    <span *ngIf="validReceiptDate && receiptDate.invalid && (receiptDate.dirty || receiptDate.touched)"
+          class="alert">
+      <span class="alert" *ngIf="receiptDate.errors?.['required']">
+        This is a required field
+      </span>
+    </span>
+    <span *ngIf="!validReceiptDate">
+      Please enter a valid date.
+    </span>
+  </div>
+  <br />
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" (click)="onSubmit($event)">Submit</button>
+  </div>
+</form>

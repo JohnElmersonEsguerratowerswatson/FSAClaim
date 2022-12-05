@@ -49,11 +49,19 @@ namespace FSA.Data.Migrations
 
             modelBuilder.Entity("FSA.Domain.Entities.EmployeeFSA", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<int>("FSAID")
                         .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.ToTable("EmployeeFSAs");
                 });
@@ -98,6 +106,9 @@ namespace FSA.Data.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isCancelled")
+                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 

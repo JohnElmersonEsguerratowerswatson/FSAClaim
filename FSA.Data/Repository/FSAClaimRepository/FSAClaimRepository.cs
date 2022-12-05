@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FSA.Data.Repository.GenericRepository;
+using FSA.Common.Enums;
 
 namespace FSA.Data.Repository.FSAClaimRepository
 {
@@ -15,34 +16,94 @@ namespace FSA.Data.Repository.FSAClaimRepository
     public class FSAClaimRepository : GenericRepository<FSAClaim>
     {
 
-
-        public FSAClaimRepository(bool test = false)
+        public FSAClaimRepository(FSAClaimContext dbContext)
         {
-            _test = test;
-            ClaimContext = new FSAClaimContext();
+
+            _test = false;
+            ClaimContext = dbContext;
         }
 
         protected override FSAClaimContext ClaimContext { get; set; }
 
-        public new IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
+        /// <summary>
+        /// UPDATE FSACLAIM
+        /// </summary>
+        /// <param name="fSAClaim"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override IRepositoryResult Update(FSAClaim fSAClaim, Func<FSAClaim, bool> predicate)
         {
             try
             {
-                using (ClaimContext)
-                {
-                    var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
-                    if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    claim.ReceiptAmount = fSAClaim.ReceiptAmount;
-                    claim.Modified = DateTime.UtcNow;
-                    claim.ReceiptDate = fSAClaim.ReceiptDate;
-                    claim.ClaimAmount = fSAClaim.ClaimAmount;
-                    claim.ReceiptNumber = fSAClaim.ReceiptNumber;
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
 
-                    int rows = Save(ClaimContext);
-                    if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
-                    return new ClaimRepositoryResult(true);
-                }
+                claim.ReceiptAmount = fSAClaim.ReceiptAmount;
+                claim.Modified = DateTime.UtcNow;
+                claim.ReceiptDate = fSAClaim.ReceiptDate;
+                claim.ClaimAmount = fSAClaim.ClaimAmount;
+                claim.ReceiptNumber = fSAClaim.ReceiptNumber;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// UPDATE APPROVAL {ADMIN ONLY}
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override IRepositoryResult Update(string status, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                claim.Status = status;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+            }
+
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Update Claim Approval(Approve Or Deny)
+        /// </summary>
+        /// <param name="approve"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IRepositoryResult Update(bool approve, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                claim.Status = approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
+                claim.ApprovalDate = DateTime.Now;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
             }
             catch (Exception ex)
             {
@@ -51,6 +112,33 @@ namespace FSA.Data.Repository.FSAClaimRepository
         }
 
 
+        /// <summary>
+        /// Update Claim Approval(Approve Or Deny)
+        /// </summary>
+        /// <param name="approve"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override IRepositoryResult Delete(bool delete, Func<FSAClaim, bool> predicate)
+        {
+            try
+            {
+
+                var claim = ClaimContext.FSAClaims.SingleOrDefault(predicate);
+                if (claim == null) return new ClaimRepositoryResult(false, "Claim Not Found");
+
+                claim.isCancelled = delete;
+                claim.ApprovalDate = DateTime.Now;
+
+                int rows = Save(ClaimContext);
+                if (rows <= 0) return new ClaimRepositoryResult(false, "Update Failed");
+                return new ClaimRepositoryResult(true);
+
+            }
+            catch (Exception ex)
+            {
+                return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
+            }
+        }
 
         //public IRepositoryResult Add(FSAClaim entity)
         //{

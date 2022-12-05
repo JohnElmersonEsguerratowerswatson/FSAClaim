@@ -1,0 +1,55 @@
+<article>
+  <h1 id="tableLabel">FSA Claims</h1>
+
+  <p>Below is a list of FSA claims.</p>
+
+  <p *ngIf="!claims"><em>Loading...</em></p>
+  <!-- -------------------------------------------------------------------------------------------------------- -->
+
+  <section *ngIf="claims">
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Date Submitted</th>
+          <th>Status</th>
+          <th>Receipt Date</th>
+          <th>Receipt Number</th>
+          <th>Receipt Amount</th>
+          <th>Claim Amount</th>
+          <th>Total Claim Amount</th>
+          <th>Reference Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let claim of claims">
+          <td>
+            <button class="btn btn-primary" (click)="onApproveClick(claim.referenceNumber)"> Approve Claim </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="onDenyClick(claim.referenceNumber)"> Deny Claim </button>
+          </td>
+
+          <td>{{ claim.employeeID }}</td>
+          <td>{{ claim.employeeName }}</td>
+          <td>{{ claim.dateSubmitted }}</td>
+          <td>{{ claim.status }}</td>
+          <td>{{ claim.receiptDate }}</td>
+          <td>{{ claim.receiptNumber }}</td>
+          <td>{{ claim.receiptAmount }}</td>
+          <td>{{ claim.claimAmount }}</td>
+          <td>{{ claim.totalClaimAmount }}</td>
+          <td> {{ claim.referenceNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <logged-out-notif-component *ngIf="!claims">
+
+  </logged-out-notif-component>
+</article>
+

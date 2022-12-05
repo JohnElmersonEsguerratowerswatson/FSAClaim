@@ -1,5 +1,6 @@
 ﻿using FSA.API.Business;
 using FSA.API.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
@@ -10,24 +11,26 @@ using System.Text;
 
 namespace FSA.API.Controllers
 {
+    [EnableCors("ClientApp")]
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-
+        private ILoginService _loginService;
         private IConfiguration _configuration;
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, ILoginService loginService)
         {
             _configuration = config;
+            _loginService = loginService;   
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public IActionResult Login( LoginModel model)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                LoginLogic login = new LoginLogic();
-                var validatedLogin = login.ValidateLogin(model);
+                
+                var validatedLogin = _loginService.ValidateLogin(model);
                 if (validatedLogin == null) return Unauthorized();
 
 
@@ -36,6 +39,7 @@ namespace FSA.API.Controllers
                 var bytes = Encoding.ASCII.GetBytes(
                     forKey
                     );
+
                 SymmetricSecurityKey key = new SymmetricSecurityKey(bytes);
                 SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -55,7 +59,7 @@ namespace FSA.API.Controllers
 
                 var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                return Ok(token);
+                return Ok(new LoginResult { Bearer = token });
             }
             catch (Exception ex)
             {

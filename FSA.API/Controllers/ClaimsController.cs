@@ -7,19 +7,23 @@ using FSA.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Cors;
+using FSA.Common;
 
 namespace FSA.API.Controllers
 {
-    [Authorize]
+    [EnableCors("ClientApp")]
+    //[Authorize]
     [Route("api/[controller]/[action]")]
     public class ClaimsController : Controller
     {
 
-        private int _employeeID = 0;
-
-        public ClaimsController()
+        private int _employeeID = 1;//employee ID 1
+        private IFSAClaimBusinessService _service;
+        public ClaimsController(IFSAClaimBusinessService service)
         {
-
+            this._service = service;  
+            this._service.EmployeeID = _employeeID;
         }
 
         private void CheckUser(IIdentity identity)
@@ -35,12 +39,13 @@ namespace FSA.API.Controllers
         /// GET LIST CLAIM
         /// </summary>
         /// <returns></returns>
-        public ActionResult<IEnumerable<IViewClaim>> GetList()
+
+        public ActionResult<IGetClaimsResult> GetList()
         {
-            CheckUser(User.Identity);
-            if (_employeeID == 0) return Unauthorized();
-            ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-            var claims = logic.GetClaimList().ToList();
+            //CheckUser(User.Identity);
+            //if (_employeeID == 0) return Unauthorized();
+            //ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
+            var claims = _service.GetClaimsResult();
             return Ok(claims);
         }
 
@@ -53,16 +58,19 @@ namespace FSA.API.Controllers
         /// <returns></returns>
         public ActionResult<IViewClaim> Details(string arg)
         {
-            CheckUser(User.Identity);
-            if (_employeeID == 0) return Unauthorized();
-
-            IViewClaim claim;
-            ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-            claim = logic.GetClaim(arg);
+            // CheckUser(User.Identity);
+            //if (_employeeID == 0) return Unauthorized();
+            
+            //ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
+            IViewClaim claim = _service.GetClaim(arg);
             if (claim == null) { return NotFound(); }
 
             return Ok(claim);
         }
+
+       
+
+      
 
 
         // POST: ClaimsController/Create
@@ -72,22 +80,24 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<IClaimResult> Create(TransactClaim claim)
+        public ActionResult<IClaimResult> Create([FromBody] TransactClaim claim)
         {
-
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
 
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-                //return BAD request if claim amount is greater than receipt ammount
-                if (claim.ClaimAmount > claim.ReceiptAmount) { return BadRequest("Amount to be claimed exceeded the receipt amount"); }
-
+                //CheckUser(User.Identity);
+                //if (_employeeID == 0) return Unauthorized();
                 IClaimResult result = new ClaimResult();
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                result = logic.AddClaim(claim);
-                if (!result.IsSuccess) return BadRequest(result.Message);
+                
+                if (!ModelState.IsValid)
+                {
+                    result.IsSuccess = false;
+                    result.Message = ObjectStatus.ModelStateInvalid;
+                    return BadRequest(result);
+                }
+
+                result = _service.AddClaim(claim);
+                if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
             }
             catch
@@ -104,17 +114,25 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<IClaimResult> Edit(TransactClaim claim)
+        public ActionResult<IClaimResult> Edit([FromBody] TransactClaim claim)
         {
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                var result = logic.Update(claim);
-                if (!result.IsSuccess) return Problem();
+                
+                //CheckUser(User.Identity);
+                // if (_employeeID == 0) return Unauthorized();
+                IClaimResult result = new ClaimResult();
+                if (!ModelState.IsValid)
+                {
+                    result.IsSuccess = false;
+                    result.Message = ObjectStatus.ModelStateInvalid;
+                    return BadRequest(result);
+                }
+               
+                result = _service.Update(claim);
+                if (!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
+
             }
             catch
             {
@@ -130,16 +148,23 @@ namespace FSA.API.Controllers
         /// <param name="claim"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete(TransactClaim claim)
+        public ActionResult Delete([FromBody] TransactClaim claim)
         {
             try
             {
-                CheckUser(User.Identity);
-                if (_employeeID == 0) return Unauthorized();
-                if (!ModelState.IsValid) return BadRequest(ModelState);
+                IClaimResult result = new ClaimResult();
+                
+                if (!ModelState.IsValid)
+                {
+                    result.IsSuccess = false;
+                    result.Message = ObjectStatus.ModelStateInvalid;
+                    return BadRequest(result);
+                }
+                // CheckUser(User.Identity);
+                // if (_employeeID == 0) return Unauthorized();
+                
 
-                ClaimsBusinessLogic logic = new ClaimsBusinessLogic(_employeeID);
-                var result = logic.Delete(claim);
+                result = _service.Delete(claim);
                 if (!result.IsSuccess) return Problem();
 
                 return Ok(result);
@@ -149,5 +174,7 @@ namespace FSA.API.Controllers
                 return View();
             }
         }
+
+
     }
 }

@@ -14,9 +14,9 @@ namespace FSA.Data.Repository.LoginRepository
 
         private FSAClaimContext _dbContext;
 
-        public LoginRepository()
+        public LoginRepository(FSAClaimContext dbContext)
         {
-            _dbContext = new FSAClaimContext();
+            _dbContext = dbContext;
         }
 
         public Login Get(Func<Login, bool> predicate)

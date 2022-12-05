@@ -2,7 +2,6 @@ C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\ref\FSA.Common.dll
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.pdb
-C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.csproj.AssemblyReference.cache
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.AssemblyInfoInputs.cache
 C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.AssemblyInfo.cs

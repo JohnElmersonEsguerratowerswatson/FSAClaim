@@ -14,13 +14,13 @@ namespace FSA.Test.Data.Tests
             _repo = new FSAClaimRepository(true);
         }
 
-        [Fact]
+       // [Fact]
         public void GetList()
         {
             Assert.NotStrictEqual(0, _repo.GetList().Count);
         }
 
-        [Fact]
+       // [Fact]
         public void AddClaim()
         {
             FSAClaim claim = new FSAClaim

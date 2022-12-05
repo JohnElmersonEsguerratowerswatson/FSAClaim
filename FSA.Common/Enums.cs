@@ -1,6 +1,6 @@
 ﻿namespace FSA.Common.Enums
 {
-    public enum ClaimApproval
+    public enum ClaimApprovals
     {
         Pending,
         Denied,

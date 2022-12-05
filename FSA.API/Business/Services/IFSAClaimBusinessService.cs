@@ -1,13 +1,13 @@
 ﻿using FSA.API.Models;
 using FSA.API.Models.Interface;
-
-namespace FSA.API.Business.Services
+namespace FSA.API.Business
 {
-    public interface IFSAClaimBusiness
+    public interface IFSAClaimBusinessService
     {
+
         public IViewClaim GetClaim(string referenceNumber);
 
-        public List<ClaimsTableItem> GetClaimList();
+        public IGetClaimsResult GetClaimsResult();
 
         public IClaimResult Update(ITransactClaim claim);
 
@@ -15,5 +15,6 @@ namespace FSA.API.Business.Services
 
         public IClaimResult AddClaim(ITransactClaim claim);
 
+        public int EmployeeID { get; set; }
     }
 }
