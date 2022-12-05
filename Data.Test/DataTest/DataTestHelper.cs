@@ -50,10 +50,44 @@ namespace FSA.Test.DataTest
             List<FSAClaim> fSAClaims = new List<FSAClaim>();
             employees.ForEach(e =>
                fSAClaims.Add(
-                  fixture.Build<FSAClaim>().Without(c=>c.ID).Do(c => { c.ID = 0; c.EmployeeID = e.ID; c.DateSubmitted = DateTime.UtcNow; c.ReferenceNumber = Guid.NewGuid().ToString(); c.Status = "Pending"; }).Create()
+                  fixture.Build<FSAClaim>().Without(c => c.ID).Do(c => { c.ID = 0; c.EmployeeID = e.ID; c.DateSubmitted = DateTime.UtcNow; c.ReferenceNumber = Guid.NewGuid().ToString(); c.Status = "Pending"; }).Create()
                    )
            );
             dbContext.FSAClaims.AddRange(fSAClaims);
+            dbContext.SaveChanges();
+        }
+
+
+        public static void SeedFSARules(FSAClaimContext dbContext)
+        {
+            
+            var fixture = new Fixture();
+            List<FSARule> fSARules = new List<FSARule>();
+             fSARules.AddRange( fixture.Create<List<FSARule>>());
+            fSARules.ForEach(r => r.ID = 0);
+            
+            dbContext.FSARules.AddRange(fSARules);
+            dbContext.SaveChanges();
+        }
+
+        public static void SeedEmployeeFSAs(FSAClaimContext dbContext)
+        {
+
+            var fixture = new Fixture();
+            List<EmployeeFSA> employeeFSAs = new List<EmployeeFSA>();
+            employeeFSAs.AddRange(fixture.Create<List<EmployeeFSA>>());
+
+            dbContext.Employees.ToList().ForEach(e => employeeFSAs.Add(
+                new EmployeeFSA
+                {
+                    ID = 0,
+                    EmployeeID = e.ID,
+                    FSAID = dbContext.FSARules.First().ID
+                }
+
+                )) ;
+
+            dbContext.EmployeeFSAs.AddRange(employeeFSAs);
             dbContext.SaveChanges();
         }
 

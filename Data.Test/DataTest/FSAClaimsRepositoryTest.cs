@@ -29,7 +29,6 @@ namespace FSA.Test.DataTest
             _repository = new FSAClaimRepository(_dbContext);
 
             Setup();
-
         }
 
 
@@ -58,6 +57,7 @@ namespace FSA.Test.DataTest
             _repository.Update(claim, x => x.ID == claim.ID);
             Assert.Equal(refNo, _dbContext.FSAClaims.SingleOrDefault(x => x.ID == claim.ID).ReferenceNumber);
         }
+
 
         [Fact]
         public void Can_AddFSAClaim()
