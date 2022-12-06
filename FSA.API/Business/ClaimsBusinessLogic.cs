@@ -271,6 +271,11 @@ namespace FSA.API.Business
 
             bool validInputs = ValidateInput(claim);
             if (!validInputs) return new ClaimResult { IsSuccess = false, Message = "Please check your inputs." };
+            if (claim.ClaimAmount > claim.ReceiptAmount)
+            {
+                return new ClaimResult { Message = "Claim Amount cannot exceed Receipt Amount", IsSuccess = false };
+                
+            }
 
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
 

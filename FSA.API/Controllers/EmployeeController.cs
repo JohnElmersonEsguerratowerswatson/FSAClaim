@@ -37,9 +37,16 @@ namespace FSA.API.Controllers
         [HttpPost]
         public ActionResult<IAddEmployeeResult> Add([FromBody] AddEmployeeModel employee)
         {
-            if (!ModelState.IsValid) return BadRequest(new AddEmployeeResult { IsSuccess = false, Message = "Please check your inputs." });
-            var result = _service.Add(employee);
-            return Ok(result);
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(new AddEmployeeResult { IsSuccess = false, Message = "Please check your inputs." });
+                var result = _service.Add(employee);
+                return Ok(result);
+            }
+            catch
+            {
+                return Problem();
+            }
         }
     }
 }
