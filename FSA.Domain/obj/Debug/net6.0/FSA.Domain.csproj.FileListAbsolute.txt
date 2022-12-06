@@ -1,0 +1,12 @@
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\bin\Debug\net6.0\FSA.Domain.deps.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\bin\Debug\net6.0\FSA.Domain.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\bin\Debug\net6.0\ref\FSA.Domain.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\bin\Debug\net6.0\FSA.Domain.pdb
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.csproj.AssemblyReference.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.AssemblyInfoInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.AssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.csproj.CoreCompileInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\ref\FSA.Domain.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Domain\obj\Debug\net6.0\FSA.Domain.pdb

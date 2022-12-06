@@ -1,0 +1,11 @@
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.deps.json
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\ref\FSA.Common.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\bin\Debug\net6.0\FSA.Common.pdb
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.AssemblyInfoInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.AssemblyInfo.cs
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.csproj.CoreCompileInputs.cache
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\ref\FSA.Common.dll
+C:\Users\johne5446\source\repos\FSAClaim\FSA.Common\obj\Debug\net6.0\FSA.Common.pdb

@@ -17,15 +17,16 @@ namespace FSA.Test.DataTest
         private FSAClaimRepository _repository;
         private FSAClaimContext _dbContext;
 
+        DbContextOptionsBuilder<FSAClaimContext> _optionsBuilder;
 
         private int _claimID;
         private int _employeeID;
 
         public FSAClaimsRepositoryTest()
         {
-            DbContextOptionsBuilder<FSAClaimContext> optionsBuilder = new DbContextOptionsBuilder<FSAClaimContext>();
-            optionsBuilder.UseInMemoryDatabase<FSAClaimContext>("FSAClaimsTestDB");
-            _dbContext = new FSAClaimContext(optionsBuilder.Options);
+             _optionsBuilder = new DbContextOptionsBuilder<FSAClaimContext>();
+            _optionsBuilder.UseInMemoryDatabase<FSAClaimContext>("FSAClaimsTestDB");
+            _dbContext = new FSAClaimContext(_optionsBuilder.Options);
             _repository = new FSAClaimRepository(_dbContext);
 
             Setup();

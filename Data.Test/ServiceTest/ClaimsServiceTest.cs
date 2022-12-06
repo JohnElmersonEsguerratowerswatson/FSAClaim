@@ -26,21 +26,11 @@ namespace FSA.Test.ServiceTest
         private decimal _totalFSA = 0;
         private decimal _timesAddClaim = 6;
         private decimal _fsaLimit = 5000;
-
         private List<FSAClaim> _fSAClaims = new List<FSAClaim>();
 
-        private void Setup()
-        {
-            _claimRepository.Setup(r => r.Add(It.IsAny<FSAClaim>())).Returns(GenerateSuccessClaimResult());
-            _claimRepository.Setup(r => r.Update(It.IsAny<FSAClaim>(), It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateSuccessClaimResult());
-            _claimRepository.Setup(r => r.Delete(true, It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateSuccessClaimResult());
-            _claimRepository.Setup(r => r.GetList()).Returns(GenerateFSAClaims());
-            _claimRepository.Setup(r => r.GetList(It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateFSAClaims());
-            _claimRepository.Setup(r => r.Get(It.IsAny<Func<FSAClaim,bool>>())).Returns(_fSAClaims.First());
-            _employeeFSARepository.Setup(r => r.GetList(It.IsAny<Func<Employee, bool>>())).Returns(GenerateFSARuleList());
-            _employeeFSARepository.Setup(r => r.Get(It.IsAny<Func<Employee, bool>>())).Returns(GenerateFSARule());
-            _employeeRepository.Setup(r => r.Get(It.IsAny<Func<Employee, bool>>())).Returns(GenerateEmployee());
-        }
+        private Fixture _fixture;
+
+       
 
         public ClaimsServiceTest()
         {
@@ -49,7 +39,8 @@ namespace FSA.Test.ServiceTest
             _employeeRepository = new Mock<IRepository<Employee>>();
             _logic = new ClaimsBusinessLogic(_claimRepository.Object, _employeeFSARepository.Object, _employeeRepository.Object);
             _logic.EmployeeID = _employeeID;
-            Setup();
+            _fixture=new Fixture();
+            _fSAClaims = GenerateFSAClaims();
         }
 
         private List<FSAClaim> GenerateFSAClaims()
@@ -75,46 +66,46 @@ namespace FSA.Test.ServiceTest
 
         private Employee GenerateEmployee()
         {
-            var fixture = new Fixture();
-            var result = fixture.Build<Employee>().Do(e => e.ID = _employeeID).Create();
+           
+            var result = _fixture.Build<Employee>().Do(e => e.ID = _employeeID).Create();
             return result;
         }
 
         private ClaimRepositoryResult GenerateSuccessClaimResult()
         {
-            var fixture = new Fixture();
-            fixture.Register<ClaimRepositoryResult>(() => new ClaimRepositoryResult(true));
-            var result = fixture.Create<ClaimRepositoryResult>();
+
+            _fixture.Register<ClaimRepositoryResult>(() => new ClaimRepositoryResult(true));
+            var result = _fixture.Create<ClaimRepositoryResult>();
             return result;
         }
 
         private ClaimRepositoryResult GenerateFailClaimResult()
         {
-            var fixture = new Fixture();
-            fixture.Register<ClaimRepositoryResult>(() => new ClaimRepositoryResult(false, "Failed transaction."));
-            var result = fixture.Create<ClaimRepositoryResult>();
+
+            _fixture.Register<ClaimRepositoryResult>(() => new ClaimRepositoryResult(false, "Failed transaction."));
+            var result = _fixture.Create<ClaimRepositoryResult>();
             return result;
         }
 
         private FSARule GenerateFSARule()
         {
-            var fixture = new Fixture();
-            var result = fixture.Create<FSARule>();
+          
+            var result = _fixture.Create<FSARule>();
             result.FSALimit = _fsaLimit;
             return result;
         }
         private List<FSARule> GenerateFSARuleList()
         {
-            var fixture = new Fixture();
-            var result = fixture.Create<List<FSARule>>();
+           
+            var result = _fixture.Create<List<FSARule>>();
             result.ForEach(r => r.FSALimit += _totalFSA);
             return result;
         }
 
         private TransactClaim GenerateValidClaimInput()
         {
-            var fixture = new Fixture();
-            var claim = fixture.Create<TransactClaim>();
+           
+            var claim = _fixture.Create<TransactClaim>();
             claim.ClaimAmount = (_totalFSA / 2) / _timesAddClaim;
             claim.ReceiptAmount += claim.ClaimAmount;
             claim.ReceiptDate = "03/10/2022";
@@ -123,9 +114,9 @@ namespace FSA.Test.ServiceTest
 
         private TransactClaim GenerateValidClaimUpdateInput()
         {
-            var fixture = new Fixture();
+            
             var fsaClaim = _fSAClaims.First();
-            var claim = fixture.Create<TransactClaim>();
+            var claim = _fixture.Create<TransactClaim>();
             claim.ReferenceNumber = fsaClaim.ReferenceNumber;
             claim.ClaimAmount = (_totalFSA / 2) / _timesAddClaim;
             claim.ReceiptAmount += claim.ClaimAmount;
@@ -133,9 +124,21 @@ namespace FSA.Test.ServiceTest
             return claim;
         }
 
+
+
+
+        private void AddEditSetup()
+        {
+           _employeeFSARepository.Setup(r => r.GetList(It.IsAny<Func<Employee, bool>>())).Returns(GenerateFSARuleList());
+            _employeeFSARepository.Setup(r => r.Get(It.IsAny<Func<Employee, bool>>())).Returns(GenerateFSARule());
+            _claimRepository.Setup(r => r.GetList(It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateFSAClaims());
+        }
+
         [Fact]
         public void AddClaim_Should_Return_SuccessResult()
         {
+            AddEditSetup();
+            _claimRepository.Setup(r => r.Add(It.IsAny<FSAClaim>())).Returns(GenerateSuccessClaimResult());
             var result = _logic.AddClaim(GenerateValidClaimInput());
             Assert.True(result.IsSuccess);
         }
@@ -143,6 +146,8 @@ namespace FSA.Test.ServiceTest
         [Fact]
         public void EditClaim_Should_Return_SuccessResult()
         {
+            AddEditSetup();
+            _claimRepository.Setup(r => r.Update(It.IsAny<FSAClaim>(), It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateSuccessClaimResult());
             var result = _logic.Update(GenerateValidClaimUpdateInput());
             Assert.True(result.IsSuccess);
         }
@@ -150,6 +155,7 @@ namespace FSA.Test.ServiceTest
         [Fact]
         public void DeleteClaim_Should_Return_SuccessResult()
         {
+            _claimRepository.Setup(r => r.Delete(true, It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateSuccessClaimResult());
             var result = _logic.Delete(GenerateValidClaimUpdateInput());
             Assert.True(result.IsSuccess);
         }
@@ -157,6 +163,8 @@ namespace FSA.Test.ServiceTest
         [Fact]
         public void GetList_Should_Return_NonEmptyList()
         {
+            
+            _claimRepository.Setup(r => r.GetList(It.IsAny<Func<FSAClaim, bool>>())).Returns(GenerateFSAClaims());
             var claims = _logic.GetClaimList();
             Assert.NotEmpty(claims);
         }
@@ -164,8 +172,10 @@ namespace FSA.Test.ServiceTest
         [Fact]
         public void GetClaim_Should_Return_Claim()
         {
+            _claimRepository.Setup(r => r.Get(It.IsAny<Func<FSAClaim, bool>>())).Returns(_fSAClaims.First());
             var claim = _logic.GetClaim(_fSAClaims.First().ReferenceNumber);
             Assert.NotNull(claim);
+            Assert.Equal(claim.ReferenceNumber, _fSAClaims.First().ReferenceNumber);
         }
     }
 }

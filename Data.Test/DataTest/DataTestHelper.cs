@@ -11,7 +11,7 @@ namespace FSA.Test.DataTest
 {
     internal class DataTestHelper
     {
-
+        //private Fixture _fixture;
         public static void SeedEmployees(FSAClaimContext dbContext)
         {
             var fixture = new Fixture();

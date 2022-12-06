@@ -18,9 +18,7 @@ namespace FSA.Data.Repository.GenericRepository
         {
             try
             {
-
                     ClaimContext.Add(entity);
-
                     int rows = Save(ClaimContext);
                     if (rows <= 0) return new ClaimRepositoryResult(false, "Add Failed");
                     return new ClaimRepositoryResult(true);
@@ -28,7 +26,6 @@ namespace FSA.Data.Repository.GenericRepository
             }
             catch (Exception ex)
             {
-
                 return new ClaimRepositoryResult(false, ex.Message, ex.StackTrace);
             }
         }

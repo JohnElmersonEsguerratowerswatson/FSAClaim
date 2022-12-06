@@ -44,25 +44,25 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<FSAClaimContext>(
 optionsBuilder => optionsBuilder.UseSqlServer("Server=PCM-6H43TL3\\SQLEXPRESS; Initial Catalog=FSAClaims; Integrated Security=true; Encrypt=false")
-    , ServiceLifetime.Scoped
+    , ServiceLifetime.Transient
     );
 
 
 //REPOSITORIES
-builder.Services.AddScoped<IJoinRepository<Employee, EmployeeFSA, FSARule>, EmployeeFSARepository>();
-builder.Services.AddScoped<IRepository<FSAClaim>, FSAClaimRepository>();
-builder.Services.AddScoped<IRepository<Employee>, TRepository<Employee>>();
-builder.Services.AddScoped<IRepository<FSARule>, TRepository<FSARule>>();
-builder.Services.AddScoped<IViewRepository<Login>, LoginRepository>();
-builder.Services.AddScoped<ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>, TransactAssociateEntityRepository>();
+builder.Services.AddTransient<IJoinRepository<Employee, EmployeeFSA, FSARule>, EmployeeFSARepository>();
+builder.Services.AddTransient<IRepository<FSAClaim>, FSAClaimRepository>();
+builder.Services.AddTransient<IRepository<Employee>, TRepository<Employee>>();
+builder.Services.AddTransient<IRepository<FSARule>, TRepository<FSARule>>();
+builder.Services.AddTransient<IViewRepository<Login>, LoginRepository>();
+builder.Services.AddTransient<ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>, TransactAssociateEntityRepository>();
 
 
 //SERVICES/ BUSINESS LOGIC
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IFSAClaimBusinessService, ClaimsBusinessLogic>();
-builder.Services.AddScoped<IClaimsApprovalService, ClaimsApprovalLogic>();
-builder.Services.AddScoped<IFSARuleService, FSARuleLogic>();
-builder.Services.AddScoped<ILoginService, LoginLogic>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IFSAClaimBusinessService, ClaimsBusinessLogic>();
+builder.Services.AddTransient<IClaimsApprovalService, ClaimsApprovalLogic>();
+builder.Services.AddTransient<IFSARuleService, FSARuleLogic>();
+builder.Services.AddTransient<ILoginService, LoginLogic>();
 
 
 builder.Services.AddControllers();

@@ -103,6 +103,7 @@ namespace FSA.API.Business
 
             catch { return false; }
         }
+
         private bool ValidateInput(ITransactClaim claim)
         {
             if (claim == null) { return false; };
@@ -113,6 +114,7 @@ namespace FSA.API.Business
             validReceiptAmount = decimal.TryParse(claim.ReceiptAmount.ToString(), out decimal receiptAmount);
             return validClaimAmount && validReceiptAmount && validRecieptDate;
         }
+
         public IClaimResult AddClaim(ITransactClaim claim)
         {
             ClaimApprovals approval = ClaimApprovals.Pending;
@@ -123,7 +125,9 @@ namespace FSA.API.Business
                 //  return BadRequest(result);
             }
 
-            var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);
+            bool validDate = DateTime.TryParse(claim.ReceiptDate,out DateTime claimReceiptDate);
+
+            if(!validDate) return new ClaimResult { IsSuccess = false, Message = "Please chek your Receipt Date input." };
 
             //Check if Receipt Date is valid
             if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApprovals.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };

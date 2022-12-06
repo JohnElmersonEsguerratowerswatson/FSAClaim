@@ -21,6 +21,7 @@ namespace FSA.Test.ServiceTest
         private Mock<IJoinRepository<Employee, EmployeeFSA, FSARule>> _employeeFSARepository;
         private Mock<IRepository<FSARule>> _fsaRuleRepository;
         private Mock<ITransactAssociateEntityRepository<Employee, EmployeeFSA, FSARule>> _employeeFSATransactRepository;
+        private Fixture _fixture;
 
         private FSARuleLogic _logic;
         private int _employeeID = 6;
@@ -34,8 +35,36 @@ namespace FSA.Test.ServiceTest
             //INSTANCE OF SUT
             _logic = new FSARuleLogic(_employeeRepository.Object, _employeeFSARepository.Object,
                                       _fsaRuleRepository.Object, _employeeFSATransactRepository.Object);
+            _fixture = new Fixture();
 
-            Setup();
+
+        }
+
+
+
+        private Employee GenerateEmployee()
+        {
+           
+            var employee = _fixture.Create<Employee>();
+            employee.ID = _employeeID;
+
+            return employee;
+        }
+
+        private FSARule GenerateFSARule(bool isNull = false)
+        {
+            if (isNull) return null;
+            
+            var rule = _fixture.Create<FSARule>();
+            return rule;
+
+        }
+
+        private TransactFSARule GenerateValidTransactFSARule()
+        {
+           
+            var rule = _fixture.Create<TransactFSARule>();
+            return rule;
         }
 
         private void Setup()
@@ -46,38 +75,13 @@ namespace FSA.Test.ServiceTest
             _employeeFSATransactRepository.Setup(r => r.Add(It.IsAny<FSARule>(), It.IsAny<int>())).Returns(new ClaimRepositoryResult(true));
         }
 
-        private Employee GenerateEmployee()
-        {
-            var fixture = new Fixture();
-            var employee = fixture.Create<Employee>();
-            employee.ID = _employeeID;
-
-            return employee;
-        }
-
-        private FSARule GenerateFSARule(bool isNull = false)
-        {
-            if (isNull) return null;
-            var fixture = new Fixture();
-            var rule = fixture.Create<FSARule>();
-            return rule;
-
-        }
-
-        private TransactFSARule GenerateValidTransactFSARule()
-        {
-            var fixture = new Fixture();
-            var rule = fixture.Create<TransactFSARule>();
-            return rule;
-        }
-
         [Fact]
         public void AddFSARule_Should_Return_SuccessResult()
         {
+            Setup();
             _logic.EmployeeID = _employeeID; // initialize property for current employee
             var result = _logic.AddFSARule(GenerateValidTransactFSARule());
             Assert.True(result.IsSuccess);
-
         }
 
     }

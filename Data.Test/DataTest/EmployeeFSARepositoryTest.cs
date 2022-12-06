@@ -39,7 +39,19 @@ namespace FSA.Test.DataTest
         {
             var employee = _dbContext.Employees.First();
             var result = _repository.Get(e => e.ID == employee.ID);
+
+            var rule = _dbContext.FSARules.Join(_dbContext.EmployeeFSAs.Where(ef => ef.EmployeeID == employee.ID), r => r.ID, ef => ef.FSAID,
+            (ir, ief) => new FSARule
+            {
+                FSALimit = ir.FSALimit,
+                YearCoverage = ir.YearCoverage,
+                ID = ir.ID
+            }).First();
+            
             Assert.NotNull(result);
+            Assert.Equal(result.ID, rule.ID);
+            Assert.Equal(result.FSALimit,rule.FSALimit);
+            Assert.Equal(result.YearCoverage, rule.YearCoverage);
         }
     }
 }
