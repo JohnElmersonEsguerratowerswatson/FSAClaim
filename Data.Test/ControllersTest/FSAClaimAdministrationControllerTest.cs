@@ -76,6 +76,5 @@ namespace FSA.Test.ControllersTest
             Assert.True(claimResult.IsSuccess);
         }
 
-
     }
 }

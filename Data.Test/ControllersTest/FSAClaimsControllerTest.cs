@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +28,12 @@ namespace FSA.Test.ControllersTest
             _service = new Mock<IFSAClaimBusinessService>();
             _claimsController = new ClaimsController(_service.Object);
         }
-        
+
 
 
         private List<ViewClaim> GenerateViewClaimList()
         {
-           
+
             return _fixture.Create<List<ViewClaim>>();
         }
 
@@ -43,13 +45,13 @@ namespace FSA.Test.ControllersTest
 
         private ClaimResult GenerateTransactClaimResult()
         {
-            
+
             return _fixture.Build<ClaimResult>().Without(r => r.IsSuccess).Do(r => r.IsSuccess = true).Create();
         }
 
         private TransactClaim GenerateTransactClaim()
         {
-           
+
             return _fixture.Create<TransactClaim>();
         }
 
@@ -59,9 +61,9 @@ namespace FSA.Test.ControllersTest
             var mockedClaims = GenerateClaimResult();
             _service.Setup(s => s.GetClaimsResult()).Returns(mockedClaims);
             var claimViewResult = _claimsController.GetList();
-            Assert.Equal(typeof(OkObjectResult) , claimViewResult.Result.GetType());
-           // Assert.Equal(mockedClaims,claimViewResult.Result.Value);
-           //  AssertThat(result, Is.TypeOf<OkResult>());
+            Assert.Equal(typeof(OkObjectResult), claimViewResult.Result.GetType());
+            // Assert.Equal(mockedClaims,claimViewResult.Result.Value);
+            //  AssertThat(result, Is.TypeOf<OkResult>());
 
 
         }
@@ -94,5 +96,26 @@ namespace FSA.Test.ControllersTest
             Assert.True(typeof(OkObjectResult) == claimViewResult.GetType());
             Assert.True(((ClaimResult)((OkObjectResult)claimViewResult).Value).IsSuccess);
         }
+
+
+        [Fact]
+        public void InvalitClaimInput_Should_Return_False()
+        {
+            var claim = GenerateTransactClaim();
+            claim.ReceiptNumber = "Long ReceiptNumberdrg5h6jyk543efsbfryj6543egrtfy654eagrfyj65rsgyr65";
+            claim.ReceiptDate = "001/012/2022";
+
+            var context = new ValidationContext(claim, null, null);
+            var results = new List<ValidationResult>();
+            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(AddEmployeeResult), typeof(AddEmployeeResult)), typeof(AddEmployeeResult));
+
+            var isModelStateValid = Validator.TryValidateObject(claim, context, results, true);
+            bool invalidReceiptNumber = results.Any(results => results.ErrorMessage.Contains("ReceiptNumber"));
+            bool invalidReceiptDate = results.Any(results => results.ErrorMessage.Contains("ReceiptDate"));
+            Assert.False(isModelStateValid);
+            Assert.True(invalidReceiptNumber);
+            Assert.True(invalidReceiptDate);
+        }
+
     }
 }

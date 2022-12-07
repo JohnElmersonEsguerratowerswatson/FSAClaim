@@ -61,6 +61,7 @@ namespace FSA.Test.DataTest
             Assert.Equal(refNo, _dbContext.FSAClaims.SingleOrDefault(x => x.ID == claim.ID).ReferenceNumber);
         }
 
+
         [Fact]
         public void Can_AddFSAClaim()
         {
