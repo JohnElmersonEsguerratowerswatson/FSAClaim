@@ -29,19 +29,28 @@ namespace FSA.Test.DataTest
             _dbContext = new FSAClaimContext(_optionsBuilder.Options);
             _repository = new TRepository<Employee>(_dbContext);
             _fixture = new Fixture();
+            Setup();
+        }
+
+        private void Setup()
+        {
+            
+            DataTestHelper.SeedEmployees(_dbContext);
+           
         }
 
         [Fact]
         public void GetList_Should_Return_EmployeeList()
         {
-            DataTestHelper.SeedEmployees(_dbContext);
-            Assert.NotEmpty(_repository.GetList());
+              Assert.NotEmpty(_repository.GetList());
         }
 
         [Fact]
         public void AddEmployee_Should_Return_SuccessResult()
         {
-            var result = _repository.Add(_fixture.Create<Employee>());
+            var employee = _fixture.Create<Employee>();
+            employee.ID = 0;
+            var result = _repository.Add(employee);
             Assert.True(result.IsSuccess);
         }
 

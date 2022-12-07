@@ -33,7 +33,7 @@ namespace FSA.API.Business
 
         private Employee GetEmployee()
         {
-           // TRepository<Employee> tdb = new TRepository<Employee>();
+            // TRepository<Employee> tdb = new TRepository<Employee>();
             return _employeeRepository.Get(e => e.ID == _employeeNumber);
         }
 
@@ -125,9 +125,9 @@ namespace FSA.API.Business
                 //  return BadRequest(result);
             }
 
-            bool validDate = DateTime.TryParse(claim.ReceiptDate,out DateTime claimReceiptDate);
+            bool validDate = DateTime.TryParse(claim.ReceiptDate, out DateTime claimReceiptDate);
 
-            if(!validDate) return new ClaimResult { IsSuccess = false, Message = "Please chek your Receipt Date input." };
+            if (!validDate) return new ClaimResult { IsSuccess = false, Message = "Please chek your Receipt Date input." };
 
             //Check if Receipt Date is valid
             if (claimReceiptDate.Year != DateTime.UtcNow.Year) approval = ClaimApprovals.Denied; //return new ClaimResult { IsSuccess = false, Message = "BadRequest" };
@@ -218,8 +218,8 @@ namespace FSA.API.Business
                 result.FSAAmount = fsaRule.FSALimit;
                 result.YearCoverage = fsaRule.YearCoverage;
                 var employee = GetEmployee();
-
-                result.EmployeeName = employee.FirstName + " " + employee.LastName;
+                if (employee == null) result.EmployeeName = "";
+                else result.EmployeeName = employee.FirstName + " " + employee.LastName;
                 result.ApprovedClaims = ComputeApprovedClaims(claims);
                 result.PendingClaims = ComputePendingClaims(claims);
 
@@ -274,7 +274,7 @@ namespace FSA.API.Business
             if (claim.ClaimAmount > claim.ReceiptAmount)
             {
                 return new ClaimResult { Message = "Claim Amount cannot exceed Receipt Amount", IsSuccess = false };
-                
+
             }
 
             var claimReceiptDate = DateTime.Parse(claim.ReceiptDate);

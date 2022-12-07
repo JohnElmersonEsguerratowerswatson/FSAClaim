@@ -29,9 +29,11 @@ namespace FSA.Test.DataTest
 
         private void Setup()
         {
+           
             DataTestHelper.SeedEmployees(_dbContext);
             DataTestHelper.SeedFSARules(_dbContext);
             // DataTestHelper.SeedEmployeeFSAs(_dbContext);
+           // _dbContext.EmployeeFSAs.RemoveRange(_dbContext.EmployeeFSAs);
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using FSA.API.Models;
 using FSA.API.Models.Interface;
+using FSA.Common;
 using FSA.Common.Enums;
 using FSA.Data.Repository;
 using FSA.Data.Repository.FSAClaimRepository;
@@ -48,8 +49,8 @@ namespace FSA.API.Business
 
         public bool ApproveClaim(ClaimApproval claimApproval)
         {
-
-            var result = _fsaClaimRepository.Update(claimApproval.Approve.ToString(), claim => claim.ReferenceNumber == claimApproval.ReferenceNumber);
+            string approve = claimApproval.Approve ? ClaimApprovals.Approved.ToString() : ClaimApprovals.Denied.ToString();
+            var result = _fsaClaimRepository.Update(approve, claim => claim.ReferenceNumber == claimApproval.ReferenceNumber);
 
             return result.IsSuccess;
         }

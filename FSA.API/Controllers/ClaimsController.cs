@@ -18,7 +18,7 @@ namespace FSA.API.Controllers
     public class ClaimsController : Controller
     {
 
-        private int _employeeID = 1;//employee ID 1
+        private int _employeeID = 10;//employee ID 1
         private IFSAClaimBusinessService _service;
         public ClaimsController(IFSAClaimBusinessService service)
         {
@@ -67,10 +67,6 @@ namespace FSA.API.Controllers
 
             return Ok(claim);
         }
-
-       
-
-      
 
 
         // POST: ClaimsController/Create
