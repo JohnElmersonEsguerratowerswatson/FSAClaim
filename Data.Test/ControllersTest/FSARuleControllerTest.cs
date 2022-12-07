@@ -48,6 +48,9 @@ namespace FSA.Test.ControllersTest
             _service.Setup(x => x.AddFSARule(It.IsAny<ITransactFSARule>())).Returns(GenerateAddFSARuleResult());
             var addResult = _controller.Add(GenerateValidTransactFSARule());
             Assert.True(typeof(OkObjectResult) == addResult.Result.GetType());
+            OkObjectResult okResult = (OkObjectResult)addResult.Result;
+            var resultObject = (AddFSARuleResult)okResult.Value;
+            Assert.True(resultObject.IsSuccess);
         }
     }
 }

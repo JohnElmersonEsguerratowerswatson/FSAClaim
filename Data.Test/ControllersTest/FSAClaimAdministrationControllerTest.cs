@@ -29,7 +29,6 @@ namespace FSA.Test.ControllersTest
         }
 
 
-
         private List<ClaimsApprovalTableItems> GenerateClaimsApprovalTableList()
         {
            
@@ -40,6 +39,7 @@ namespace FSA.Test.ControllersTest
             
             return _fixture.Build<ClaimApproval>().Without(a=>a.Approve).Do(a=>a.Approve= approve).Create();
         }
+
 
         [Fact]
         public void Should_return_all_claims()
@@ -52,13 +52,18 @@ namespace FSA.Test.ControllersTest
             Assert.Equal(okResult.Value, claimsForApproval);
         }
 
+
         [Fact]
         public void Approve_Should_return_success_result()
         {
             _service.Setup(s => s.ApproveClaim(It.IsAny<ClaimApproval>())).Returns(true);
             var claimViewResult = _controller.ClaimApproval(GenerateClaimApproval());
             Assert.True(typeof(OkObjectResult) == claimViewResult.GetType());
+            OkObjectResult okResult = (OkObjectResult)claimViewResult;
+            ClaimResult claimResult = (ClaimResult)okResult.Value;
+            Assert.True(claimResult.IsSuccess);
         }
+
 
         [Fact]
         public void Deny_Should_return_success_result()
@@ -66,6 +71,11 @@ namespace FSA.Test.ControllersTest
             _service.Setup(s => s.ApproveClaim(It.IsAny<ClaimApproval>())).Returns(true);
             var claimViewResult = _controller.ClaimApproval(GenerateClaimApproval(false));
             Assert.True(typeof(OkObjectResult) == claimViewResult.GetType());
+            OkObjectResult okResult = (OkObjectResult)claimViewResult;
+            ClaimResult claimResult = (ClaimResult)okResult.Value;
+            Assert.True(claimResult.IsSuccess);
         }
+
+
     }
 }

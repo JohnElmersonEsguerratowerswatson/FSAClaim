@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +71,25 @@ namespace FSA.Test.ControllersTest
             Assert.True(typeof(OkObjectResult) == result.Result.GetType());
             var okResult = (OkObjectResult) result.Result;
             Assert.True(((AddEmployeeResult)okResult.Value).IsSuccess);
+        }
+
+        [Fact]
+        public void InvalidEmployeeModel_Should_Return_False()
+        {
+            var model = GenerateEmployeeModel();
+            model.FirstName = "Verylongnamecje8jcn83hf98eh938h98hv98hviuhh9iudshisuhvisehviushvishviwshviwuhviwuhveiu";
+            //_service.Setup(s => s.Add(model)).Returns(GenerateAddEmployeeSuccessResult());
+            //var result = _controller.Add(model);
+            //Assert.True(typeof(BadRequestObjectResult) == result.Result.GetType());
+            //var okResult = (BadRequestObjectResult)result.Result;
+            //Assert.False(((AddEmployeeResult)okResult.Value).IsSuccess);
+                       
+            var context = new ValidationContext(model, null, null);
+            var results = new List<ValidationResult>();
+            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(AddEmployeeResult), typeof(AddEmployeeResult)), typeof(AddEmployeeResult));
+
+            var isModelStateValid = Validator.TryValidateObject(model, context, results, true);
+            Assert.False(isModelStateValid);
         }
     }
 }
