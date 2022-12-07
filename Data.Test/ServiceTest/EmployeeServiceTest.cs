@@ -49,16 +49,35 @@ namespace FSA.Test.ServiceTest
             Assert.NotEmpty(employees);
         }
 
-        
+
 
         [Fact]
         public void AddEmployee_Should_Return_SuccessResult()
         {
             _employeeRepository.Setup(r => r.Add(It.IsAny<Employee>())).Returns(new ClaimRepositoryResult(true));
-
             var result = _employeeService.Add(GenerateValidEmployeeModel());
-
             Assert.True(result.IsSuccess);
         }
+
+
+        [Fact]
+        public void AddEmployee_Should_Return_FailedResult()
+        {
+
+            var existingEmployee = _fixture.Create<Employee>();
+            _employeeRepository.Setup(r => r.Get(It.IsAny<Func<Employee,bool>>()))
+                .Returns(existingEmployee);
+            var employeeModel = GenerateValidEmployeeModel();
+            employeeModel.FirstName = existingEmployee.FirstName;
+            employeeModel.LastName = existingEmployee.LastName;
+            employeeModel.MiddleName = existingEmployee.MiddleName;
+
+            var result = _employeeService.Add(employeeModel);
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Employee already exists.", result.Message);
+
+        }
+
+
     }
 }

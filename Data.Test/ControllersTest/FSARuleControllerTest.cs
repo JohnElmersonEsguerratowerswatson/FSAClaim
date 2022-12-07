@@ -27,7 +27,6 @@ namespace FSA.Test.ControllersTest
             _fixture = new Fixture();   
         }
 
- 
 
         private AddFSARuleResult GenerateAddFSARuleResult()
         {
@@ -36,11 +35,13 @@ namespace FSA.Test.ControllersTest
 
         }
 
+
         private TransactFSARule GenerateValidTransactFSARule()
         {
            
             return _fixture.Create<TransactFSARule>();
         }
+
 
         [Fact]
         public void Add_Should_Return_OK()

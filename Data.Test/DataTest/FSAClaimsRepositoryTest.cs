@@ -21,7 +21,7 @@ namespace FSA.Test.DataTest
 
         private int _claimID;
         private int _employeeID;
-
+        
         public FSAClaimsRepositoryTest()
         {
              _optionsBuilder = new DbContextOptionsBuilder<FSAClaimContext>();
@@ -35,15 +35,18 @@ namespace FSA.Test.DataTest
 
         private void Setup()
         {
+            if (DataTestHelper.SetupRan) return;
             DataTestHelper.SeedEmployees(_dbContext);
             DataTestHelper.SeedLogin(_dbContext);
             DataTestHelper.SeedClaims(_dbContext);
+            DataTestHelper.SetupRan = true;
         }
 
 
         [Fact]
         public void GetListCLaims_Should_Get_CLaimsList()
         {
+            
             Assert.NotEmpty(_repository.GetList());
         }
 
@@ -51,14 +54,12 @@ namespace FSA.Test.DataTest
         [Fact]
         public void Can_UpdateFSAClaim()
         {
-
             string refNo = Guid.NewGuid().ToString();
             var claim = _dbContext.FSAClaims.First();
             claim.ReferenceNumber = refNo;
             _repository.Update(claim, x => x.ID == claim.ID);
             Assert.Equal(refNo, _dbContext.FSAClaims.SingleOrDefault(x => x.ID == claim.ID).ReferenceNumber);
         }
-
 
         [Fact]
         public void Can_AddFSAClaim()
@@ -74,6 +75,7 @@ namespace FSA.Test.DataTest
         [Fact]
         public void Can_DeleteClaim()
         {
+            
             var claim = _dbContext.FSAClaims.First();
             var result = _repository.Delete(true, c => c.ID == claim.ID);
             Assert.True(result.IsSuccess);
@@ -82,6 +84,7 @@ namespace FSA.Test.DataTest
         [Fact]
         public void Can_GetClaim()
         {
+            
             int id = _dbContext.FSAClaims.First().ID;
             var claim = _repository.Get(x => x.ID == id);
             Assert.NotNull(claim);

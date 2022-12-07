@@ -76,7 +76,6 @@ namespace FSA.Test.ControllersTest
             Assert.True(((ClaimResult)((OkObjectResult)claimViewResult.Result).Value).IsSuccess);
         }
 
-
         [Fact]
         public void Edit_Should_ReturnOK()
         {

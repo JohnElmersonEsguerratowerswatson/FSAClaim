@@ -41,6 +41,7 @@ namespace FSA.API.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(new AddEmployeeResult { IsSuccess = false, Message = "Please check your inputs." });
                 var result = _service.Add(employee);
+                if(!result.IsSuccess) return BadRequest(result);
                 return Ok(result);
             }
             catch
